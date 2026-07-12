@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — rlcapstone.ai</title>
+  <meta name="description" content="Why this site exists: learning AI by building complete, working systems and documenting everything.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">rlcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/about.html" aria-current="page">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <h1>About this site</h1>
+    <p>
+      rlcapstone.ai is a collection of capstone-style AI projects, each built completely:
+      dataset preparation, model training on local GPU hardware, evaluation with honest
+      metrics, and deployment into a real working application.
+    </p>
+    <p>
+      The write-ups aim to be the article I wished existed when starting each project.
+      That means including the parts tutorials usually skip — export toolchains that only
+      work on certain platforms, dependency versions that silently break builds, evaluation
+      thresholds chosen for a reason, and results that are good but not magic.
+    </p>
+
+    <h2>How projects are built</h2>
+    <ul>
+      <li><strong>Training</strong> — PyTorch on a local NVIDIA GPU, using public research datasets.</li>
+      <li><strong>Deployment</strong> — on-device inference wherever possible (TensorFlow Lite,
+          ONNX Runtime), so demos work offline and no user data leaves the device.</li>
+      <li><strong>Apps</strong> — Flutter for mobile, plain web for demos, one codebase per project.</li>
+      <li><strong>Honesty</strong> — every project page reports real metrics on held-out data and
+          states its limitations plainly.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>
+      Questions or corrections are welcome — reach out via the project repositories on GitHub.
+    </p>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 rlcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

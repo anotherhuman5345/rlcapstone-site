@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MoleCheck — an on-device skin-lesion classifier — rlcapstone.ai</title>
+  <meta name="description" content="How MoleCheck was built: YOLO11 classification on ISIC dermatology images, exported to TFLite, running fully on-device in a Flutter app.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">rlcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/about.html">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <h1>MoleCheck: an on-device skin-lesion classifier</h1>
+    <p class="lead">
+      A Flutter app that classifies photos of moles as lower- or higher-risk, entirely
+      on the phone — no server, no upload, works offline.
+    </p>
+
+    <div class="disclaimer">
+      <strong>This is not a medical device.</strong> MoleCheck is an educational
+      demonstration of image classification. It cannot diagnose skin cancer or any other
+      condition. If you are concerned about a mole or skin change, consult a dermatologist.
+      Read the full <a href="/disclaimer.html">disclaimer</a>.
+    </div>
+
+    <h2>At a glance</h2>
+    <table class="facts">
+      <tr><th>Task</th><td>Binary classification — benign vs. malignant skin lesions from photos</td></tr>
+      <tr><th>Dataset</th><td>ISIC Archive, 11,720 dermatology images (superset of HAM10000)</td></tr>
+      <tr><th>Model</th><td>YOLO11s-cls, fine-tuned 40 epochs, 224×224 input</td></tr>
+      <tr><th>Result</th><td>ROC-AUC 0.914; 90% sensitivity at 75% specificity on held-out data</td></tr>
+      <tr><th>Deployment</th><td>TensorFlow Lite (float32), on-device via <code>tflite_flutter</code></td></tr>
+      <tr><th>App</th><td>Flutter — one codebase for Android and iOS</td></tr>
+    </table>
+
+    <h2>Why on-device</h2>
+    <p>
+      Photos of skin are sensitive. The simplest way to make the privacy story airtight is
+      to never move the image at all: the model ships inside the app, inference runs on the
+      phone's own hardware, and the app works in airplane mode. This also removes an entire
+      category of engineering (servers, APIs, uptime, data retention policy) from the project.
+    </p>
+
+    <h2>Data and labels</h2>
+    <p>
+      Training used a public ISIC Archive collection of 11,720 dermatoscopic images — a
+      superset of the classic HAM10000 dataset. Each image carries a diagnosis field that was
+      mapped to a binary label: benign or malignant, with indeterminate cases excluded. The
+      dataset is heavily imbalanced toward benign lesions, which shaped both training and how
+      the decision threshold was chosen.
+    </p>
+
+    <h2>Model and training</h2>
+    <p>
+      The classifier is YOLO11s-cls — the classification variant of Ultralytics' YOLO11 —
+      fine-tuned for 40 epochs on a local NVIDIA RTX 5060 Ti. A pretrained classification
+      backbone with a direct export path was chosen deliberately: for a capstone, a strong,
+      reproducible baseline beats a custom architecture that is harder to ship.
+    </p>
+
+    <h2>Choosing the threshold: sensitivity first</h2>
+    <p>
+      A default 0.5 threshold is the wrong choice for this problem. The two errors are not
+      symmetric: telling a user a malignant lesion looks fine (a false negative) is far worse
+      than flagging a benign one for a dermatologist visit (a false positive). The final model
+      reaches <strong>ROC-AUC 0.914</strong>, and the decision threshold was set at 0.137 —
+      the point where the model catches <strong>90% of malignant lesions</strong> while still
+      correctly clearing 75% of benign ones. The app is tuned to err on the side of
+      "get it checked."
+    </p>
+
+    <h2>The export toolchain (the part tutorials skip)</h2>
+    <p>
+      Ultralytics can export straight to TFLite — but as of version 8.4 that path only works
+      on Linux and macOS. On Windows, the working route is:
+    </p>
+    <p>
+      PyTorch checkpoint → ONNX → <code>onnx2tf</code> → float32 TFLite.
+    </p>
+    <p>
+      The converted model matches PyTorch outputs to within 0.001, so nothing meaningful is
+      lost in translation. The resulting model takes NHWC input at 224×224 with simple
+      /255 normalization — details that must match exactly in the app code, or predictions
+      are silently garbage.
+    </p>
+
+    <h2>The app</h2>
+    <p>
+      The Flutter app lets the user photograph or pick an image of a mole, runs the TFLite
+      model locally, and presents the result as risk awareness — never as a diagnosis. A
+      three-screen onboarding flow requires acknowledging the educational disclaimer before
+      first use, and every result screen repeats the advice to consult a dermatologist.
+    </p>
+    <p>
+      Two dependency notes for anyone reproducing it: <code>tflite_flutter</code> needs
+      version 0.12.1 (0.11.0 collides with the TensorFlow Lite namespace under current
+      Android Gradle Plugin versions), and its Android module's Kotlin
+      <code>jvmTarget</code> must be pinned to 11 to avoid a Java/Kotlin target mismatch.
+    </p>
+
+    <h2>Limitations</h2>
+    <ul>
+      <li>Trained on dermatoscopic research images, which look different from casual phone
+          photos — real-world accuracy is expected to be lower.</li>
+      <li>Public dermatology datasets under-represent darker skin tones; performance across
+          skin types is not guaranteed to be uniform.</li>
+      <li>A 90% sensitivity target still means the model misses roughly 1 in 10 malignant
+          lesions on held-out data — which is exactly why it must never substitute for a
+          clinician.</li>
+    </ul>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 rlcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
