@@ -1,0 +1,55 @@
+{
+  "columns": [
+    { "key": "data", "label": "Evaluated on" },
+    { "key": "subjAcc", "label": "Subject accuracy" },
+    { "key": "subjAuc", "label": "Subject ROC-AUC" },
+    { "key": "winAcc", "label": "Window accuracy" }
+  ],
+  "versions": [
+    {
+      "version": "v1 — multi-channel 1D CNN",
+      "date": "July 2026",
+      "data": "24 unseen subjects (held out)",
+      "subjAcc": "91.7%",
+      "subjAuc": "0.965",
+      "winAcc": "89.0%",
+      "note": "Split by subject, so this is generalization to new people"
+    }
+  ],
+  "inProgress": "v2 — testing whether the signal is robust: band-limited inputs, per-channel ablation (which electrodes carry the signal?), and a larger held-out set via cross-validation to tighten the confidence interval.",
+  "epochSeries": {
+    "label": "Validation accuracy during training (held-out subjects)",
+    "yLabel": "Validation window accuracy",
+    "xLabel": "Training epoch",
+    "baseline": { "value": 0.5, "label": "chance (2 classes) = 50%" },
+    "points": [
+      [1, 0.8671], [2, 0.8502], [3, 0.8597], [4, 0.846], [5, 0.8935],
+      [6, 0.8956], [7, 0.8576], [8, 0.8565], [9, 0.8776], [10, 0.8618],
+      [11, 0.8808], [12, 0.8713], [13, 0.8586], [14, 0.8407], [15, 0.8776],
+      [16, 0.903], [17, 0.8871], [18, 0.8608], [19, 0.8882], [20, 0.8924],
+      [21, 0.8945], [22, 0.8987], [23, 0.8987], [24, 0.8977], [25, 0.8987],
+      [26, 0.8998], [27, 0.8956], [28, 0.8945], [29, 0.903], [30, 0.8966],
+      [31, 0.9008], [32, 0.9019], [33, 0.9019], [34, 0.903], [35, 0.9019],
+      [36, 0.8987], [37, 0.9008], [38, 0.8956], [39, 0.8966], [40, 0.9008]
+    ]
+  },
+  "changelog": [
+    {
+      "version": "v1 — multi-channel 1D CNN",
+      "date": "July 2026",
+      "status": "current",
+      "changed": [
+        "First end-to-end build: a 193k-parameter 1D CNN over all 19 EEG channels, classifying 2-second windows as ADHD vs control.",
+        "Split strictly by subject (train / validation / test share no people), and scored at the subject level by averaging each subject's window predictions.",
+        "Exported to self-contained ONNX (775 KB) for the on-device browser demo."
+      ],
+      "improved": [
+        "Strong, honest baseline: 91.7% accuracy and 0.965 ROC-AUC on 24 completely unseen subjects — the model generalises to new people, not just new windows.",
+        "Unlike the ECG project, no big lab-to-reality gap appeared here: validation and test agree closely."
+      ],
+      "knownGaps": [
+        "The test set is only 24 subjects, so 91.7% means 22 of 24 — a wide confidence interval. And this classifies research-cohort group membership, never a diagnosis."
+      ]
+    }
+  ]
+}
