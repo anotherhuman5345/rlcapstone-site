@@ -293,6 +293,32 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 .prob-fill.top { background: var(--accent); }
 .prob-val { width: 2.6rem; text-align: right; font-size: 0.85rem; color: var(--text-soft); }
 
+/* Android app download card */
+.download-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.4rem;
+  margin: 1.2rem 0;
+  max-width: 46rem;
+  background: var(--bg-soft);
+}
+.download-meta {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  margin-bottom: 0.9rem;
+}
+.download-meta strong { color: var(--text); font-size: 1rem; }
+.download-card .btn { margin: 0; }
+.download-card details { margin-top: 1rem; }
+.download-card details ol { margin: 0.6rem 0 0; padding-left: 1.3rem; }
+.download-card details li { margin: 0.25rem 0; }
+.download-note {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin: 1rem 0 0;
+  line-height: 1.5;
+}
+
 /* Changelog (js/progress-chart.js) */
 .changelog { margin: 1.5rem 0; max-width: 46rem; }
 .changelog-entry {
