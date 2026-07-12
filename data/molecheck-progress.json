@@ -1,0 +1,31 @@
+{
+  "versions": [
+    {
+      "version": "v1 — YOLO11s-cls baseline",
+      "date": "July 2026",
+      "data": "ISIC Archive (HAM10000 superset), 11,720 images",
+      "rocAuc": "0.914",
+      "sensitivity": "90%",
+      "specificity": "75%",
+      "valTop1": "87.8%",
+      "note": "Shipped in the app and the web demo"
+    }
+  ],
+  "inProgress": "v2 — adding the PAD-UFES-20 clinical-photo dataset, so the model also learns from ordinary phone-camera images rather than dermatoscope images only.",
+  "epochSeries": {
+    "label": "Validation accuracy by training epoch (v1)",
+    "yLabel": "Validation accuracy",
+    "xLabel": "Training epoch",
+    "baseline": { "value": 0.802, "label": "“always say benign” baseline ≈ 80%" },
+    "points": [
+      [1, 0.8030], [2, 0.8181], [3, 0.7885], [4, 0.8204], [5, 0.8279],
+      [6, 0.8181], [7, 0.7683], [8, 0.8210], [9, 0.7914], [10, 0.8285],
+      [11, 0.7804], [12, 0.8192], [13, 0.8227], [14, 0.8366], [15, 0.7932],
+      [16, 0.8221], [17, 0.8384], [18, 0.8447], [19, 0.8436], [20, 0.8494],
+      [21, 0.8210], [22, 0.8418], [23, 0.8557], [24, 0.8569], [25, 0.8488],
+      [26, 0.8453], [27, 0.8604], [28, 0.8714], [29, 0.8691], [30, 0.8615],
+      [31, 0.8581], [32, 0.8720], [33, 0.8662], [34, 0.8592], [35, 0.8586],
+      [36, 0.8783], [37, 0.8725], [38, 0.8778], [39, 0.8783], [40, 0.8754]
+    ]
+  }
+}

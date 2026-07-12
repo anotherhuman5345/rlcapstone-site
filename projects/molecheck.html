@@ -6,6 +6,7 @@
   <title>MoleCheck — an on-device skin-lesion classifier — rlcapstone.ai</title>
   <meta name="description" content="How MoleCheck was built: YOLO11 classification on ISIC dermatology images, exported to TFLite, running fully on-device in a Flutter app.">
   <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/progress-chart.js" defer></script>
 </head>
 <body>
 
@@ -85,6 +86,17 @@
       correctly clearing 75% of benign ones. The app is tuned to err on the side of
       "get it checked."
     </p>
+
+    <h2>Progress across iterations</h2>
+    <p>
+      Every iteration of this project is recapped here as it ships, so you can watch the
+      recognition numbers improve over time. The chart below also shows the journey
+      <em>within</em> the first iteration: at epoch 1 the model scores about 80% — which
+      sounds good until you notice that "always answer benign" scores 80% too, because
+      most lesions in the dataset are benign. The learning that matters is everything
+      above that dashed line.
+    </p>
+    <div class="progress" data-src="/data/molecheck-progress.json"></div>
 
     <h2>The export toolchain (the part tutorials skip)</h2>
     <p>

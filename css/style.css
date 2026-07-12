@@ -256,6 +256,49 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 }
 .result-reminder { font-size: 0.95rem; }
 
+/* Progress chart (js/progress-chart.js) */
+.progress-note { color: var(--text-soft); font-size: 0.95rem; }
+figure.chart {
+  margin: 1.5rem 0;
+  max-width: 46rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1rem 0.6rem;
+  background: var(--bg-soft);
+}
+figure.chart figcaption {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 0.6rem;
+}
+.chart-stage { position: relative; }
+.chart-stage svg { display: block; width: 100%; height: auto; }
+.chart-stage .grid { stroke: var(--border); stroke-width: 1; }
+.chart-stage .tick, .chart-stage .axis-label, .chart-stage .baseline-label {
+  fill: var(--text-soft);
+  font-size: 11px;
+}
+.chart-stage .axis-label { font-size: 12px; }
+.chart-stage .baseline { stroke: var(--text-soft); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.chart-stage .series-line { fill: none; stroke: var(--accent); stroke-width: 2; }
+.chart-stage .series-dot { fill: var(--accent); stroke: var(--bg-soft); stroke-width: 2; }
+.chart-stage .point-label { fill: var(--text); font-size: 11px; font-weight: 600; }
+.chart-stage .crosshair { stroke: var(--text-soft); stroke-width: 1; stroke-dasharray: 2 3; }
+.chart-tip {
+  position: absolute;
+  transform: translate(-50%, -140%);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.8rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+details summary { cursor: pointer; color: var(--text-soft); font-size: 0.9rem; }
+details table.facts { margin-top: 0.6rem; }
+
 /* Footer */
 footer.site {
   border-top: 1px solid var(--border);
