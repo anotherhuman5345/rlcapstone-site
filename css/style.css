@@ -176,6 +176,86 @@ table.facts th, table.facts td {
 }
 table.facts th { background: var(--bg-soft); white-space: nowrap; }
 
+/* Demo (molecheck-demo.html) */
+.btn {
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 1.4rem;
+  cursor: pointer;
+  margin-top: 0.9rem;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.gate-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.gate-row input { margin-top: 0.3rem; }
+
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--text-soft);
+  cursor: pointer;
+  margin: 1.5rem 0 0.5rem;
+  max-width: 46rem;
+}
+.dropzone:hover, .dropzone.dragging { border-color: var(--accent); }
+.dropzone img {
+  max-width: 16rem;
+  max-height: 16rem;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 0.8rem;
+}
+.demo-status { color: var(--text-soft); min-height: 1.5em; max-width: 46rem; }
+
+.demo-result {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.4rem;
+  margin: 1rem 0 2rem;
+  max-width: 46rem;
+}
+.demo-result h2 { margin: 0 0 0.8rem; }
+.demo-result.concerning { border-color: var(--warn-border); background: var(--warn-bg); color: var(--warn-text); }
+.demo-result.concerning h2 { color: inherit; }
+.result-bar {
+  position: relative;
+  height: 0.8rem;
+  border-radius: 99px;
+  background: rgba(127, 127, 127, 0.2);
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+}
+.result-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+.demo-result.concerning .result-fill { background: var(--warn-border); }
+.result-threshold {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 13.7%;
+  width: 2px;
+  background: var(--text-soft);
+}
+.result-reminder { font-size: 0.95rem; }
+
 /* Footer */
 footer.site {
   border-top: 1px solid var(--border);
