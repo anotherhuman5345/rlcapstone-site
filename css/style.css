@@ -256,6 +256,43 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 }
 .result-reminder { font-size: 0.95rem; }
 
+/* ECG demo (js/ecg-demo.js) */
+#ecg-samples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.sample-chip {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 0.35rem 0.9rem;
+  cursor: pointer;
+}
+.sample-chip:hover { border-color: var(--accent); }
+.sample-chip.active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.ecg-screen {
+  --grid: #e9edf2;
+  --trace: var(--accent);
+  width: 100%;
+  max-width: 46rem;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  display: block;
+}
+@media (prefers-color-scheme: dark) { .ecg-screen { --grid: #232b35; } }
+:root[data-theme="dark"] .ecg-screen { --grid: #232b35; }
+:root[data-theme="light"] .ecg-screen { --grid: #e9edf2; }
+.ecg-truth { font-size: 0.95rem; color: var(--text-soft); margin: 0 0 0.8rem; }
+.prob-row { display: flex; align-items: center; gap: 0.6rem; margin: 0.3rem 0; max-width: 30rem; }
+.prob-label { width: 1.4rem; font-weight: 700; font-family: ui-monospace, monospace; }
+.prob-track { flex: 1; height: 0.7rem; background: rgba(127,127,127,0.2); border-radius: 99px; overflow: hidden; }
+.prob-fill { height: 100%; background: var(--text-soft); border-radius: 99px; transition: width 0.3s ease; }
+.prob-fill.top { background: var(--accent); }
+.prob-val { width: 2.6rem; text-align: right; font-size: 0.85rem; color: var(--text-soft); }
+
 /* Progress chart (js/progress-chart.js) */
 .progress-note { color: var(--text-soft); font-size: 0.95rem; }
 figure.chart {

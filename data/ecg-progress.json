@@ -1,0 +1,36 @@
+{
+  "columns": [
+    { "key": "data", "label": "Evaluated on" },
+    { "key": "testAcc", "label": "Test accuracy" },
+    { "key": "macroRecall", "label": "Macro-recall" },
+    { "key": "vRecall", "label": "V (ventricular) recall" },
+    { "key": "sRecall", "label": "S (supravent.) recall" }
+  ],
+  "versions": [
+    {
+      "version": "v1 — 1D CNN, single beat",
+      "date": "July 2026",
+      "data": "MIT-BIH, unseen patients (DS2)",
+      "testAcc": "70.2%",
+      "macroRecall": "44.1%",
+      "vRecall": "86.5%",
+      "sRecall": "8.8%",
+      "note": "Sees each beat in isolation — no timing context"
+    }
+  ],
+  "inProgress": "v2 — adding RR-interval (beat-timing) features, which is the signal a model needs to recognise supraventricular beats. Target: lift S-class recall well above v1's 8.8%.",
+  "epochSeries": {
+    "label": "Validation macro-recall during training — and why it flatters the model",
+    "yLabel": "Macro-recall (mean of the 4 per-class recalls)",
+    "xLabel": "Training epoch",
+    "baseline": { "value": 0.25, "label": "“always say normal” ≈ 25% macro-recall" },
+    "points": [
+      [1, 0.846], [2, 0.886], [3, 0.853], [4, 0.935], [5, 0.916],
+      [6, 0.928], [7, 0.929], [8, 0.881], [9, 0.924], [10, 0.946],
+      [11, 0.949], [12, 0.948], [13, 0.954], [14, 0.961], [15, 0.959],
+      [16, 0.953], [17, 0.959], [18, 0.960], [19, 0.967], [20, 0.960],
+      [21, 0.961], [22, 0.964], [23, 0.957], [24, 0.954], [25, 0.960],
+      [26, 0.962], [27, 0.962], [28, 0.962], [29, 0.962], [30, 0.962]
+    ]
+  }
+}
