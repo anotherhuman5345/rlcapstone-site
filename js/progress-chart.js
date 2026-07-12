@@ -19,19 +19,30 @@
     return node;
   }
 
-  function renderVersions(container, versions, inProgress) {
+  // Default columns (MoleCheck-style) if a project doesn't specify its own.
+  const DEFAULT_COLUMNS = [
+    { key: "data", label: "Trained on" },
+    { key: "rocAuc", label: "ROC-AUC" },
+    { key: "sensitivity", label: "Sensitivity" },
+    { key: "specificity", label: "Specificity" },
+    { key: "valTop1", label: "Val. accuracy" },
+  ];
+
+  function renderVersions(container, versions, inProgress, columns) {
+    const cols = columns && columns.length ? columns : DEFAULT_COLUMNS;
     const table = document.createElement("table");
     table.className = "facts";
     table.innerHTML =
-      "<thead><tr><th>Iteration</th><th>Trained on</th><th>ROC-AUC</th>" +
-      "<th>Sensitivity</th><th>Specificity</th><th>Val. accuracy</th></tr></thead>";
+      "<thead><tr><th>Iteration</th>" +
+      cols.map((c) => "<th>" + c.label + "</th>").join("") +
+      "</tr></thead>";
     const tbody = document.createElement("tbody");
     for (const v of versions) {
       const tr = document.createElement("tr");
-      for (const cell of [
-        v.version + " (" + v.date + ")", v.data,
-        v.rocAuc, v.sensitivity, v.specificity, v.valTop1,
-      ]) {
+      const cells = [v.version + " (" + v.date + ")"].concat(
+        cols.map((c) => (v[c.key] == null ? "—" : v[c.key]))
+      );
+      for (const cell of cells) {
         const td = document.createElement("td");
         td.textContent = cell;
         tr.appendChild(td);
@@ -175,7 +186,7 @@
       const res = await fetch(container.dataset.src);
       const data = await res.json();
       if (data.versions && data.versions.length) {
-        renderVersions(container, data.versions, data.inProgress);
+        renderVersions(container, data.versions, data.inProgress, data.columns);
       }
       if (data.epochSeries) renderChart(container, data.epochSeries);
     } catch (e) {
