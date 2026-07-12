@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MoleCheck live demo — rlcapstone.ai</title>
+  <meta name="description" content="Try the MoleCheck skin-lesion classifier in your browser. The photo is analyzed on your device and never uploaded.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
+  <script src="/js/molecheck-demo.js" defer></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">rlcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/about.html">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <h1>MoleCheck live demo</h1>
+    <p class="lead">
+      The same model that powers the <a href="/projects/molecheck.html">MoleCheck app</a>,
+      running in your browser. Your photo is analyzed <strong>on your device</strong> —
+      it is never uploaded, and this site has no server to send it to.
+    </p>
+
+    <!-- Consent gate: mirrors the app's onboarding acknowledgement -->
+    <section id="demo-gate" class="demo-gate">
+      <div class="disclaimer">
+        <strong>Before you try it — this is not a medical test.</strong>
+        <ul>
+          <li>This is an educational demonstration of image classification.
+              It <strong>cannot diagnose</strong> skin cancer or any other condition.</li>
+          <li>A "lower-risk" result is <strong>not reassurance</strong>. The model misses
+              roughly 1 in 10 malignant lesions on held-out test data, and real-world
+              photos are harder than the research images it trained on.</li>
+          <li>If a mole is new, changing, bleeding, or worrying you in any way,
+              <strong>see a dermatologist</strong> — regardless of what this page says.</li>
+        </ul>
+        <label class="gate-row">
+          <input type="checkbox" id="gate-ack">
+          I understand this is an educational demo, not medical advice.
+        </label>
+        <button id="gate-start" class="btn" disabled>Try the demo</button>
+      </div>
+    </section>
+
+    <!-- Demo UI, revealed after acknowledgement -->
+    <section id="demo-ui" hidden>
+      <div id="dropzone" class="dropzone" role="button" tabindex="0"
+           aria-label="Choose or drop a photo of a mole">
+        <input type="file" id="demo-file" accept="image/*" hidden>
+        <img id="demo-preview" alt="Selected photo preview" hidden>
+        <p id="dropzone-hint">Drop a close-up photo of a single mole here,<br>or click to choose one</p>
+      </div>
+      <p id="demo-status" class="demo-status" role="status"></p>
+
+      <div id="demo-result" class="demo-result" hidden>
+        <h2 id="result-verdict"></h2>
+        <div class="result-bar" aria-hidden="true">
+          <div id="result-fill" class="result-fill"></div>
+          <div class="result-threshold" title="Flagging threshold"></div>
+        </div>
+        <p id="result-detail"></p>
+        <p class="result-reminder">
+          Whatever the score: this tool cannot see what a dermatologist sees.
+          If you're concerned about this mole, <strong>get it examined in person.</strong>
+        </p>
+      </div>
+
+      <h2>What happens to my photo?</h2>
+      <p>
+        Nothing leaves your browser. The model (a 21&nbsp;MB neural network) is downloaded
+        <em>to</em> your device once, and the analysis runs locally via WebAssembly. You can
+        disconnect from the internet after the page loads and it will still work.
+      </p>
+
+      <h2>Tips for a meaningful result</h2>
+      <ul>
+        <li>One mole per photo, centered and in focus, filling most of the frame.</li>
+        <li>Good, even lighting; no shadows across the lesion.</li>
+        <li>The model was trained on dermatoscope images, so casual phone photos
+            are outside its comfort zone — treat the score as a rough signal only.</li>
+      </ul>
+    </section>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 rlcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
