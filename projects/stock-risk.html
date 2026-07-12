@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stock volatility risk from price + sentiment — rlcapstone.ai</title>
+  <meta name="description" content="An MLP that predicts a stock's next-week volatility risk from price and news sentiment — and the honest finding that the sentiment didn't help.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/progress-chart.js" defer></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">rlcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/about.html">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <h1>Predicting a stock's risk — and testing whether sentiment helps</h1>
+    <p class="lead">
+      A model that sorts a stock's coming week into Low, Medium or High volatility from its price
+      history and the news sentiment around it — built mainly to answer one question honestly:
+      does the sentiment actually add anything?
+    </p>
+
+    <div class="disclaimer">
+      <strong>Not financial advice.</strong> This is an educational machine-learning project. It
+      predicts volatility, not price direction, and nothing here is a recommendation to buy, sell
+      or hold anything. Read the full <a href="/disclaimer.html">disclaimer</a>.
+    </div>
+
+    <p>
+      <a class="btn" href="/projects/stock-risk-demo.html">Try it in your browser →</a><br>
+      <small>Runs on your device — nothing is uploaded.</small>
+    </p>
+
+    <h2>At a glance</h2>
+    <table class="facts">
+      <tr><th>Task</th><td>Classify a stock's next-week realised volatility as Low / Medium / High</td></tr>
+      <tr><th>Data</th><td>Yahoo Finance prices + ticker-level news sentiment (Polygon, 2023), 59 stocks</td></tr>
+      <tr><th>Features</th><td>12: trailing returns, rolling volatility, volume, drawdown, and a daily sentiment signal</td></tr>
+      <tr><th>Model</th><td>Small MLP — 3,397 parameters (20 KB)</td></tr>
+      <tr><th>Result</th><td>56% accuracy on 3 classes (chance is 33%) — but see the sentiment finding</td></tr>
+      <tr><th>Deployment</th><td>ONNX in the browser demo; TFLite in the Android app</td></tr>
+    </table>
+
+    <h2>Why volatility, not direction</h2>
+    <p>
+      Predicting whether a stock goes <em>up or down</em> tomorrow is famously close to a coin
+      flip. Predicting <em>how much it will move</em> — its volatility — is a different story,
+      because volatility clusters: calm weeks tend to follow calm weeks and turbulent ones follow
+      turbulent ones. That autocorrelation is real, learnable signal, which is why a simple model
+      reaches 56% on three classes where chance is 33%.
+    </p>
+
+    <h2>Progress across iterations</h2>
+    <p>
+      The model trains in seconds and settles around 64% on the validation slice, dropping to 56%
+      on the later, unseen test period — a normal, honest gap when markets move to a regime the
+      model hasn't seen.
+    </p>
+    <div class="progress" data-src="/data/stock-progress.json"></div>
+
+    <h2>The honest headline: sentiment didn't help</h2>
+    <p>
+      The whole point of the project was the word "sentiment", so the result that matters is the
+      comparison. Training the same model on <strong>price features only</strong> — no sentiment —
+      scored <strong>57.2%</strong>, actually a hair <em>better</em> than the 56.3% with sentiment
+      included. The sentiment signal added nothing; if anything it added a little noise.
+    </p>
+    <p>
+      That is not a bug, and it is not a disappointment — it is the most useful thing the project
+      found. A daily average of headline sentiment is a coarse, sparse signal, and by the time you
+      already have rolling-volatility features, most of what's predictable about next week's
+      turbulence is already on the table. Reporting the negative result honestly — instead of
+      quietly dropping the ablation and claiming sentiment "works" — is the difference between a
+      demo and an experiment.
+    </p>
+
+    <h2>Where the model struggles</h2>
+    <p>
+      The confusion is exactly where you'd expect: it reads calm (Low, 76% recall) and turbulent
+      (High, 60%) weeks reasonably well, but the Medium middle bucket is hard (27%), because
+      "medium" volatility looks like a blurred edge between the other two. That's an honest,
+      interpretable failure mode rather than a mysterious one.
+    </p>
+
+    <h2>What's next (v2)</h2>
+    <p>
+      If sentiment is going to earn its place, it needs to be richer than a daily average: per
+      headline embeddings rather than one number, a longer multi-year history spanning more market
+      regimes, and a test of whether sentiment helps more for <em>direction</em> than for
+      volatility. Those results will appear in the table above — including, honestly, if sentiment
+      still doesn't help.
+    </p>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 rlcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

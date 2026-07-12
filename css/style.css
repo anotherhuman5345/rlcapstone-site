@@ -410,6 +410,40 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 }
 .result-truth { font-size: 0.95rem; color: var(--text-soft); margin: 0 0 0.8rem; }
 
+/* Stock risk demo (js/stock-demo.js) */
+#stock-samples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.stock-chip {
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  color: var(--text);
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+.stock-chip:hover { border-color: var(--accent); }
+.stock-chip.active { border-color: var(--accent); background: var(--accent-soft); }
+.stock-chip strong { font-size: 1rem; }
+.stock-chip span { font-size: 0.75rem; color: var(--text-soft); }
+.price-screen {
+  --trace: var(--accent);
+  width: 100%;
+  max-width: 46rem;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  display: block;
+  margin-top: 0.5rem;
+}
+#price-caption { font-size: 0.85rem; color: var(--text-soft); margin: 0.4rem 0 0; }
+.result-truth { font-size: 0.95rem; color: var(--text-soft); margin: 0 0 0.4rem; }
+.result-context { font-size: 0.9rem; color: var(--text-soft); margin: 0 0 0.8rem; }
+
 /* Progress chart (js/progress-chart.js) */
 .progress-note { color: var(--text-soft); font-size: 0.95rem; }
 figure.chart {
