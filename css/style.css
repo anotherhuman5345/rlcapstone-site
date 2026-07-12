@@ -361,6 +361,26 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 .changelog-group ul { margin: 0; padding-left: 1.1rem; }
 .changelog-group li { margin: 0.15rem 0; }
 
+/* EEG montage (js/adhd-demo.js) — reuses .sample-chip / .prob-* from ECG demo */
+.eeg-screen {
+  --grid: #eceaf6;
+  --trace: #7c3aed;
+  --label: #8a8a9a;
+  width: 100%;
+  max-width: 46rem;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  .eeg-screen { --grid: #262233; --trace: #a78bfa; --label: #777; }
+}
+:root[data-theme="dark"] .eeg-screen { --grid: #262233; --trace: #a78bfa; --label: #777; }
+:root[data-theme="light"] .eeg-screen { --grid: #eceaf6; --trace: #7c3aed; --label: #8a8a9a; }
+.eeg-truth { font-size: 0.95rem; color: var(--text-soft); margin: 0 0 0.8rem; }
+
 /* Progress chart (js/progress-chart.js) */
 .progress-note { color: var(--text-soft); font-size: 0.95rem; }
 figure.chart {

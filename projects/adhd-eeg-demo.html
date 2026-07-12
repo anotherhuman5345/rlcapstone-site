@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ADHD EEG live demo — rlcapstone.ai</title>
+  <meta name="description" content="Try the EEG classifier in your browser. Pick a real 19-channel EEG recording from an unseen subject and watch the model classify it on your device.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
+  <script src="/js/adhd-demo.js" defer></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">rlcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/about.html">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <h1>ADHD EEG live demo</h1>
+    <p class="lead">
+      Pick a real 19-channel EEG recording below — each is a 2-second window from a
+      child the model never saw during training. The
+      <a href="/projects/adhd-eeg.html">model</a> classifies it in your browser;
+      nothing is uploaded.
+    </p>
+
+    <div class="disclaimer">
+      <strong>Educational demo — this cannot diagnose ADHD.</strong> ADHD is diagnosed
+      clinically by professionals, never from a brief EEG. This classifies whether a
+      research recording came from the study's ADHD or control group — a pattern-matching
+      exercise, not a medical test. If you have concerns about attention or focus, speak
+      with a qualified clinician.
+    </div>
+
+    <h2>Pick a recording</h2>
+    <p>
+      Each is labelled by the group the child belonged to in the study: <strong>Control</strong>
+      or <strong>ADHD</strong>. Tap one to see its 19-channel EEG and the model's call.
+    </p>
+    <div id="eeg-samples"></div>
+
+    <canvas id="eeg-canvas" class="eeg-screen" width="720" height="380"
+            aria-label="19-channel EEG montage of the selected recording"></canvas>
+    <p id="eeg-status" class="demo-status" role="status"></p>
+
+    <div id="eeg-result" class="demo-result" hidden>
+      <h2 id="eeg-verdict"></h2>
+      <p id="eeg-truth" class="eeg-truth"></p>
+      <div id="eeg-bars"></div>
+      <p class="result-reminder">
+        This model separates the study's two groups with about 92% accuracy on unseen
+        subjects — genuinely interesting, but on a small cohort and for group membership,
+        not diagnosis. See the <a href="/projects/adhd-eeg.html">write-up</a> for the honest
+        numbers and caveats.
+      </p>
+    </div>
+
+    <h2>What am I looking at?</h2>
+    <p>
+      Each row is one electrode on the scalp (Fp1, Fp2, F3 … following the international
+      10–20 layout), and each trace is 2 seconds of brain electrical activity sampled 128
+      times per second. The model reads all 19 channels together. It was trained only on
+      recordings from <em>other</em> children, so a correct call here means the pattern it
+      learned transfers to people it has never encountered.
+    </p>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 rlcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
