@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leukemia subtyping from blood smears — rlcapstone.ai</title>
+  <meta name="description" content="A YOLO classifier that subtypes leukemic cells from blood smears at 99.8% — and an honest look at why that number can't be trusted yet.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/progress-chart.js" defer></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">rlcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/about.html">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <h1>Subtyping leukemia from a single cell</h1>
+    <p class="lead">
+      A computer-vision classifier that sorts white blood cells from a smear into Benign or
+      one of three B-cell ALL stages — and a case study in why a 99.8% score can be the
+      least trustworthy result on this whole site.
+    </p>
+
+    <div class="disclaimer">
+      <strong>Not a diagnostic tool.</strong> Leukaemia is diagnosed by haematologists using
+      bone-marrow biopsy, flow cytometry and genetics. This project classifies research images
+      and is purely educational. Read the full <a href="/disclaimer.html">disclaimer</a>.
+    </div>
+
+    <p>
+      <a class="btn" href="/projects/leukemia-demo.html">Try it in your browser →</a><br>
+      <small>Classifies real blood-smear cells on your device — nothing is uploaded.</small>
+    </p>
+
+    <h2>At a glance</h2>
+    <table class="facts">
+      <tr><th>Task</th><td>Classify one blood-smear white cell into 4 classes: Benign, Early Pre-B, Pre-B, Pro-B ALL</td></tr>
+      <tr><th>Data</th><td>ALL image dataset (Aria et al., 2021) — 3,256 peripheral-blood-smear images</td></tr>
+      <tr><th>Model</th><td>YOLO11s-cls, transfer-learned, 224×224 input (5.4M parameters)</td></tr>
+      <tr><th>Result</th><td>99.8% accuracy, 0.998 macro-F1 on held-out images — see the caveat below</td></tr>
+      <tr><th>Deployment</th><td>ONNX in the browser demo; TFLite in the Android app</td></tr>
+    </table>
+
+    <h2>The four classes</h2>
+    <p>
+      Three of the classes — <strong>Early Pre-B</strong>, <strong>Pre-B</strong> and
+      <strong>Pro-B</strong> — are maturation stages of the same B-cell acute lymphoblastic
+      leukaemia, and the fourth, <strong>Benign</strong>, is a non-cancerous look-alike
+      (hematogones) that can fool the eye. Distinguishing them is genuinely subtle work, which
+      is what makes it a worthwhile vision problem.
+    </p>
+
+    <h2>Progress across iterations</h2>
+    <p>
+      The model learns the four cell types quickly and cleanly, and validation accuracy
+      marches to 100%. On most projects that would be the headline. Here it's the opposite —
+      it's the cue to look harder at how the data was split.
+    </p>
+    <div class="progress" data-src="/data/leukemia-progress.json"></div>
+
+    <h2>Why 99.8% is a warning, not a win</h2>
+    <p>
+      The images come from a real set of patients, but this public release does not include
+      patient identifiers. So when the data is split into training and test sets at random, the
+      overwhelmingly likely outcome is that <strong>cells from the same patient land on both
+      sides of the split</strong>. Cells from one slide share the same staining, lighting,
+      focus and background — and a powerful model can score near-perfectly by recognising
+      <em>those</em> cues, having learned far less about leukaemia than the number suggests.
+    </p>
+    <p>
+      This is the same trap the <a href="/projects/adhd-eeg.html">EEG project</a> avoided by
+      splitting on subjects. We can't avoid it here, because the identifiers simply aren't in
+      the data — and pretending otherwise would be the dishonest move. So the 99.8% is reported
+      with an asterisk the size of the result itself.
+    </p>
+
+    <h2>What's next (v2)</h2>
+    <p>
+      v2 moves to the <strong>C-NMC 2019</strong> dataset, which ships patient IDs for roughly
+      fifteen thousand cells. That lets us hold out whole patients, exactly as we did for EEG,
+      and measure what the model has really learned. The near-certain outcome is a
+      <em>lower</em> accuracy than 99.8% — and that lower number will be worth far more than
+      this one. It will appear in the table above when it lands.
+    </p>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 rlcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

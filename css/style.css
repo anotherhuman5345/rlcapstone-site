@@ -381,6 +381,35 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 :root[data-theme="light"] .eeg-screen { --grid: #eceaf6; --trace: #7c3aed; --label: #8a8a9a; }
 .eeg-truth { font-size: 0.95rem; color: var(--text-soft); margin: 0 0 0.8rem; }
 
+/* Leukemia cell-image demo (js/leukemia-demo.js) */
+#cell-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0;
+  max-width: 46rem;
+}
+.cell-thumb {
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--bg-soft);
+  aspect-ratio: 1;
+}
+.cell-thumb:hover { border-color: var(--accent); }
+.cell-thumb.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.cell-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#selected-cell {
+  max-width: 15rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin: 0.5rem 0;
+  display: block;
+}
+.result-truth { font-size: 0.95rem; color: var(--text-soft); margin: 0 0 0.8rem; }
+
 /* Progress chart (js/progress-chart.js) */
 .progress-note { color: var(--text-soft); font-size: 0.95rem; }
 figure.chart {
