@@ -8,3 +8,4 @@ Desktop.ini
 !.dev.vars.example
 .env*
 !.env.example
+test-tmp/
