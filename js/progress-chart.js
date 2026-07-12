@@ -181,6 +181,52 @@
     container.appendChild(det);
   }
 
+  function renderChangelog(container, changelog) {
+    const section = document.createElement("div");
+    section.className = "changelog";
+    const h = document.createElement("h3");
+    h.textContent = "Release history — what changed, what improved";
+    section.appendChild(h);
+
+    for (const entry of changelog) {
+      const item = document.createElement("div");
+      item.className = "changelog-entry";
+      const head = document.createElement("div");
+      head.className = "changelog-head";
+      head.innerHTML =
+        "<span class='changelog-ver'>" + entry.version + "</span>" +
+        "<span class='changelog-date'>" + entry.date + "</span>" +
+        (entry.status ? "<span class='changelog-status'>" + entry.status + "</span>" : "");
+      item.appendChild(head);
+
+      const groups = [
+        { key: "changed", label: "Changed", cls: "changed" },
+        { key: "improved", label: "Improved", cls: "improved" },
+        { key: "knownGaps", label: "Known gap", cls: "gap" },
+      ];
+      for (const g of groups) {
+        const lines = entry[g.key];
+        if (!lines || !lines.length) continue;
+        const block = document.createElement("div");
+        block.className = "changelog-group " + g.cls;
+        const tag = document.createElement("span");
+        tag.className = "changelog-tag";
+        tag.textContent = g.label;
+        block.appendChild(tag);
+        const ul = document.createElement("ul");
+        for (const line of lines) {
+          const li = document.createElement("li");
+          li.textContent = line;
+          ul.appendChild(li);
+        }
+        block.appendChild(ul);
+        item.appendChild(block);
+      }
+      section.appendChild(item);
+    }
+    container.appendChild(section);
+  }
+
   async function init(container) {
     try {
       const res = await fetch(container.dataset.src);
@@ -189,6 +235,9 @@
         renderVersions(container, data.versions, data.inProgress, data.columns);
       }
       if (data.epochSeries) renderChart(container, data.epochSeries);
+      if (data.changelog && data.changelog.length) {
+        renderChangelog(container, data.changelog);
+      }
     } catch (e) {
       container.textContent = "Could not load progress data.";
     }

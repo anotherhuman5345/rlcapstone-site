@@ -18,6 +18,25 @@
       "note": "Sees each beat in isolation — no timing context"
     }
   ],
+  "changelog": [
+    {
+      "version": "v1 — 1D CNN, single beat",
+      "date": "July 2026",
+      "status": "current",
+      "changed": [
+        "First end-to-end build: a 77k-parameter 1D CNN trained on ~100,000 MIT-BIH heartbeats, classifying each beat into the 4 AAMI classes.",
+        "Split the data by patient (not by beat) so the honest inter-patient result is measured, not an inflated one.",
+        "Exported to a self-contained ONNX model (325 KB) running on-device in the browser demo."
+      ],
+      "improved": [
+        "Established a strong baseline on ventricular beats: 86% recall on unseen patients.",
+        "Macro-recall of 44% clears the 'always say normal' floor of 25%."
+      ],
+      "knownGaps": [
+        "Only 9% recall on supraventricular beats: the model reads beat shape but not beat timing, and timing is what defines that class. This is the target of v2."
+      ]
+    }
+  ],
   "inProgress": "v2 — adding RR-interval (beat-timing) features, which is the signal a model needs to recognise supraventricular beats. Target: lift S-class recall well above v1's 8.8%.",
   "epochSeries": {
     "label": "Validation macro-recall during training — and why it flatters the model",

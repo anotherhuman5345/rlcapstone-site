@@ -293,6 +293,48 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 .prob-fill.top { background: var(--accent); }
 .prob-val { width: 2.6rem; text-align: right; font-size: 0.85rem; color: var(--text-soft); }
 
+/* Changelog (js/progress-chart.js) */
+.changelog { margin: 1.5rem 0; max-width: 46rem; }
+.changelog-entry {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  background: var(--bg-soft);
+}
+.changelog-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.changelog-ver { font-weight: 700; font-size: 1.05rem; }
+.changelog-date { color: var(--text-soft); font-size: 0.9rem; }
+.changelog-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 99px;
+  padding: 0.1rem 0.6rem;
+}
+.changelog-group { display: grid; grid-template-columns: 5.5rem 1fr; gap: 0.6rem; margin-top: 0.5rem; }
+.changelog-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  height: fit-content;
+  text-align: center;
+}
+.changelog-group.changed .changelog-tag { color: var(--text-soft); background: rgba(127,127,127,0.15); }
+.changelog-group.improved .changelog-tag { color: #0a7d3c; background: #d7f3e1; }
+.changelog-group.gap .changelog-tag { color: var(--warn-text); background: var(--warn-bg); }
+@media (prefers-color-scheme: dark) {
+  .changelog-group.improved .changelog-tag { color: #7ee2a8; background: #123522; }
+}
+:root[data-theme="dark"] .changelog-group.improved .changelog-tag { color: #7ee2a8; background: #123522; }
+:root[data-theme="light"] .changelog-group.improved .changelog-tag { color: #0a7d3c; background: #d7f3e1; }
+.changelog-group ul { margin: 0; padding-left: 1.1rem; }
+.changelog-group li { margin: 0.15rem 0; }
+
 /* Progress chart (js/progress-chart.js) */
 .progress-note { color: var(--text-soft); font-size: 0.95rem; }
 figure.chart {

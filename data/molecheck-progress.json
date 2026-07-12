@@ -11,6 +11,22 @@
       "note": "Shipped in the app and the web demo"
     }
   ],
+  "changelog": [
+    {
+      "version": "v1 — YOLO11s-cls baseline",
+      "date": "July 2026",
+      "status": "current",
+      "changed": [
+        "First end-to-end build: YOLO11s-cls fine-tuned for 40 epochs on 11,720 ISIC dermatoscopic images.",
+        "Exported to TensorFlow Lite and wired into the Flutter app and this in-browser demo (fully on-device).",
+        "Decision threshold deliberately set to 0.137 instead of the default 0.5, to prioritise catching malignant lesions."
+      ],
+      "improved": [
+        "Established the baseline: ROC-AUC 0.914 on held-out data.",
+        "Catches 90% of malignant lesions (sensitivity) while still clearing 75% of benign ones — far better than the 'always benign' 80%-accuracy trap."
+      ]
+    }
+  ],
   "inProgress": "v2 — adding the PAD-UFES-20 clinical-photo dataset, so the model also learns from ordinary phone-camera images rather than dermatoscope images only.",
   "epochSeries": {
     "label": "Validation accuracy by training epoch (v1)",
