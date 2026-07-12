@@ -1,0 +1,54 @@
+{
+  "columns": [
+    { "key": "data", "label": "Evaluated on" },
+    { "key": "acc", "label": "Test accuracy" },
+    { "key": "macroF1", "label": "Macro-F1" },
+    { "key": "split", "label": "Split type" }
+  ],
+  "versions": [
+    {
+      "version": "v1 — YOLO11s-cls, 4-class",
+      "date": "July 2026",
+      "data": "489 held-out images (random split)",
+      "acc": "99.8%",
+      "macroF1": "0.998",
+      "split": "random (no patient IDs)",
+      "note": "Near-perfect — and that's the warning sign, not the win"
+    }
+  ],
+  "inProgress": "v2 — the C-NMC 2019 dataset, which ships patient IDs, so cells from one patient can be kept entirely within one split. The honest accuracy there will almost certainly be lower — and more trustworthy.",
+  "epochSeries": {
+    "label": "Validation accuracy during training",
+    "yLabel": "Validation accuracy",
+    "xLabel": "Training epoch",
+    "baseline": { "value": 0.303, "label": "“always guess the biggest class” ≈ 30%" },
+    "points": [
+      [1, 0.9775], [2, 0.8098], [3, 0.8957], [4, 0.7362], [5, 0.8814],
+      [6, 0.9243], [7, 0.8528], [8, 0.9734], [9, 0.9918], [10, 0.9836],
+      [11, 0.9836], [12, 0.9877], [13, 0.9816], [14, 0.9734], [15, 0.9918],
+      [16, 0.9939], [17, 0.9877], [18, 0.9898], [19, 0.9898], [20, 0.9898],
+      [21, 0.9591], [22, 0.9775], [23, 0.9959], [24, 0.9877], [25, 0.9918],
+      [26, 0.9898], [27, 0.998], [28, 0.9959], [29, 0.998], [30, 0.9959],
+      [31, 0.998], [32, 0.998], [33, 1.0], [34, 1.0], [35, 1.0],
+      [36, 1.0], [37, 1.0], [38, 1.0], [39, 1.0], [40, 1.0]
+    ]
+  },
+  "changelog": [
+    {
+      "version": "v1 — YOLO11s-cls, 4-class",
+      "date": "July 2026",
+      "status": "current",
+      "changed": [
+        "First end-to-end build: a YOLO11s-cls network fine-tuned to sort blood-smear white cells into 4 classes — Benign plus three B-cell ALL maturation stages (Early Pre-B, Pre-B, Pro-B).",
+        "Reuses the MoleCheck computer-vision pipeline (transfer learning → ONNX for the browser, TFLite for the app).",
+        "Exported to ONNX (21 MB) running on-device in the browser demo."
+      ],
+      "improved": [
+        "Learns the four cell types cleanly: 99.8% accuracy and 0.998 macro-F1 on the held-out images."
+      ],
+      "knownGaps": [
+        "That 99.8% is a red flag, not a triumph. This dataset ships no patient IDs, so a random split almost certainly puts the same patient's cells in both training and test — the model can key on patient/staining artifacts instead of leukemia morphology. v2 (C-NMC, which has patient IDs) does the rigorous patient-level split; expect a lower, more honest number there."
+      ]
+    }
+  ]
+}
