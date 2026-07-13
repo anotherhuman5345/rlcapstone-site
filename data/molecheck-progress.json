@@ -65,7 +65,7 @@
         "Fine-tuning recovered it to ROC-AUC 0.920 on phone photos — as strong as v1 ever was in its own domain — with specificity back to 75%. That 0.920 is the number that describes what the app can actually do."
       ],
       "knownGaps": [
-        "v1 and v2 use different evaluation datasets, so this is not a like-for-like rematch beyond the shared label definition. A fairness audit across Fitzpatrick skin tones (the labels are already recorded during prep) is the natural next step, and the smartphone-trained model still needs to be shipped into the app in place of v1."
+        "A Fitzpatrick fairness audit (below on the page) found the model catches 94% of cancers on lighter skin but only 78% on medium skin — and the dataset holds too little darker skin (3 images, no Fitzpatrick VI) to test the group that matters most. Closing that needs more diverse data, not a modelling trick. The smartphone-trained model also still needs to be shipped into the app in place of v1."
       ]
     },
     {

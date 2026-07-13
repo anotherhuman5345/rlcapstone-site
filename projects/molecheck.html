@@ -210,8 +210,47 @@
       <a href="/projects/ecg.html">ECG</a> model tested on patients it never saw, the
       <a href="/projects/leukemia.html">leukemia</a> model tested on held-out patients: measure the
       model on what it will really face, not on the friendliest version of the problem. The prep step
-      also records each photo's Fitzpatrick skin type, which sets up a fairness audit — per-skin-tone
-      sensitivity and specificity — as the natural next step.
+      also records each photo's Fitzpatrick skin type, which makes the fairness audit below possible.
+    </p>
+
+    <h2>Fairness across skin tones</h2>
+    <p>
+      A model that catches cancer well on average can still fail unevenly — and in dermatology AI that
+      usually means worse performance on darker skin, because public datasets under-represent it.
+      Since the prep step recorded each photo's Fitzpatrick skin type, v2 can be audited for exactly
+      that. The test is deliberately strict: one global decision threshold — the app's 90%-sensitivity
+      operating point — is applied to <em>every</em> group, and the question is simply whether the
+      errors land unevenly.
+    </p>
+    <table class="facts">
+      <tr>
+        <th>Skin type (Fitzpatrick)</th><th>Images</th><th>Malignant lesions</th>
+        <th>Sensitivity (cancers caught)</th>
+      </tr>
+      <tr><td>I–II (lighter)</td><td>130</td><td>123</td><td><strong>94.3%</strong></td></tr>
+      <tr><td>III–IV (medium)</td><td>48</td><td>41</td><td><strong>78.0%</strong></td></tr>
+      <tr><td>V–VI (darker)</td><td>3</td><td>3</td><td>too few to assess</td></tr>
+    </table>
+    <ul>
+      <li><strong>There is a real gap.</strong> The model catches 94% of cancers on lighter skin but
+          only 78% on medium skin — roughly a 16-point drop in the metric that matters most for a
+          screening tool. Both groups have enough malignant cases (123 and 41) for this to be a
+          genuine signal rather than noise, and it points the same way the dermatology-AI literature
+          warns: the tool is less safe on darker skin.</li>
+      <li><strong>The most important comparison can't be made.</strong> The dataset contains just
+          three Fitzpatrick V images and no Fitzpatrick VI at all, so performance on the darkest skin
+          — the group most affected by this equity gap — simply cannot be evaluated here. That
+          absence is itself the finding.</li>
+      <li><strong>Specificity is left out by group on purpose.</strong> In this dataset skin type was
+          recorded mainly for biopsied (mostly malignant) lesions, so almost none of the benign cases
+          carry a skin-type label — too few per group to measure specificity honestly. Reporting it
+          on a handful of samples would be worse than leaving it out.</li>
+    </ul>
+    <p>
+      The honest takeaway is uncomfortable and worth stating plainly: v2 is measurably better at
+      catching cancer on lighter skin than on darker skin, and the data available cannot even test the
+      darkest skin at all. Closing that gap is not a modelling trick — it needs training and test data
+      that actually include darker skin, which is the real next step for this project.
     </p>
   </article>
 </main>
