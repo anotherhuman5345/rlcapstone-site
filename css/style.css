@@ -293,62 +293,47 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 .prob-fill.top { background: var(--accent); }
 .prob-val { width: 2.6rem; text-align: right; font-size: 0.85rem; color: var(--text-soft); }
 
-/* JADEPUFFER detector demo (js/jadepuffer-demo.js) */
-#jp-input {
-  width: 100%;
-  max-width: 46rem;
-  min-height: 12rem;
-  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
-  font-size: 0.82rem;
-  line-height: 1.5;
-  padding: 0.8rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg-soft);
-  color: var(--text);
-  resize: vertical;
-}
-.jp-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
+/* JADEPUFFER detector demo (js/jadepuffer-demo.js) — animated line-by-line scan */
+.jp-controls { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0; }
 .jp-controls .btn { margin: 0; }
 .jp-controls .ghost {
   background: transparent; color: var(--text); border: 1px solid var(--border);
-  border-radius: 8px; padding: 0.55rem 1rem; font: inherit; font-weight: 600; cursor: pointer;
+  border-radius: 8px; padding: 0.55rem 1.2rem; font: inherit; font-weight: 600; cursor: pointer;
 }
 .jp-controls .ghost:hover { border-color: var(--accent); }
-#jp-result { max-width: 46rem; margin-top: 1rem; }
+.jp-controls button:disabled { opacity: 0.5; cursor: default; }
+
+/* each scanned line, inside the shared dark .terminal box */
+.jp-line {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.15rem 0 0.15rem 0.6rem; border-left: 3px solid transparent;
+}
+.jp-line.ok { color: #6e7681; }
+.jp-line.bad { color: #f0b6b0; border-left-color: #f85149; }
+.jp-code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jp-tag {
+  flex: none; font-size: 0.72rem; font-weight: 700; color: #fff; background: #b3261e;
+  border-radius: 99px; padding: 0.1rem 0.6rem; white-space: nowrap;
+}
+
+/* final verdict card */
+.jp-verdict {
+  display: flex; align-items: center; gap: 1rem; max-width: 46rem;
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.2rem; margin-top: 1rem;
+}
 .jp-badge {
-  display: inline-flex; align-items: center; gap: 0.9rem;
-  border-radius: var(--radius); padding: 0.7rem 1.1rem; color: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 4.2rem; height: 4.2rem; border-radius: 12px; color: #fff; flex: none;
 }
-.jp-badge.crit { background: #b3261e; }
-.jp-badge.high { background: #c0392b; }
-.jp-badge.med { background: #b8860b; }
-.jp-badge.low, .jp-badge.clean { background: #0a7d3c; }
-.jp-score { font-size: 1.7rem; font-weight: 800; line-height: 1; }
-.jp-score span { font-size: 0.9rem; font-weight: 500; opacity: 0.85; }
-.jp-level { font-weight: 700; letter-spacing: 0.05em; }
-.jp-verdict { font-weight: 600; margin: 0.8rem 0 1rem; }
-.jp-iocs { list-style: none; padding: 0; margin: 0 0 1rem; }
-.jp-iocs li { padding: 0.3rem 0; }
-.jp-ioc-type { color: var(--text-soft); font-size: 0.85rem; margin-right: 0.4rem; }
-.jp-findings { display: flex; flex-direction: column; gap: 0.7rem; }
-.jp-finding {
-  border: 1px solid var(--border); border-left: 3px solid var(--accent);
-  border-radius: 10px; padding: 0.8rem 1rem; background: var(--bg-soft);
-}
-.jp-finding-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; }
-.jp-stage {
-  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
-  color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 0.1rem 0.5rem;
-}
-.jp-meta { font-size: 0.8rem; color: var(--text-soft); margin-left: auto; }
-.jp-mitre { font-size: 0.8rem; color: var(--text-soft); margin: 0.25rem 0; }
-.jp-why { font-size: 0.9rem; margin: 0.3rem 0; }
-.jp-ev {
-  display: block; font-size: 0.78rem; background: var(--bg); border: 1px solid var(--border);
-  border-radius: 6px; padding: 0.4rem 0.6rem; overflow-x: auto; white-space: pre; color: var(--text-soft);
-}
-.jp-none { color: #0a7d3c; font-weight: 600; }
+.jp-verdict.crit .jp-badge { background: #b3261e; }
+.jp-verdict.high .jp-badge { background: #c0392b; }
+.jp-verdict.med .jp-badge { background: #b8860b; }
+.jp-verdict.low .jp-badge, .jp-verdict.clean .jp-badge { background: #0a7d3c; }
+.jp-num { font-size: 1.55rem; font-weight: 800; line-height: 1; }
+.jp-lvl { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; margin-top: 0.15rem; }
+.jp-say { display: flex; flex-direction: column; gap: 0.2rem; }
+.jp-say strong { font-size: 1.05rem; }
+.jp-say span { color: var(--text-soft); font-size: 0.9rem; }
 
 /* Capstone report link */
 .report-link {

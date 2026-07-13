@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JADEPUFFER detector — RLcapstone.ai</title>
-  <meta name="description" content="A defensive tool that reads a database log and flags signs of JADEPUFFER-style agentic (AI-driven) ransomware. Runs in your browser.">
+  <meta name="description" content="A defense tool that watches a database log and flags JADEPUFFER — the first ransomware run entirely by an AI. Runs in your browser.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/jadepuffer-detect.js" defer></script>
   <script src="/js/jadepuffer-demo.js" defer></script>
@@ -26,68 +26,34 @@
   <article>
     <h1>Catching AI-driven database ransomware</h1>
     <p class="lead">
-      This is the flip side of my <a href="/projects/pentest-agent.html">AI hacking agent</a> — a
-      <strong>defense</strong> tool. It reads a database log and flags the signs of
-      <strong>JADEPUFFER</strong>, the first known case of ransomware run entirely by an AI. Paste
-      a log, hit scan, and it points out what looks dangerous.
+      The flip side of my <a href="/projects/pentest-agent.html">AI hacking agent</a> — this one
+      <strong>defends</strong>. It reads a database's activity and flags <strong>JADEPUFFER</strong>,
+      the first ransomware ever run entirely by an AI. Watch it scan a log line by line.
     </p>
 
     <div class="disclaimer">
-      <strong>Defensive and for learning.</strong> This tool only <em>reads and scores</em> a log —
-      it never runs anything and never touches a real database. It's built to help spot an attack,
-      not to do one.
+      <strong>Defensive and for learning.</strong> This only <em>reads</em> a log and scores it — it
+      never runs anything and never touches a real database.
     </div>
 
-    <h2>What is JADEPUFFER?</h2>
     <p>
-      Security researchers at Sysdig found the first ransomware attack driven start-to-finish by an
-      AI (a large language model). It breaks into a company's database, quietly makes a backdoor
-      admin account, scrambles all the settings with encryption, deletes the originals, and leaves
-      a table demanding Bitcoin. The scary-cool part: the AI adapts on the fly — when a step fails,
-      it diagnoses the error and tries a different way in seconds, and it even leaves little
-      reasoning notes in its code, like "high-ROI databases to drop." My detector looks for exactly
-      those tells.
+      Researchers at Sysdig found the first ransomware attack driven start-to-finish by an AI: it
+      breaks into a database, makes a secret admin account, encrypts everything, deletes the
+      originals, and leaves a Bitcoin ransom note. My tool watches for exactly those moves.
     </p>
 
-    <h2>Try it</h2>
-    <p>The box below is pre-loaded with a fake attack log (nothing real). Scan it, then try the
-       normal one to see it stay calm.</p>
-    <textarea id="jp-input" aria-label="Database log to scan" spellcheck="false"></textarea>
     <div class="jp-controls">
-      <button id="jp-scan" class="btn">Scan the log</button>
-      <button id="jp-load-attack" class="ghost">Load attack example</button>
-      <button id="jp-load-benign" class="ghost">Load normal example</button>
+      <button id="scan-attack" class="btn">▶ Scan an attack log</button>
+      <button id="scan-benign" class="ghost">▶ Scan a normal log</button>
     </div>
-
-    <div id="jp-result" hidden></div>
-
-    <h2>What it looks for</h2>
-    <p>
-      The tool grades a log out of 100 using the behaviors from the report, each tied to its place
-      in the attack:
-    </p>
-    <ul>
-      <li><strong>The ransom table</strong> — a table named like a ransom note, or one holding a
-          Bitcoin address, a contact email, or "your data has been encrypted."</li>
-      <li><strong>Encrypt-then-destroy</strong> — copying a table through AES encryption and then
-          dropping the original, plus turning off foreign-key checks to force mass deletes.</li>
-      <li><strong>A backdoor admin</strong> — a new admin user shoved straight into the login
-          tables.</li>
-      <li><strong>Breakout probing</strong> — using the database to read host files like
-          <code>/var/run/docker.sock</code> or list special functions.</li>
-      <li><strong>The "agentic" tell</strong> — natural-language reasoning left in the SQL, which a
-          human hacker would never write but an AI does. This is the newest and most interesting
-          signal.</li>
-      <li><strong>Known indicators</strong> — the exact addresses, emails, and table names from the
-          report.</li>
-    </ul>
+    <div id="jp-terminal" class="terminal" aria-live="polite"></div>
+    <div id="jp-verdict" class="jp-verdict" hidden></div>
 
     <h2>Why this is the v2</h2>
     <p>
-      The first version of this project was an AI that <em>attacks</em> a practice site. As AI-run
-      attacks like JADEPUFFER start showing up for real, the more useful skill is catching them — so
-      v2 turns the idea around into a detector. Next steps would be reading real database logs live
-      and scoring a whole session as it happens.
+      V1 was an AI that <em>attacks</em> a practice site. As real AI-run attacks like JADEPUFFER start
+      showing up, the more useful skill is catching them — so v2 flips the whole idea around into a
+      detector.
     </p>
   </article>
 </main>
