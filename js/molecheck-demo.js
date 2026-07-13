@@ -1,13 +1,14 @@
 /* MoleCheck web demo — all inference happens in the browser via onnxruntime-web.
    The selected image is never uploaded anywhere. Mirrors app/lib/classifier.dart:
-   plain resize to 224x224, RGB/255, softmax-if-needed, threshold 0.137. */
+   plain resize to 224x224, RGB/255, softmax-if-needed. Ships the v2 model
+   (smartphone-trained); threshold 0.368 for ~90% sensitivity on phone photos. */
 
 (function () {
   "use strict";
 
   const MODEL_URL = "/models/molecheck.onnx";
   const INPUT_SIZE = 224;
-  const THRESHOLD = 0.137; // ~90% sensitivity on held-out test set
+  const THRESHOLD = 0.368; // v2: ~90% sensitivity on the PAD-UFES phone-photo test set
   const MALIGNANT_INDEX = 1; // labels: [benign, malignant]
 
   let sessionPromise = null;

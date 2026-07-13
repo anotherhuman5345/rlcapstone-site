@@ -80,8 +80,9 @@
       <tr><th>Task</th><td>Binary classification of skin lesions (benign vs. malignant) from photographs</td></tr>
       <tr><th>Dataset</th><td>ISIC Archive — 11,720 dermatoscopic images (a superset of HAM10000)</td></tr>
       <tr><th>Model</th><td>YOLO11s-cls, transfer-learned, 224×224 input (5.4M parameters)</td></tr>
-      <tr><th>Result</th><td>ROC-AUC 0.914; 90% sensitivity at 75% specificity on a held-out test set</td></tr>
-      <tr><th>Deployment</th><td>TensorFlow Lite, on-device inference via <code>tflite_flutter</code></td></tr>
+      <tr><th>Result</th><td>v1 baseline: ROC-AUC 0.914 on dermoscopy (held-out test set)</td></tr>
+      <tr><th>Shipped now</th><td><strong>v2</strong> — retrained on smartphone photos: ROC-AUC 0.920 on phone photos, threshold 0.368 (see <a href="#v2">the v2 write-up</a> below)</td></tr>
+      <tr><th>Deployment</th><td>TensorFlow Lite in the app, ONNX in this browser demo — both on-device</td></tr>
       <tr><th>Application</th><td>Flutter — a single codebase targeting Android and iOS</td></tr>
     </table>
 
@@ -161,7 +162,7 @@
           which is precisely why the tool must never substitute for a clinician.</li>
     </ul>
 
-    <h2>v2 — closing the smartphone gap</h2>
+    <h2 id="v2">v2 — closing the smartphone gap</h2>
     <p>
       The first limitation above is the important one, and it is a real flaw: v1 was trained on
       <strong>dermatoscopic</strong> images — taken through a clinical lens pressed against the skin,

@@ -250,7 +250,7 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 13.7%;
+  left: 36.8%; /* v2 flagging threshold (0.368) */
   width: 2px;
   background: var(--text-soft);
 }
