@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How it's built — the pipeline behind every project — RLcapstone.ai</title>
+  <meta name="description" content="Every project on this site follows the same six-stage pipeline: public dataset, leakage-aware preparation, local-GPU training, honest evaluation, export, and a shippable demo. This page shows that pipeline and how each project fills it in.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">RLcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/pipeline.html" aria-current="page">Pipeline</a>
+      <a href="/cs-bioe.html">CS + BIOE</a>
+      <a href="/about.html">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <h1>How it's built, end to end</h1>
+    <p class="lead">
+      Every project on this site — whether it reads a heartbeat, a brain wave, or a blood cell —
+      is built the same way. This page shows the six-stage pipeline I follow from a raw public
+      dataset to a demo you can try, and then shows exactly how each project fills that pipeline in.
+    </p>
+
+    <h2>The pipeline every project follows</h2>
+    <div class="flow">
+      <div class="stage">
+        <span class="num">1</span>
+        <h3>Dataset</h3>
+        <p>Start from a real public research dataset (for two projects, a purpose-built
+           environment) and figure out what's actually in it.</p>
+      </div>
+      <div class="stage">
+        <span class="num">2</span>
+        <h3>Prepare &amp; split</h3>
+        <p>Clean, label, and split the data so no information leaks between what the model trains
+           on and what it's tested on.</p>
+      </div>
+      <div class="stage">
+        <span class="num">3</span>
+        <h3>Train</h3>
+        <p>Fine-tune or train a model on my own GPU — an NVIDIA RTX 5060 Ti — not a black-box
+           cloud service.</p>
+      </div>
+      <div class="stage">
+        <span class="num">4</span>
+        <h3>Evaluate honestly</h3>
+        <p>Score on data the model has never seen, and report the real number — even when it's
+           lower than the demo-day version.</p>
+      </div>
+      <div class="stage">
+        <span class="num">5</span>
+        <h3>Export</h3>
+        <p>Convert the trained model to run anywhere (ONNX, TensorFlow Lite) and verify the
+           converted model still matches the original.</p>
+      </div>
+      <div class="stage">
+        <span class="num">6</span>
+        <h3>Ship</h3>
+        <p>Wrap it in an in-browser demo and a phone app you can actually try, with the "not a
+           medical device" disclaimer built in.</p>
+      </div>
+    </div>
+
+    <div class="spine">
+      <strong>The spine of the whole thing is stage 2 and stage 4.</strong> The easiest way to get
+      a big, impressive number is to accidentally let the model see the answer in advance — the
+      same patient's heartbeats, or the same person's brain waves, landing in both the training and
+      the test set. Almost every project here is really a story about <em>refusing</em> to do that,
+      and reporting the honest number that comes out the other side.
+    </div>
+
+    <h2>The pipeline, project by project</h2>
+    <p>
+      Same six stages, filled in with what each project actually does. The <strong>Evaluate</strong>
+      column is the one that matters most — it's where the honesty lives.
+    </p>
+
+    <!-- MoleCheck -->
+    <div class="proj-pipe" style="--pa:#00796B">
+      <div class="head">
+        <h3><a href="/projects/molecheck.html">MoleCheck</a></h3>
+        <p>Skin-lesion photo &rarr; lower- or higher-risk, running entirely on the phone.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="k">1 · Dataset</span><span class="v">ISIC Archive — <strong>11,720</strong> dermatoscopy images (a HAM10000 superset), mostly benign.</span></div>
+        <div class="step"><span class="k">2 · Prepare</span><span class="v">Map each diagnosis to benign / malignant; split <strong>by lesion</strong> so no lesion appears on both sides.</span></div>
+        <div class="step"><span class="k">3 · Train</span><span class="v">YOLO11s-cls, transfer-learned for 40 epochs on the RTX 5060 Ti.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">ROC-AUC <strong>0.914</strong>; tuned to catch <strong>90%</strong> of cancers at 75% specificity.</span></div>
+        <div class="step"><span class="k">5 · Export</span><span class="v">PyTorch &rarr; ONNX &rarr; TFLite; verified to match within 0.001.</span></div>
+        <div class="step"><span class="k">6 · Ship</span><span class="v">Browser demo + Flutter Android app; photo never leaves the device.</span></div>
+      </div>
+    </div>
+
+    <!-- ECG -->
+    <div class="proj-pipe" style="--pa:#c62828">
+      <div class="head">
+        <h3><a href="/projects/ecg.html">ECG Arrhythmia Classification</a></h3>
+        <p>A single heartbeat &rarr; one of four clinical categories.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="k">1 · Dataset</span><span class="v">MIT-BIH Arrhythmia Database — 48 records, ~<strong>100,000</strong> cardiologist-labeled beats.</span></div>
+        <div class="step"><span class="k">2 · Prepare</span><span class="v">Cut a 0.7&nbsp;s window per beat, map to 4 AAMI classes; split <strong>by patient</strong>.</span></div>
+        <div class="step"><span class="k">3 · Train</span><span class="v">A compact 1D CNN (77k parameters) with class weighting for the rare beats.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">96% in validation &rarr; an honest <strong>44% macro-recall</strong> on 22 unseen patients.</span></div>
+        <div class="step"><span class="k">5 · Export</span><span class="v">ONNX (28&nbsp;KB) for the browser, TFLite for Android.</span></div>
+        <div class="step"><span class="k">6 · Ship</span><span class="v">Browser demo where you pick a real beat and watch it classified live.</span></div>
+      </div>
+    </div>
+
+    <!-- ADHD EEG -->
+    <div class="proj-pipe" style="--pa:#7c3aed">
+      <div class="head">
+        <h3><a href="/projects/adhd-eeg.html">ADHD Classification from EEG</a></h3>
+        <p>A child's 19-channel EEG &rarr; study group, split strictly by child.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="k">1 · Dataset</span><span class="v">Nasrabadi EEG — <strong>121</strong> children (ages 7–12), 19 electrodes at 128&nbsp;Hz.</span></div>
+        <div class="step"><span class="k">2 · Prepare</span><span class="v">Segment into 2-second windows; keep <strong>every child</strong> entirely on one side of the split.</span></div>
+        <div class="step"><span class="k">3 · Train</span><span class="v">A multi-channel 1D CNN that reads all 19 electrodes at once (193k parameters).</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">Scored per child: <strong>91.7%</strong> (22 of 24 unseen kids), ROC-AUC 0.965 — no collapse.</span></div>
+        <div class="step"><span class="k">5 · Export</span><span class="v">TensorFlow Lite for the app; ONNX for the browser montage.</span></div>
+        <div class="step"><span class="k">6 · Ship</span><span class="v">Browser demo drawn like a clinical montage, plus the EEG Explorer app.</span></div>
+      </div>
+    </div>
+
+    <!-- Leukemia -->
+    <div class="proj-pipe" style="--pa:#ad1457">
+      <div class="head">
+        <h3><a href="/projects/leukemia.html">Leukemia Cell Subtyping</a></h3>
+        <p>A single white blood cell &rarr; benign look-alike or a leukemia stage — and a lesson in data leakage.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="k">1 · Dataset</span><span class="v">v1: Aria 2021 smears (3,256 cells, <em>no patient IDs</em>). v2: C-NMC 2019 (<strong>with</strong> patient IDs).</span></div>
+        <div class="step"><span class="k">2 · Prepare</span><span class="v">v1 could only split randomly; v2 holds out <strong>whole patients</strong> — the honest test.</span></div>
+        <div class="step"><span class="k">3 · Train</span><span class="v">YOLO11s-cls at 224×224, transfer-learned on the blood-cell images.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">v1 hit <strong>99.8%</strong> — a red flag, not a win. v2, done right: <strong>80.8%</strong>, ROC-AUC 0.857.</span></div>
+        <div class="step"><span class="k">5 · Export</span><span class="v">ONNX + TFLite, both reproducing the original model.</span></div>
+        <div class="step"><span class="k">6 · Ship</span><span class="v">Browser "Cell Explorer" demo + Android app.</span></div>
+      </div>
+    </div>
+
+    <!-- Stock -->
+    <div class="proj-pipe" style="--pa:#1565c0">
+      <div class="head">
+        <h3><a href="/projects/stock-risk.html">Stock Volatility &amp; Sentiment</a></h3>
+        <p>Price + news &rarr; next week's volatility risk — really an experiment about whether sentiment helps.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="k">1 · Dataset</span><span class="v">Yahoo Finance prices for 59 stocks + a public 2023 news-sentiment dataset.</span></div>
+        <div class="step"><span class="k">2 · Prepare</span><span class="v">Engineer 12 features using only past data; split <strong>by time</strong> so tests follow training.</span></div>
+        <div class="step"><span class="k">3 · Train</span><span class="v">A small MLP — twice: once with sentiment, once without, to isolate its effect.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">56% with sentiment vs <strong>57% without</strong> (chance is 33%) — sentiment didn't help, and I said so.</span></div>
+        <div class="step"><span class="k">5 · Export</span><span class="v">ONNX + TFLite.</span></div>
+        <div class="step"><span class="k">6 · Ship</span><span class="v">Browser demo comparing the prediction to what the stock actually did, + Risk Explorer app.</span></div>
+      </div>
+    </div>
+
+    <!-- Pentest -->
+    <div class="proj-pipe" style="--pa:#15803d">
+      <div class="head">
+        <h3><a href="/projects/pentest-agent.html">Autonomous Pentest Agent</a></h3>
+        <p>The one that breaks the mold — a reinforcement-learning agent, not a trained classifier.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="k">1 · Environment</span><span class="v">No dataset: a purpose-built "MiniBank" Flask app with 3 planted flaws (SQLi, XSS, IDOR).</span></div>
+        <div class="step"><span class="k">2 · Frame</span><span class="v">Model it as a decision process — 16 states, 12 actions, each a <strong>real HTTP request</strong>.</span></div>
+        <div class="step"><span class="k">3 · Train</span><span class="v">Tabular Q-learning over a few hundred episodes, rewarded for finding flaws fast.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">Finds all 3 in <strong>4 actions</strong> vs ~25 for random — <strong>6× faster</strong>, every run.</span></div>
+        <div class="step"><span class="k">5 · Report</span><span class="v">Auto-generates a findings report: severity, OWASP class, and the fix for each.</span></div>
+        <div class="step"><span class="k">6 · Ship</span><span class="v">Browser replay of the trained agent, plus JADEPUFFER — a defensive detector.</span></div>
+      </div>
+    </div>
+
+    <h2>Why it's laid out this way</h2>
+    <p>
+      The point of showing the pipeline isn't just to look organized. It's that the interesting
+      part of most of these projects is <em>not</em> the headline accuracy — it's the choices in
+      stages 2 and 4 that decide whether that accuracy means anything. Splitting by patient instead
+      of by beat. Holding out whole people. Running the ablation and keeping the result even when it
+      says your idea didn't work. That's the through-line, and it's the part I'd want someone
+      looking at this to actually notice.
+    </p>
+    <p>
+      Every project's full write-up, code, and honest metrics are linked from the
+      <a href="/">projects page</a>, and the complete source is on
+      <a href="https://github.com/anotherhuman5345/rlcapstone" target="_blank" rel="noopener">GitHub</a>.
+    </p>
+
+    <div class="disclaimer">
+      <strong>Educational content only.</strong> None of these projects is a certified product or
+      medical device. See the full <a href="/disclaimer.html">disclaimer</a>.
+    </div>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="https://github.com/anotherhuman5345/rlcapstone" target="_blank" rel="noopener">GitHub</a> &middot; <a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
