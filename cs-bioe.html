@@ -36,34 +36,34 @@
   <section>
     <h2>Why I'm pursuing this major</h2>
     <p>
-      I am pursuing a degree in Computer Science + Bioengineering because it represents the ideal
-      integration of my interests in computational problem-solving and the advancement of human
-      health through technology. This interdisciplinary field allows me to combine rigorous training
-      in computer science with bioengineering principles to develop innovative solutions for complex
-      biomedical challenges.
+      The projects I've built on my own keep leading me to the same place: the hard part isn't
+      training a model, it's knowing whether to trust it. My ECG classifier taught me that the hard
+      way — it scored about 96% until I split the data by patient, and then it dropped to 44%.
+      Understanding why is what pulled me toward biomedical computing, where a wrong answer isn't a
+      leaderboard score but a missed diagnosis.
     </p>
     <p>
-      My independent projects have given me practical experience at this intersection. For instance,
-      I developed MoleCheck, an on-device skin lesion risk-awareness application using YOLO11 for
-      computer vision, and an ECG Arrhythmia classifier based on 1D convolutional neural networks.
-      These projects required me to navigate the full development lifecycle — from dataset curation
-      and model training to deployment and critical evaluation of real-world limitations, such as
-      generalization gaps in patient data. They reinforced my understanding of the technical and
-      ethical considerations involved in applying AI to medical domains, including data privacy and
-      model robustness.
+      Across six projects I've gone from a public dataset to a trained model to a working app or
+      in-browser demo — for skin lesions, heartbeats, pediatric EEG, and blood-cell images. What I
+      care about most is evaluating them honestly: leakage-aware splits, metrics chosen to fit the
+      problem (sensitivity, ROC-AUC, macro-recall rather than raw accuracy), and reporting the
+      results that didn't work — like the leukemia classifier whose 99.8% is inflated by a dataset
+      flaw I couldn't fully fix, which I document rather than hide.
     </p>
     <p>
-      A CS + Bioengineering program will equip me with advanced knowledge in areas such as biomedical
-      data analysis, computational modeling of biological systems, medical imaging, and healthcare
-      informatics. I am particularly eager to engage in research and collaborative projects that
-      translate computational techniques into meaningful clinical impact. Ultimately, I aim to
-      contribute to the development of responsible, effective technologies that improve diagnostics,
-      personalized medicine, and patient outcomes.
+      That intersection — computation applied to screening, diagnostics, and treatment — is exactly
+      what the CS + Bioengineering degree at Illinois is built around. My EEG and ECG work lines up
+      with Grainger's neural-engineering program (the first bachelor's degree in neural engineering
+      in the country), and my dermatology and blood-smear classifiers fit its bioimaging and
+      computational-and-systems-biology research. What I'm missing is the biology and
+      signal-processing foundation to make my models rest on real understanding rather than just
+      labeled data, and that is what I want to learn there.
     </p>
     <p>
-      This major aligns perfectly with my long-term goal of working at the forefront of computational
-      health technologies, and I am excited to bring my technical foundation and dedication to an
-      institution that values interdisciplinary innovation.
+      My next step is depth over breadth: retraining the leukemia classifier on a patient-labeled
+      dataset to replace that inflated 99.8% with an honest number. Longer term, I want to build
+      diagnostic tools trustworthy enough to actually help — and Illinois is where I want to learn
+      to do that rigorously.
     </p>
   </section>
 
