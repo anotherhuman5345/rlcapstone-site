@@ -152,13 +152,67 @@
 
     <h2>Limitations</h2>
     <ul>
-      <li>The model was trained on dermatoscopic images, which differ substantially from ordinary
-          smartphone photographs; real-world accuracy is expected to be lower.</li>
+      <li>The v1 model was trained on dermatoscopic images, which differ substantially from ordinary
+          smartphone photographs; real-world accuracy is expected to be lower. <strong>This is the
+          limitation v2 below measures and closes.</strong></li>
       <li>Public dermatology datasets under-represent darker skin tones, so performance is not
           guaranteed to be uniform across skin types — a recognized equity concern in dermatology AI.</li>
       <li>A 90% sensitivity target still implies roughly one in ten malignant lesions is missed,
           which is precisely why the tool must never substitute for a clinician.</li>
     </ul>
+
+    <h2>v2 — closing the smartphone gap</h2>
+    <p>
+      The first limitation above is the important one, and it is a real flaw: v1 was trained on
+      <strong>dermatoscopic</strong> images — taken through a clinical lens pressed against the skin,
+      under controlled light — but the app receives an ordinary <strong>smartphone photo</strong>.
+      The 0.914 headline was therefore measured on a kind of image the app never actually sees. v2
+      sets out to measure how much that mismatch costs, and then to fix it.
+    </p>
+    <p>
+      The test data is <strong>PAD-UFES-20</strong>: 2,298 real smartphone photos of skin lesions
+      collected in a Brazilian screening program, with a patient ID attached to every image. The
+      data is split <strong>by patient</strong> — no patient on both sides — using the same
+      benign/malignant labels as v1. Actinic keratosis is excluded, because v1's source data marked
+      it "indeterminate" and dropped it, so scoring it here would not be a fair test of the same
+      model. That leaves 969 patients and 1,564 photos.
+    </p>
+    <table class="facts">
+      <tr>
+        <th>Model</th><th>Tested on</th><th>ROC-AUC</th><th>Specificity at 90% sensitivity</th>
+      </tr>
+      <tr>
+        <td>v1 — trained on dermoscopy</td><td>its own dermoscopy test</td><td>0.914</td><td>75%</td>
+      </tr>
+      <tr>
+        <td>v1 — trained on dermoscopy</td><td>real smartphone photos</td>
+        <td><strong>0.743</strong></td><td><strong>32%</strong></td>
+      </tr>
+      <tr>
+        <td>v2 — fine-tuned on smartphone</td><td>the same smartphone photos</td>
+        <td><strong>0.920</strong></td><td><strong>75%</strong></td>
+      </tr>
+    </table>
+    <ul>
+      <li><strong>The drop is real.</strong> On smartphone photos the dermoscopy model fell from
+          ROC-AUC 0.914 to <strong>0.743</strong>, and at the app's 90%-sensitivity operating point
+          its specificity collapsed to 32% — it was falsely flagging roughly two out of three benign
+          lesions. A model trained on a clinical lens does not simply transfer to a phone camera.</li>
+      <li><strong>Fine-tuning recovers it.</strong> Retraining that same model on smartphone photos
+          brought it back to <strong>ROC-AUC 0.920</strong> — as strong on phone photos as v1 ever
+          was on dermatoscopes — with specificity restored to 75%.</li>
+      <li><strong>Why it matters.</strong> v2's 0.920 is the number that describes what the app can
+          actually do, because it is measured on the kind of image the app actually receives. The
+          higher-looking 0.914 was measured on the wrong domain.</li>
+    </ul>
+    <p>
+      This is the same idea that runs through the rest of the portfolio — the
+      <a href="/projects/ecg.html">ECG</a> model tested on patients it never saw, the
+      <a href="/projects/leukemia.html">leukemia</a> model tested on held-out patients: measure the
+      model on what it will really face, not on the friendliest version of the problem. The prep step
+      also records each photo's Fitzpatrick skin type, which sets up a fairness audit — per-skin-tone
+      sensitivity and specificity — as the natural next step.
+    </p>
   </article>
 </main>
 

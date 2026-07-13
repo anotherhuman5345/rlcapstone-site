@@ -95,7 +95,7 @@
         <div class="step"><span class="k">1 · Dataset</span><span class="v">ISIC Archive — <strong>11,720</strong> dermatoscopy images (a HAM10000 superset), mostly benign.</span></div>
         <div class="step"><span class="k">2 · Prepare</span><span class="v">Map each diagnosis to benign / malignant; split <strong>by lesion</strong> so no lesion appears on both sides.</span></div>
         <div class="step"><span class="k">3 · Train</span><span class="v">YOLO11s-cls, transfer-learned for 40 epochs on the RTX 5060 Ti.</span></div>
-        <div class="step"><span class="k">4 · Evaluate</span><span class="v">ROC-AUC <strong>0.914</strong>; tuned to catch <strong>90%</strong> of cancers at 75% specificity.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">ROC-AUC <strong>0.914</strong> on dermoscopy; v2 recovers <strong>0.920</strong> on real phone photos (up from 0.743).</span></div>
         <div class="step"><span class="k">5 · Export</span><span class="v">PyTorch &rarr; ONNX &rarr; TFLite; verified to match within 0.001.</span></div>
         <div class="step"><span class="k">6 · Ship</span><span class="v">Browser demo + Flutter Android app; photo never leaves the device.</span></div>
       </div>

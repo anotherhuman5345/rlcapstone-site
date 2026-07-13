@@ -1,33 +1,40 @@
 {
+  "columns": [
+    { "key": "data", "label": "Test set" },
+    { "key": "rocAuc", "label": "ROC-AUC" },
+    { "key": "sensitivity", "label": "Sensitivity" },
+    { "key": "specificity", "label": "Specificity (at 90% sens)" }
+  ],
   "versions": [
     {
-      "version": "v1 — YOLO11s-cls baseline",
+      "version": "v1 — dermoscopy-trained",
       "date": "July 2026",
-      "data": "ISIC Archive (HAM10000 superset), 11,720 images",
+      "data": "its own dermoscopy test set",
       "rocAuc": "0.914",
       "sensitivity": "90%",
       "specificity": "75%",
-      "valTop1": "87.8%",
-      "note": "Shipped in the app and the web demo"
-    }
-  ],
-  "changelog": [
+      "note": "The shipped model — but measured on clinical-lens images"
+    },
     {
-      "version": "v1 — YOLO11s-cls baseline",
+      "version": "v1 — on smartphone photos",
       "date": "July 2026",
-      "status": "current",
-      "changed": [
-        "First end-to-end build: YOLO11s-cls fine-tuned for 40 epochs on 11,720 ISIC dermatoscopic images.",
-        "Exported to TensorFlow Lite and wired into the Flutter app and this in-browser demo (fully on-device).",
-        "Decision threshold deliberately set to 0.137 instead of the default 0.5, to prioritise catching malignant lesions."
-      ],
-      "improved": [
-        "Established the baseline: ROC-AUC 0.914 on held-out data.",
-        "Catches 90% of malignant lesions (sensitivity) while still clearing 75% of benign ones — far better than the 'always benign' 80%-accuracy trap."
-      ]
+      "data": "PAD-UFES-20 (out of domain)",
+      "rocAuc": "0.743",
+      "sensitivity": "90%",
+      "specificity": "32%",
+      "note": "The same model on the photos the app really sees — the drop"
+    },
+    {
+      "version": "v2 — fine-tuned on smartphone",
+      "date": "July 2026",
+      "data": "PAD-UFES-20 (patient-split)",
+      "rocAuc": "0.920",
+      "sensitivity": "90%",
+      "specificity": "75%",
+      "note": "Recovered on phone photos — the honest, deployable number"
     }
   ],
-  "inProgress": "v2 — adding the PAD-UFES-20 clinical-photo dataset, so the model also learns from ordinary phone-camera images rather than dermatoscope images only.",
+  "inProgress": "",
   "epochSeries": {
     "label": "Validation accuracy by training epoch (v1)",
     "yLabel": "Validation accuracy",
@@ -43,5 +50,40 @@
       [31, 0.8581], [32, 0.8720], [33, 0.8662], [34, 0.8592], [35, 0.8586],
       [36, 0.8783], [37, 0.8725], [38, 0.8778], [39, 0.8783], [40, 0.8754]
     ]
-  }
+  },
+  "changelog": [
+    {
+      "version": "v2 — smartphone domain gap",
+      "date": "July 2026",
+      "status": "current",
+      "changed": [
+        "Tested the shipped dermoscopy-trained model on PAD-UFES-20 — 2,298 real smartphone photos of skin lesions, split by patient (969 patients, 1,564 images after excluding actinic keratosis to match v1's benign/malignant label space).",
+        "Fine-tuned that same model on the smartphone photos and re-evaluated on the identical held-out test split, so the only thing that changes between the two numbers is the training domain."
+      ],
+      "improved": [
+        "Measured the domain gap honestly: on phone photos the dermoscopy model dropped from ROC-AUC 0.914 to 0.743, its specificity collapsing to 32% — it flagged roughly two-thirds of benign lesions.",
+        "Fine-tuning recovered it to ROC-AUC 0.920 on phone photos — as strong as v1 ever was in its own domain — with specificity back to 75%. That 0.920 is the number that describes what the app can actually do."
+      ],
+      "knownGaps": [
+        "v1 and v2 use different evaluation datasets, so this is not a like-for-like rematch beyond the shared label definition. A fairness audit across Fitzpatrick skin tones (the labels are already recorded during prep) is the natural next step, and the smartphone-trained model still needs to be shipped into the app in place of v1."
+      ]
+    },
+    {
+      "version": "v1 — YOLO11s-cls baseline",
+      "date": "July 2026",
+      "status": "previous",
+      "changed": [
+        "First end-to-end build: YOLO11s-cls fine-tuned for 40 epochs on 11,720 ISIC dermatoscopic images.",
+        "Exported to TensorFlow Lite and wired into the Flutter app and this in-browser demo (fully on-device).",
+        "Decision threshold deliberately set to 0.137 instead of the default 0.5, to prioritise catching malignant lesions."
+      ],
+      "improved": [
+        "Established the baseline: ROC-AUC 0.914 on held-out data.",
+        "Catches 90% of malignant lesions (sensitivity) while still clearing 75% of benign ones — far better than the 'always benign' 80%-accuracy trap."
+      ],
+      "knownGaps": [
+        "It was trained on dermatoscopic images, not phone photos — so its 0.914 was measured on a domain the app never sees. v2 (above) quantifies that gap (a drop to 0.743) and closes it."
+      ]
+    }
+  ]
 }
