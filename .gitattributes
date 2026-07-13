@@ -1,0 +1,8 @@
+# Treat these as binary — never apply line-ending conversion.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.onnx binary
+*.tflite binary
+*.apk binary
