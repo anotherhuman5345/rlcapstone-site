@@ -293,6 +293,22 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 .prob-fill.top { background: var(--accent); }
 .prob-val { width: 2.6rem; text-align: right; font-size: 0.85rem; color: var(--text-soft); }
 
+/* Capstone report link */
+.report-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  background: var(--bg-soft);
+  font-weight: 600;
+  margin: 0.4rem 0 1.4rem;
+}
+.report-link:hover { border-color: var(--accent); text-decoration: none; }
+.report-link .doc { font-size: 1.1rem; }
+.report-link small { display: block; font-weight: 400; color: var(--text-soft); }
+
 /* Android app download card */
 .download-card {
   border: 1px solid var(--border);
