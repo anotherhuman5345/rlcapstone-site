@@ -1,4 +1,4 @@
-# rlcapstone.ai
+# RLcapstone.ai
 
 Educational website for a series of end-to-end AI capstone projects. Plain static
 HTML/CSS — no build step, no framework, no Node toolchain.
@@ -26,7 +26,7 @@ Hosted on Cloudflare Pages, connected to this repository. Build settings:
 - Build command: *(none)*
 - Output directory: `/`
 
-Custom domain: `rlcapstone.ai` (registered and DNS-managed on Cloudflare).
+Custom domain: `RLcapstone.ai` (registered and DNS-managed on Cloudflare).
 
 ## Disclaimer
 
