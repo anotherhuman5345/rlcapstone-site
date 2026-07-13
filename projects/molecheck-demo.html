@@ -40,9 +40,9 @@
         <ul>
           <li>This is an educational demonstration of image classification. It
               <strong>cannot diagnose</strong> skin cancer or any other condition.</li>
-          <li>A "lower-risk" result is <strong>not reassurance</strong>. The model misses roughly
-              1 in 10 malignant lesions even on its test set, and real-world photographs are harder
-              than the dermatoscopic images it was trained on.</li>
+          <li>A "lower-risk" result is <strong>not reassurance</strong>. The model still misses
+              roughly 1 in 10 malignant lesions even on its test set, and a real lesion can look
+              unlike anything in its training data.</li>
           <li>If a mole is new, changing, bleeding, or concerning in any way,
               <strong>consult a dermatologist</strong> — regardless of what this page reports.</li>
         </ul>
@@ -88,8 +88,8 @@
       <ul>
         <li>One mole per photo, centered and in focus, filling most of the frame.</li>
         <li>Even lighting, with no shadows across the lesion.</li>
-        <li>The model was trained on dermatoscopic images, so ordinary smartphone photos are outside
-            its training distribution — treat the score as a rough signal only.</li>
+        <li>This is the v2 model, trained on real smartphone photos of lesions — so an ordinary phone
+            photo is now in-distribution. It is still only an educational signal, not a diagnosis.</li>
       </ul>
     </section>
   </article>
