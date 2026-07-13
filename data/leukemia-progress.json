@@ -14,11 +14,20 @@
       "macroF1": "0.998",
       "split": "random (no patient IDs)",
       "note": "Near-perfect — and that's the warning sign, not the win"
+    },
+    {
+      "version": "v2 — C-NMC, binary, patient-level",
+      "date": "July 2026",
+      "data": "1,014 cells · 11 held-out patients",
+      "acc": "80.8%",
+      "macroF1": "n/a (binary)",
+      "split": "patient-disjoint (C-NMC 2019)",
+      "note": "ROC-AUC 0.857 · sensitivity 93.6% · specificity 53.4% — the honest drop from 99.8%"
     }
   ],
-  "inProgress": "v2 — the C-NMC 2019 dataset, which ships patient IDs, so cells from one patient can be kept entirely within one split. The honest accuracy there will almost certainly be lower — and more trustworthy.",
+  "inProgress": "",
   "epochSeries": {
-    "label": "Validation accuracy during training",
+    "label": "v1 validation accuracy during training (climbs to 100% — itself the leakage warning)",
     "yLabel": "Validation accuracy",
     "xLabel": "Training epoch",
     "baseline": { "value": 0.303, "label": "“always guess the biggest class” ≈ 30%" },
@@ -35,9 +44,24 @@
   },
   "changelog": [
     {
-      "version": "v1 — YOLO11s-cls, 4-class",
+      "version": "v2 — C-NMC, binary, patient-level",
       "date": "July 2026",
       "status": "current",
+      "changed": [
+        "Moved to the C-NMC 2019 dataset, which encodes a patient ID in every filename, and split the data by patient so no patient appears in both training and test (73 patients; 11 held out for the test set).",
+        "Reframed as a binary task — leukemic vs. normal cell — which is what C-NMC labels; a different, harder problem than v1's four-class subtyping, not a like-for-like rematch."
+      ],
+      "improved": [
+        "Replaced v1's leakage-inflated 99.8% with an honestly-measured result on unseen patients: 80.8% accuracy, ROC-AUC 0.857, and 93.6% sensitivity (it rarely misses a malignant cell)."
+      ],
+      "knownGaps": [
+        "Specificity is only 53.4% — the model over-calls malignant, because the training set has far more leukemic patients than normal ones. The test set is small too (11 patients, only 4 normal), so the per-patient view is noisy. Balancing the normal-patient data, or tuning the decision threshold, is the honest next step."
+      ]
+    },
+    {
+      "version": "v1 — YOLO11s-cls, 4-class",
+      "date": "July 2026",
+      "status": "previous",
       "changed": [
         "First end-to-end build: a YOLO11s-cls network fine-tuned to sort blood-smear white cells into 4 classes — Benign plus three B-cell ALL maturation stages (Early Pre-B, Pre-B, Pro-B).",
         "Reuses the MoleCheck computer-vision pipeline (transfer learning → ONNX for the browser, TFLite for the app).",
@@ -47,7 +71,7 @@
         "Learns the four cell types cleanly: 99.8% accuracy and 0.998 macro-F1 on the held-out images."
       ],
       "knownGaps": [
-        "That 99.8% is a red flag, not a triumph. This dataset ships no patient IDs, so a random split almost certainly puts the same patient's cells in both training and test — the model can key on patient/staining artifacts instead of leukemia morphology. v2 (C-NMC, which has patient IDs) does the rigorous patient-level split; expect a lower, more honest number there."
+        "That 99.8% is a red flag, not a triumph. This dataset ships no patient IDs, so a random split almost certainly puts the same patient's cells in both training and test — the model can key on patient/staining artifacts instead of leukemia morphology. v2 (above) does the rigorous patient-level split, and the honest number drops to ~81%."
       ]
     }
   ]
