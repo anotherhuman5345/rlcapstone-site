@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ECG Heartbeats — reading heartbeats with AI — RLcapstone.ai</title>
-  <meta name="description" content="An AI that sorts heartbeats into four types — and the lesson about how it looked great while training but only got 44% right on new patients.">
+  <title>ECG Arrhythmia Classification — RLcapstone.ai</title>
+  <meta name="description" content="A 1D CNN for heartbeat classification on MIT-BIH, with a rigorous inter-patient evaluation documenting the gap between controlled and real-world performance.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/progress-chart.js" defer></script>
 </head>
@@ -23,45 +23,45 @@
 
 <main class="wrap">
   <article>
-    <h1>Teaching an AI to read a heartbeat</h1>
+    <h1>Inter-Patient Generalization in ECG Arrhythmia Classification</h1>
     <p class="lead">
-      An AI that sorts single heartbeats from an ECG into four types — plus a first-hand look
-      at how a model can look amazing while training and then flop to 44% on patients it's
-      never seen.
+      A 1D convolutional neural network that classifies individual heartbeats into four clinical
+      categories — and a rigorous study of the inter-patient generalization gap, in which
+      validation performance of ~96% falls to 44% on previously unseen patients.
     </p>
 
     <div class="disclaimer">
-      <strong>Not a medical tool.</strong> This is a school project that plays with heart-signal
-      data. It doesn't diagnose anything and shouldn't be used for any health decision. Here's
-      the full <a href="/disclaimer.html">disclaimer</a>.
+      <strong>Not a medical device.</strong> This is an educational study of biomedical signal
+      classification on a public research dataset. It does not diagnose cardiac conditions and must
+      not inform any medical decision. Read the full <a href="/disclaimer.html">disclaimer</a>.
     </div>
 
     <p>
       <a class="btn" href="/projects/ecg-demo.html">Try it in your browser →</a><br>
-      <small>Sorts real heartbeats on your device — nothing is uploaded.</small>
+      <small>Classifies real heartbeats on your device — nothing is uploaded.</small>
     </p>
 
     <div class="download-card">
       <div class="download-meta">
-        <strong>Get the Android app</strong><br>
+        <strong>Android application</strong><br>
         ECG Check · Android (arm64) · ~22 MB · v1.0.0
       </div>
-      <p>Want the app version? Download the APK and install it. It runs the same on-the-phone
-         model as the browser demo — offline, nothing uploaded.</p>
+      <p>A native application running the same on-device model as the browser demonstration —
+         offline, with no data uploaded.</p>
       <a class="btn" href="https://github.com/anotherhuman5345/rlcapstone-site/releases/download/apps-v1.0.0/ecg-check-v1.0.0-arm64.apk">Download APK →</a>
       <details>
-        <summary>How to install (sideloading)</summary>
+        <summary>Installation (sideloading)</summary>
         <ol>
-          <li>On your Android phone, open this page and tap <strong>Download APK</strong>.</li>
-          <li>When it asks, let your browser “install unknown apps” (Android asks once, just to be safe).</li>
+          <li>On an Android phone, open this page and tap <strong>Download APK</strong>.</li>
+          <li>When prompted, permit your browser to install from unknown sources (Android requests this once, for safety).</li>
           <li>Open the downloaded file and tap <strong>Install</strong>.</li>
         </ol>
       </details>
       <p class="download-note">
-        School project — not a medical tool and not a diagnosis. It's not on the Play Store and
-        it's signed with a test key, so your phone will warn you before installing. That warning
-        is normal here. Built for arm64 phones (basically every recent Android). Android only for
-        now — the same code can make an iPhone version.
+        Educational application — not a medical device and not a diagnosis. Distributed outside the
+        Play Store and signed with a debug key, so Android displays a warning before installation;
+        this is expected for a sideloaded educational build. Built for arm64 devices. Android only
+        at present — an iOS build can be produced from the same codebase.
       </p>
     </div>
 
@@ -70,71 +70,74 @@
       <span>Read the full capstone report<small>PDF, opens in your browser</small></span>
     </a>
 
-    <h2>The quick version</h2>
+    <h2>Summary</h2>
     <table class="facts">
-      <tr><th>What it does</th><td>Sorts each heartbeat into 4 types (Normal, and three abnormal kinds)</td></tr>
-      <tr><th>Data</th><td>MIT-BIH database — 48 recordings, ~100,000 beats a cardiologist labeled</td></tr>
-      <tr><th>Signal</th><td>One ECG channel, chopped into one short window per beat</td></tr>
-      <tr><th>Model</th><td>A small neural network — 77,000 numbers (312 KB)</td></tr>
-      <tr><th>Honest result</th><td>On new patients: 70% right overall, but only 44% when you weigh all types fairly</td></tr>
-      <tr><th>Runs on</th><td>Right in your browser (a tiny 28 KB model)</td></tr>
+      <tr><th>Task</th><td>Classify each heartbeat into 4 AAMI classes (Normal, Supraventricular, Ventricular, Fusion)</td></tr>
+      <tr><th>Dataset</th><td>MIT-BIH Arrhythmia Database — 48 records, ~100,000 cardiologist-labeled beats</td></tr>
+      <tr><th>Signal</th><td>Single lead (MLII), 360 Hz, one 260-sample window centered on each beat</td></tr>
+      <tr><th>Model</th><td>1D CNN — four convolutional blocks, 77k parameters (312 KB)</td></tr>
+      <tr><th>Result</th><td>On unseen patients: 70% accuracy, 44% macro-recall — strong on ventricular beats, weak on supraventricular</td></tr>
+      <tr><th>Deployment</th><td>ONNX, on-device inference in the browser demonstration (28 KB model)</td></tr>
     </table>
 
-    <h2>Why "accuracy" is a trap here</h2>
+    <h2>Why accuracy alone is misleading</h2>
     <p>
-      About 90% of the beats in this data are normal. So a lazy model that calls
-      <em>every</em> beat "normal" already scores 90% — while catching exactly zero of the
-      dangerous beats that actually matter. That's the worst possible model wearing a
-      good-looking score. So instead I track how well it does across <strong>all four types
-      fairly</strong>, which only goes up when it handles the rare, important beats too.
+      Approximately 90% of the beats in this dataset are normal, so a trivial model that labels
+      <em>every</em> beat "normal" attains 90% accuracy while detecting none of the abnormal beats
+      that matter — the worst possible model presented with a favorable metric. The primary metric
+      is therefore <strong>macro-recall</strong>, the unweighted mean of the per-class recall
+      rates, which improves only when the model handles the rare, clinically important classes.
     </p>
 
-    <h2>Turning the signal into beats</h2>
+    <h2>From signal to labeled beats</h2>
     <p>
-      Each recording is a half-hour ECG with a doctor's mark on every single heartbeat. I chop
-      it into one short window per beat and sort each into four types. The most important
-      decision was how to split the data: I split it <strong>by patient, not by beat</strong>.
-      If you split by beat, the same person's heartbeats end up in both the training and testing
-      piles, and the model just learns to recognize <em>that person</em> instead of learning
-      about heart problems — which is exactly the trap the next part is about.
+      Each MIT-BIH record is a half-hour, two-channel ECG with a cardiologist's annotation on every
+      beat. The pipeline reads the standard MLII lead, extracts a 260-sample (~0.7 s) window
+      centered on each beat, normalizes it, and maps the fine-grained annotation symbols into the
+      four AAMI super-classes. The single most consequential design decision is the train/test
+      split, which is performed <strong>by patient, not by beat</strong>. A by-beat split allows a
+      single patient's heartbeats to appear in both partitions, so the model learns to recognize
+      <em>individuals</em> rather than <em>arrhythmias</em> — precisely the failure mode examined
+      next.
     </p>
 
-    <h2>Watching it learn (and the catch)</h2>
+    <h2>Training progression and the generalization gap</h2>
     <p>
-      Here's the story in one chart. While training, its fair-score climbed past 96% and looked
-      great. But that practice test shared <em>patients</em> with the training data. On the real
-      test — 22 patients it had never seen — the honest fair-score drops to <strong>44%</strong>.
-      The gap between that climbing line and the real number is the whole lesson.
+      During training, validation macro-recall climbs above 96% and appears excellent. However,
+      that validation set shares <em>patients</em> with the training data. On the true test set —
+      22 entirely unseen patients — the honest macro-recall is <strong>44%</strong>. The gap
+      between the climbing curve and that figure is the central finding of the project.
     </p>
     <div class="progress" data-src="/data/ecg-progress.json"></div>
 
-    <h2>What it learned, and what it didn't</h2>
+    <h2>Per-class analysis</h2>
     <p>
-      The breakdown is where it gets interesting. On new patients it catches
-      <strong>86% of one dangerous type (ventricular)</strong> — actually useful — but only
-      <strong>9% of another type (supraventricular)</strong>. That's not random; it's a clue.
+      The per-class breakdown is instructive. On unseen patients the model detects
+      <strong>86% of ventricular beats</strong> — genuinely useful — but only
+      <strong>9% of supraventricular beats</strong>. This is not random; it indicates what the
+      model can and cannot perceive.
     </p>
     <p>
-      A ventricular bad beat looks <em>weirdly shaped</em>, so a model that reads shapes spots it
-      easily. But a supraventricular bad beat looks almost exactly like a normal one — the thing
-      that makes it abnormal is its <em>timing</em> (it comes early). My model looks at each beat
-      all by itself with no sense of timing, so it's basically blind to the one clue it needs for
-      the type it fails on.
+      A ventricular beat has a distinctly abnormal waveform morphology, which a shape-sensitive
+      model detects readily. A supraventricular beat, in contrast, is nearly identical in shape to
+      a normal beat; its defining feature is <em>timing</em> — it occurs prematurely. Because the
+      model processes each beat in isolation, with no representation of rhythm, it is structurally
+      blind to the one feature that distinguishes the class it fails on.
     </p>
 
-    <h2>What's next (v2)</h2>
+    <h2>Next iteration (v2)</h2>
     <p>
-      The fix comes straight from the problem: give the model timing. If I feed it
-      <strong>how far apart the beats are</strong>, it could finally notice when a beat comes
-      early — the giveaway for that missed type. That's the next version, and its result will
-      show up in the table above so you can see if the idea works.
+      The remedy follows directly from the diagnosis: provide the model with timing information.
+      Adding <strong>RR-interval features</strong> — the intervals to the preceding and following
+      beats — would allow the model to perceive prematurity, the hallmark of supraventricular
+      beats. This is the planned next iteration, and its result will appear in the table above.
     </p>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

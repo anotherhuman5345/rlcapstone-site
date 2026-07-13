@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JADEPUFFER detector — RLcapstone.ai</title>
-  <meta name="description" content="A defense tool that watches a database log and flags JADEPUFFER — the first ransomware run entirely by an AI. Runs in your browser.">
+  <meta name="description" content="A defensive tool that inspects a database log and flags JADEPUFFER — the first documented case of ransomware operated entirely by an AI. Runs in your browser.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/jadepuffer-detect.js" defer></script>
   <script src="/js/jadepuffer-demo.js" defer></script>
@@ -24,22 +24,24 @@
 
 <main class="wrap">
   <article>
-    <h1>Catching AI-driven database ransomware</h1>
+    <h1>Detecting AI-driven database ransomware</h1>
     <p class="lead">
-      The flip side of my <a href="/projects/pentest-agent.html">AI hacking agent</a> — this one
-      <strong>defends</strong>. It reads a database's activity and flags <strong>JADEPUFFER</strong>,
-      the first ransomware ever run entirely by an AI. Watch it scan a log line by line.
+      The defensive counterpart to the <a href="/projects/pentest-agent.html">penetration-testing
+      agent</a>. This tool inspects a database's activity log and flags <strong>JADEPUFFER</strong>,
+      the first documented case of ransomware operated entirely by an AI. It scans a log line by line
+      in your browser.
     </p>
 
     <div class="disclaimer">
-      <strong>Defensive and for learning.</strong> This only <em>reads</em> a log and scores it — it
-      never runs anything and never touches a real database.
+      <strong>Defensive and educational.</strong> This tool only <em>reads</em> a log and scores it —
+      it never executes anything and never touches a real database.
     </div>
 
     <p>
-      Researchers at Sysdig found the first ransomware attack driven start-to-finish by an AI: it
-      breaks into a database, makes a secret admin account, encrypts everything, deletes the
-      originals, and leaves a Bitcoin ransom note. My tool watches for exactly those moves.
+      Researchers at Sysdig documented the first ransomware operation driven end-to-end by a large
+      language model: it compromises a database, inserts a covert administrator account, encrypts the
+      configuration, deletes the originals, and writes a Bitcoin ransom note. This detector looks for
+      exactly those behaviors.
     </p>
 
     <div class="jp-controls">
@@ -51,16 +53,16 @@
 
     <h2>Why this is the v2</h2>
     <p>
-      V1 was an AI that <em>attacks</em> a practice site. As real AI-run attacks like JADEPUFFER start
-      showing up, the more useful skill is catching them — so v2 flips the whole idea around into a
-      detector.
+      The first version was an agent that <em>attacks</em> a practice application. As real AI-operated
+      attacks such as JADEPUFFER begin to appear, the more valuable capability is detecting them — so
+      the second version reframes the project as a defensive tool.
     </p>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

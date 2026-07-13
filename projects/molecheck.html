@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MoleCheck — a phone app that checks moles — RLcapstone.ai</title>
-  <meta name="description" content="How I built MoleCheck: an AI that looks at a photo of a mole and guesses harmless vs. worth-checking, running right on your phone.">
+  <title>MoleCheck — Privacy-Preserving Skin-Lesion Analysis — RLcapstone.ai</title>
+  <meta name="description" content="A YOLO11 computer-vision classifier for skin-lesion analysis, deployed fully on-device with Flutter and TensorFlow Lite so no image leaves the phone.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/progress-chart.js" defer></script>
 </head>
@@ -23,47 +23,48 @@
 
 <main class="wrap">
   <article>
-    <h1>MoleCheck: a phone app that checks moles</h1>
+    <h1>MoleCheck: Privacy-Preserving Skin-Lesion Analysis</h1>
     <p class="lead">
-      A phone app that looks at a photo of a mole and guesses whether it's probably harmless
-      or worth getting checked. The whole thing runs on the phone — no server, no upload,
-      works with no internet.
+      A mobile application that classifies a photographed skin lesion as lower- or higher-risk
+      using a convolutional neural network. All inference runs on-device — no server, no upload,
+      and full offline operation — establishing a strong privacy guarantee for sensitive medical
+      imagery.
     </p>
 
     <div class="disclaimer">
-      <strong>This is not a medical tool.</strong> MoleCheck is a school project that shows off
-      image AI. It can't diagnose skin cancer or anything else. If you're worried about a mole
-      or a skin change, see a real skin doctor. Here's the full
-      <a href="/disclaimer.html">disclaimer</a>.
+      <strong>Not a medical device.</strong> MoleCheck is an educational demonstration of image
+      classification. It cannot diagnose skin cancer or any other condition and must not inform a
+      health decision. If you are concerned about a mole or a skin change, consult a dermatologist.
+      Read the full <a href="/disclaimer.html">disclaimer</a>.
     </div>
 
     <p>
       <a class="btn" href="/projects/molecheck-demo.html">Try it in your browser →</a><br>
-      <small>Runs right on your device — your photo is never uploaded.</small>
+      <small>Inference runs entirely on your device — your photo is never uploaded.</small>
     </p>
 
     <div class="download-card">
       <div class="download-meta">
-        <strong>Get the Android app</strong><br>
+        <strong>Android application</strong><br>
         MoleCheck · Android (arm64) · ~44 MB · v1.0.0
       </div>
-      <p>The full app: take or pick a photo of a mole and get an on-the-phone guess, with the
-         same tap-through disclaimer. Nothing gets uploaded.</p>
+      <p>The full application: capture or select a photo of a lesion and receive an on-device
+         estimate, with the same disclaimer acknowledgement flow. No data is uploaded.</p>
       <a class="btn" href="https://github.com/anotherhuman5345/rlcapstone-site/releases/download/apps-v1.0.0/molecheck-v1.0.0-arm64.apk">Download APK →</a>
       <details>
-        <summary>How to install (sideloading)</summary>
+        <summary>Installation (sideloading)</summary>
         <ol>
-          <li>On your Android phone, open this page and tap <strong>Download APK</strong>.</li>
-          <li>When it asks, let your browser “install unknown apps” (Android asks once, just to be safe).</li>
+          <li>On an Android phone, open this page and tap <strong>Download APK</strong>.</li>
+          <li>When prompted, permit your browser to install from unknown sources (Android requests this once, for safety).</li>
           <li>Open the downloaded file and tap <strong>Install</strong>.</li>
         </ol>
       </details>
       <p class="download-note">
-        School project — not a medical tool and not a diagnosis. It's not on the Play Store and
-        it's signed with a test key, so your phone will warn you before installing. That warning
-        is normal for a project app like this. Built for arm64 phones (basically every Android
-        phone from the last several years). Android only for now — the same code can make an
-        iPhone version.
+        Educational application — not a medical device and not a diagnosis. It is distributed
+        outside the Play Store and signed with a debug key, so Android displays a warning before
+        installation; this is expected for a sideloaded educational build. Built for arm64 devices
+        (the large majority of Android phones from recent years). Android only at present — an iOS
+        build can be produced from the same codebase.
       </p>
     </div>
 
@@ -72,93 +73,96 @@
       <span>Read the full capstone report<small>PDF, opens in your browser</small></span>
     </a>
 
-    <h2>The quick version</h2>
+    <h2>Summary</h2>
     <table class="facts">
-      <tr><th>What it does</th><td>Looks at a mole photo and guesses harmless vs. worth-checking</td></tr>
-      <tr><th>Data</th><td>ISIC Archive — 11,720 real mole photos (includes the famous HAM10000 set)</td></tr>
-      <tr><th>Model</th><td>YOLO11 image AI, fine-tuned, 224×224 photos</td></tr>
-      <tr><th>How it did</th><td>Separating score 0.914; catches 90% of the dangerous ones, clears 75% of harmless ones</td></tr>
-      <tr><th>Runs on</th><td>Right on the phone, using TensorFlow Lite</td></tr>
-      <tr><th>App</th><td>Flutter — one set of code for Android and iPhone</td></tr>
+      <tr><th>Task</th><td>Binary classification of skin lesions (benign vs. malignant) from photographs</td></tr>
+      <tr><th>Dataset</th><td>ISIC Archive — 11,720 dermatoscopic images (a superset of HAM10000)</td></tr>
+      <tr><th>Model</th><td>YOLO11s-cls, transfer-learned, 224×224 input (5.4M parameters)</td></tr>
+      <tr><th>Result</th><td>ROC-AUC 0.914; 90% sensitivity at 75% specificity on a held-out test set</td></tr>
+      <tr><th>Deployment</th><td>TensorFlow Lite, on-device inference via <code>tflite_flutter</code></td></tr>
+      <tr><th>Application</th><td>Flutter — a single codebase targeting Android and iOS</td></tr>
     </table>
 
-    <h2>Why it runs on the phone</h2>
+    <h2>Rationale for on-device inference</h2>
     <p>
-      Photos of your skin are private. The easiest way to keep them private is to never send
-      them anywhere: the AI lives inside the app, does all its thinking on the phone, and works
-      even in airplane mode. Bonus — I didn't have to build or pay for any servers.
+      Photographs of skin are sensitive personal data. The most robust way to protect them is to
+      ensure they never leave the device: the model is bundled inside the application, inference
+      executes on the phone's own hardware, and the app functions in airplane mode. This design
+      also eliminates an entire class of engineering concerns — servers, APIs, uptime, and data
+      retention policy — from the project.
     </p>
 
-    <h2>The data</h2>
+    <h2>Dataset and labeling</h2>
     <p>
-      I trained on a free collection of 11,720 real mole photos from the ISIC Archive (it
-      includes the well-known HAM10000 set). Each photo is labeled harmless or dangerous. Most
-      of them are harmless, which really shaped how I trained the model and how careful I made
-      it (more on that below).
+      Training used a public ISIC Archive collection of 11,720 dermatoscopic images (a superset of
+      the HAM10000 dataset). The diagnosis field for each image was mapped to a binary label —
+      benign or malignant — with indeterminate cases excluded. The dataset is heavily imbalanced
+      toward benign lesions, which informed both the training procedure and the selection of the
+      decision threshold.
     </p>
 
-    <h2>The model</h2>
+    <h2>Model and training</h2>
     <p>
-      The AI is called YOLO11, which already knew a lot about images before I started. I just
-      fine-tuned it on moles for a bit on my own graphics card. I went with a solid, proven
-      model instead of inventing my own, because for a project like this, something that works
-      and is easy to put on a phone beats something fancy that's a pain to ship.
+      The classifier is YOLO11s-cls, the classification variant of Ultralytics' YOLO11, fine-tuned
+      for 40 epochs on an NVIDIA RTX 5060 Ti. A pretrained backbone with a clean mobile-export path
+      was chosen deliberately: a strong, reproducible baseline that deploys reliably is more
+      valuable for this project than a bespoke architecture that is difficult to ship.
     </p>
 
-    <h2>Making it cautious on purpose</h2>
+    <h2>Threshold selection: prioritizing sensitivity</h2>
     <p>
-      A normal AI would use a 50/50 cutoff for its guesses, but that's wrong here. Missing a
-      real cancer is way worse than a false alarm — a false alarm just means someone gets a
-      mole checked that turns out fine. So I tuned it to lean toward "get it checked." At its
-      final setting it catches <strong>90% of the dangerous moles</strong> while still correctly
-      clearing about 75% of the harmless ones.
+      The default 0.5 decision threshold is inappropriate for a screening task because the two
+      error types are asymmetric: a false negative (a malignant lesion reported as benign) is far
+      more costly than a false positive (a benign lesion flagged for a dermatologist visit). The
+      final model achieves <strong>ROC-AUC 0.914</strong>, and the operating threshold was set to
+      0.137 — the point at which the model detects <strong>90% of malignant lesions</strong> while
+      still correctly clearing 75% of benign ones. The application is deliberately tuned to err
+      toward recommending a professional evaluation.
     </p>
 
-    <h2>Watching it learn</h2>
+    <h2>Training progression</h2>
     <p>
-      The chart below shows the model getting better as it trained. Here's a sneaky detail: at
-      the very start it scores about 80% — which sounds good until you realize that just
-      guessing "harmless" every time also scores 80%, because most moles are harmless. The
-      learning that actually matters is everything above that dashed line.
+      The chart tracks validation accuracy across training. A key nuance: at epoch 1 the model
+      already scores roughly 80% — which appears strong until one observes that a trivial
+      "always benign" baseline also scores 80%, because most lesions in the dataset are benign.
+      The meaningful learning is everything above that dashed baseline.
     </p>
     <div class="progress" data-src="/data/molecheck-progress.json"></div>
 
-    <h2>The annoying technical part</h2>
+    <h2>Model export and verification</h2>
     <p>
-      To get the model onto a phone I had to convert it into a phone-friendly format. The easy
-      one-step way only works on Mac and Linux, and I'm on Windows — so I had to take a longer
-      route through a couple of other formats to get there.
-    </p>
-    <p>
-      I didn't just assume it still worked after all that converting. I tested the converted
-      model against the original, and they matched almost exactly (within 0.001), so nothing
-      important got lost. There were also a couple of tiny settings in the app that had to match
-      the model perfectly, or it would quietly give nonsense answers — the kind of bug that
-      takes forever to find.
+      On-device inference required converting the PyTorch model to TensorFlow Lite. Because the
+      direct export path is unsupported on Windows, the model was routed through ONNX and converted
+      with onnx2tf. Conversion correctness was verified rather than assumed: the exported model was
+      evaluated against the original PyTorch model and reproduced its predictions to within 0.001
+      probability, with identical decisions. Several preprocessing parameters (input layout and
+      normalization) had to match exactly between model and application, or predictions would
+      silently degrade.
     </p>
 
-    <h2>The app</h2>
+    <h2>Application</h2>
     <p>
-      The Flutter app lets you take or pick a mole photo, runs the AI right there on the phone,
-      and shows the result as a heads-up — never a diagnosis. The first time you open it, you
-      have to tap through a disclaimer, and every result screen reminds you to see a real doctor.
+      The Flutter application allows the user to capture or select an image, runs the TensorFlow
+      Lite model locally, and presents the output as risk awareness rather than a diagnosis. A
+      first-run onboarding flow requires the user to acknowledge the educational disclaimer, and
+      every result screen reiterates the recommendation to consult a dermatologist.
     </p>
 
-    <h2>What it can't do</h2>
+    <h2>Limitations</h2>
     <ul>
-      <li>It learned on special close-up medical photos, which look different from normal phone
-          pics — so it'll probably do worse on real photos than the scores suggest.</li>
-      <li>The photos it learned from don't include enough darker skin tones, so it may not work
-          equally well for everyone — a real fairness problem in skin AI.</li>
-      <li>Catching 90% still means it misses about 1 in 10 dangerous moles — which is exactly
-          why it should never replace an actual doctor.</li>
+      <li>The model was trained on dermatoscopic images, which differ substantially from ordinary
+          smartphone photographs; real-world accuracy is expected to be lower.</li>
+      <li>Public dermatology datasets under-represent darker skin tones, so performance is not
+          guaranteed to be uniform across skin types — a recognized equity concern in dermatology AI.</li>
+      <li>A 90% sensitivity target still implies roughly one in ten malignant lesions is missed,
+          which is precisely why the tool must never substitute for a clinician.</li>
     </ul>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stock risk demo — RLcapstone.ai</title>
-  <meta name="description" content="Try the stock-risk AI in your browser. Pick a stock and see its Low/Medium/High guess vs. what actually happened, on your device.">
+  <title>Stock volatility demo — RLcapstone.ai</title>
+  <meta name="description" content="Try the volatility-risk classifier in your browser. Select a stock and week and compare the predicted Low/Medium/High risk with the actual outcome.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
   <script src="/js/stock-demo.js" defer></script>
@@ -24,33 +24,33 @@
 
 <main class="wrap">
   <article>
-    <h1>Stock-risk AI — live demo</h1>
+    <h1>Stock volatility-risk — live demo</h1>
     <p class="lead">
-      Pick a real stock-and-week example below. The <a href="/projects/stock-risk.html">AI</a>
-      guesses whether the <em>next</em> week was Low, Medium, or High risk — right in your browser,
-      from that moment's price and news clues.
+      Select a real stock-and-week example below. The <a href="/projects/stock-risk.html">model</a>
+      predicts whether the <em>following</em> week was Low, Medium, or High volatility — in your
+      browser, from that moment's price and sentiment features.
     </p>
 
     <section id="demo-gate">
       <div class="disclaimer">
-        <strong>A demo for learning — not financial advice.</strong>
+        <strong>Educational demonstration — not financial advice.</strong>
         <ul>
-          <li>It guesses <em>bumpiness</em> (how much a stock moves), not direction, and not what
-              you should do. It's an AI demo, nothing to trade on.</li>
-          <li>These are old examples; markets change and AI is often wrong. Nobody here is a
-              financial adviser.</li>
+          <li>This predicts <em>volatility</em> (how much a stock moves), not direction, and not any
+              course of action. It is a machine-learning demonstration, nothing to trade on.</li>
+          <li>The examples are historical; markets change and models fail. No one involved is a
+              licensed financial adviser.</li>
         </ul>
         <label class="gate-row">
           <input type="checkbox" id="gate-ack">
-          I get it — this is a demo for learning, not financial advice.
+          I understand this is an educational demonstration, not financial advice.
         </label>
-        <button id="gate-start" class="btn" disabled>Try the demo</button>
+        <button id="gate-start" class="btn" disabled>Start the demo</button>
       </div>
     </section>
 
     <section id="demo-ui" hidden>
-      <h2>Pick a stock &amp; week</h2>
-      <p>Each is a real example from the later-2023 weeks the AI never trained on.</p>
+      <h2>Select a stock &amp; week</h2>
+      <p>Each is a real example from the held-out later-2023 test period.</p>
       <div id="stock-samples"></div>
 
       <canvas id="price-canvas" class="price-screen" width="720" height="160"
@@ -64,18 +64,19 @@
         <p id="result-context" class="result-context"></p>
         <div id="result-bars"></div>
         <p class="result-reminder">
-          The interesting part of this project isn't the accuracy — it's that adding the news
-          <em>didn't help</em>. See the <a href="/projects/stock-risk.html">write-up</a> for why
-          that's the honest, and most useful, result.
+          The notable outcome of this project is not the accuracy — it is that adding news sentiment
+          <em>did not help</em>. See the <a href="/projects/stock-risk.html">write-up</a> for why
+          that is the honest, and most useful, result.
         </p>
       </div>
 
       <h2>What am I looking at?</h2>
       <p>
-        The line is the stock's price over the 21 trading days before the chosen date. From clues
-        at that point — recent gains and losses, how bumpy it's been, volume, and the week's news
-        mood — the AI guesses the coming week's risk level. "What actually happened" is the real
-        result, so you can see where it's right and where it's not.
+        The line is the stock's closing price over the 21 trading days leading up to the chosen date.
+        From features computed at that point — trailing returns, rolling volatility, volume, and the
+        week's news sentiment — the model predicts the coming week's volatility class. "What actually
+        happened" is the true outcome, so you can see where the prediction is correct and where it is
+        not.
       </p>
     </section>
   </article>
@@ -83,7 +84,7 @@
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

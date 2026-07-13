@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RLcapstone.ai — AI projects I built, start to finish</title>
-  <meta name="description" content="Six AI projects a high schooler built end to end — the real results, the mistakes, and what each one taught me.">
+  <title>RLcapstone.ai — End-to-End AI Projects in Biomedical Computing</title>
+  <meta name="description" content="A portfolio of end-to-end AI projects spanning biomedical imaging, physiological signals, and applied machine learning — with rigorous evaluation and reproducible methods.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -22,19 +22,19 @@
 
 <main class="wrap">
   <section class="hero">
-    <h1>AI projects I built, start to finish</h1>
+    <h1>End-to-End AI Projects in Biomedical Computing</h1>
     <p class="lead">
-      I'm a high school student, and these are six AI projects I built completely myself —
-      from the raw data all the way to a working app. For each one I show the real results,
-      including the parts that didn't work and the mistakes I almost made. It's all for
-      learning, not something you should actually use.
+      Each project documents the complete development lifecycle: from curated public datasets
+      through model training, rigorous evaluation, and deployment to functional applications.
+      Detailed metrics, the challenges encountered, and the key technical decisions are included
+      to support learning and reproducibility. All work is presented for educational purposes.
     </p>
   </section>
 
   <div class="disclaimer">
-    <strong>Just for learning.</strong> None of this is medical, money, or professional
-    advice, and none of these are real products you should trust. Here's the full
-    <a href="/disclaimer.html">disclaimer</a>.
+    <strong>Educational content only.</strong> Nothing on this site constitutes medical,
+    financial, or professional advice, and none of these projects are certified products or
+    devices. See the full <a href="/disclaimer.html">disclaimer</a>.
   </div>
 
   <section>
@@ -42,9 +42,9 @@
     <div class="grid">
       <a class="card" href="/projects/molecheck.html">
         <h3>MoleCheck</h3>
-        <p>A phone app that looks at a photo of a mole and guesses whether it's probably
-           harmless or worth getting checked. The AI runs right on your phone, so the photo
-           never leaves it.</p>
+        <p>Privacy-preserving skin-lesion analysis: a YOLO11 computer-vision classifier trained on
+           11,720 dermatology images, running fully on-device via Flutter and TensorFlow Lite so
+           no user data leaves the phone.</p>
         <div class="tags">
           <span class="tag">Computer vision</span>
           <span class="tag">TFLite</span>
@@ -53,9 +53,10 @@
         </div>
       </a>
       <a class="card" href="/projects/ecg.html">
-        <h3>ECG Heartbeats</h3>
-        <p>An AI that sorts heartbeats into four types — and the story of how it looked
-           amazing while training but only got 44% right on patients it had never seen.</p>
+        <h3>ECG Arrhythmia Classification</h3>
+        <p>A 1D convolutional neural network for heartbeat classification on the MIT-BIH database,
+           with a rigorous inter-patient evaluation documenting the drop from 96% in controlled
+           settings to 44% on unseen patients.</p>
         <div class="tags">
           <span class="tag">Signal processing</span>
           <span class="tag">1D CNN</span>
@@ -64,9 +65,10 @@
         </div>
       </a>
       <a class="card" href="/projects/adhd-eeg.html">
-        <h3>ADHD from Brain Waves</h3>
-        <p>An AI that reads kids' brain waves and tells apart two research groups. I tested it
-           the honest way (splitting by kid), so the 92% score is actually real.</p>
+        <h3>ADHD Classification from EEG</h3>
+        <p>A multi-channel 1D CNN classifying pediatric EEG by study group, evaluated with a strict
+           subject-level split to measure genuine generalization — 92% accuracy on unseen
+           subjects.</p>
         <div class="tags">
           <span class="tag">EEG</span>
           <span class="tag">1D CNN</span>
@@ -75,9 +77,10 @@
         </div>
       </a>
       <a class="card" href="/projects/leukemia.html">
-        <h3>Leukemia Blood Cells</h3>
-        <p>An AI that sorts leukemia cells from blood photos and scores 99.8% — and why that
-           almost-perfect number is actually the sketchiest one on this whole site.</p>
+        <h3>Leukemia Cell Subtyping</h3>
+        <p>A computer-vision classifier subtyping leukemic blood cells across four classes at
+           99.8%, with a critical analysis of why that figure reflects a dataset limitation rather
+           than true clinical performance.</p>
         <div class="tags">
           <span class="tag">Computer vision</span>
           <span class="tag">YOLO</span>
@@ -86,9 +89,10 @@
         </div>
       </a>
       <a class="card" href="/projects/stock-risk.html">
-        <h3>Stock Risk + News</h3>
-        <p>An AI that guesses whether a stock will be calm or bumpy next week from its price
-           and the news — plus my surprising finding that the news part didn't help at all.</p>
+        <h3>Stock Volatility &amp; Sentiment</h3>
+        <p>A neural network predicting next-week volatility risk from price and news-sentiment
+           features, including a controlled ablation demonstrating that the sentiment signal did
+           not improve performance.</p>
         <div class="tags">
           <span class="tag">Fintech</span>
           <span class="tag">Time series</span>
@@ -97,9 +101,10 @@
         </div>
       </a>
       <a class="card" href="/projects/pentest-agent.html">
-        <h3>AI Hacking Agent</h3>
-        <p>An AI that learns, by trial and error, to find security holes in a practice website —
-           and beats random guessing six to one. All safe and practice-only.</p>
+        <h3>Autonomous Pentest Agent</h3>
+        <p>A reinforcement-learning agent that learns efficient vulnerability-discovery strategies
+           against a sandboxed web application, outperforming a random baseline sixfold — with a
+           defensive extension for detecting agentic ransomware.</p>
         <div class="tags">
           <span class="tag">Reinforcement learning</span>
           <span class="tag">Security</span>
@@ -109,11 +114,24 @@
       </a>
     </div>
   </section>
+
+  <section>
+    <h2>Relevance to Computer Science + Bioengineering</h2>
+    <p>
+      These projects directly support the goals of an interdisciplinary Computer Science and
+      Bioengineering education. Collectively they demonstrate applied skills in biomedical data
+      analysis, the computational modeling of physiological signals (ECG and EEG), medical image
+      classification, and the development of privacy-aware, on-device diagnostic tools. The work
+      reflects readiness for advanced coursework in medical imaging, bioinformatics, and healthcare
+      informatics, alongside a consistent commitment to rigorous validation and responsible
+      innovation in health technologies.
+    </p>
+  </section>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>
