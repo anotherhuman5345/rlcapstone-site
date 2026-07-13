@@ -618,3 +618,68 @@ footer.site {
   font-size: 0.9rem;
 }
 footer.site .wrap { display: flex; flex-wrap: wrap; gap: 0.4rem 2rem; justify-content: space-between; }
+
+/* How it's built — pipeline page (pipeline.html) */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.6rem;
+  margin: 1.6rem 0 1.2rem;
+  max-width: none;
+}
+.flow .stage {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  padding: 0.9rem 0.85rem 1rem;
+}
+.flow .stage .num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.6rem; height: 1.6rem; border-radius: 99px;
+  background: var(--accent); color: #fff; font-weight: 700; font-size: 0.85rem;
+}
+.flow .stage h3 { margin: 0.55rem 0 0.3rem; font-size: 0.98rem; }
+.flow .stage p { margin: 0; font-size: 0.85rem; color: var(--text-soft); line-height: 1.5; max-width: none; }
+@media (max-width: 900px) { .flow { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .flow { grid-template-columns: 1fr 1fr; } }
+
+.spine {
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin: 1.4rem 0 2.4rem;
+  max-width: none;
+  font-size: 0.95rem;
+}
+.spine strong { color: var(--text); }
+
+.proj-pipe { margin: 1.5rem 0 2.2rem; }
+.proj-pipe .head {
+  border-left: 4px solid var(--pa);
+  padding: 0.1rem 0 0.1rem 0.7rem;
+  margin-bottom: 0.8rem;
+}
+.proj-pipe .head h3 { margin: 0; font-size: 1.15rem; }
+.proj-pipe .head h3 a { color: var(--pa); }
+.proj-pipe .head p { margin: 0.15rem 0 0; font-size: 0.9rem; color: var(--text-soft); max-width: none; }
+.proj-pipe .steps {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem;
+}
+.proj-pipe .step {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--pa);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  padding: 0.6rem 0.7rem 0.7rem;
+  font-size: 0.83rem;
+  line-height: 1.45;
+}
+.proj-pipe .step .k {
+  display: block; font-size: 0.66rem; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--text-soft); font-weight: 700; margin-bottom: 0.3rem;
+}
+.proj-pipe .step .v { color: var(--text); }
+.proj-pipe .step .v strong { font-weight: 700; }
+@media (max-width: 900px) { .proj-pipe .steps { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .proj-pipe .steps { grid-template-columns: 1fr; } }
