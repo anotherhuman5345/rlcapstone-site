@@ -57,7 +57,7 @@ endobj
 endobj
 9 0 obj
 <<
-/Author (RL) /CreationDate (D:20260712221250-05'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260712221250-05'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+/Author (Arel) /CreationDate (D:20260713114023-05'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260713114023-05'00') /Producer (ReportLab PDF Library - \(opensource\)) 
   /Subject (\(unspecified\)) /Title (ECG Arrhythmia Classification \204 Capstone Report) /Trapped /False
 >>
 endobj
@@ -68,10 +68,10 @@ endobj
 endobj
 11 0 obj
 <<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 762
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 764
 >>
 stream
-Gat$ubAQ&g&A7ljp(AK"C.:ioUi];Z,V>*F)sEXs/(:q)=`Pq56$hb(GH$?2,ur@HJ7rV'1HT(j7.eIdRI:,>AoMpIJ/kjPTO\\@)n=*-%uVToKL!]0n=GL)"0YM0#mE;1=-=jP\uHd@?=$mS\T?LQ^YKV//kXSL`Oa-M0Bro437i+Xp5Q7+$b(:d49#erHcY'!JM4UW<3]!9kJjtiq,#+*nY5.b_&nSW6r7?p)(3.:,;L!^jC,m3<`1.rN)cUjnXNL85^(&kXuM5T3Kf0R,asQHV/Wkhc$2Xr-0*LY:RQ*/9N`P`;i:<@*L4*qP?BY5+3@oDW=!0l""fnc813s;RCMEH%Yt3'*X+1$A/]_U+T52`l]tlaVl`'dgWDQU(-d0=M@)OOj8=+:4Nqc5[%$"gM`FNFO.?3kHP%eR2UE(ICt939:*`erBpBs=#,CLu])(:Grg!AHe+=O=(sa<@o__MG6F(5iU&fPpfo+g&Y&hBSOOr$V0&*UC;aP&"f,ajqG!Ec\8W8$.__rdgW]1]nQ;Y/d=Q-Bc@9p@&;N$E#.tNA[S(^`aLN*X-rD`%/$`7*Y!EW)qh)<XTG4c"2RO6b8O*n5TI'T1:A7P>L/!&F/hnlQrS\Tf.X$4&&DI'lFWH*>*b8''"*0j]sZ>>'\8pLK3_V%:B#g+N.X2\=he'Dm`Z[*g-.`K1!:5ERY4\S?<-5'b6#8>CI^qOl.X`,@)#/TI%HJujFkQ%42EM`P>!.VZ%QBNHoHs$:NNnJG:~>endstream
+Gat$ubAQ&g&A7ljp(AK"C.<T,P`BIHU]kdP"!)GkA_L`GM[i098.Y[m0(j1XUafOe&-_H:AnN@r$3"X_/U%1:$TPbm5T(8OTRmFtDW%g&4=l4X('?RZ_fN],+1sf9-5Ot%]+cLmhGrt$o^^u[cFr+!L$d0#\>XMufX3;RYc`^B`Y;\AI1ok&i7@7c&+?1$LZ3_%pnFh1,tXnWDL?e0%Wt1o(H((]r`Gs/KT[fR)"N(o&NT;)%h#+r'T)scWQZVPSl9A1Li3"@'a*;E8$KLm9G*lZ(bSjm)3;k++:S/?.FTl-.8*8^OcoB/*L4*qZWT%]*QcZ]jt`)c%_,n/':"D5AC@%W3ZsDe=;&0?Jgedi!U5q3(r-!+3)(FOg=4..b5UbXZSd+gg5#,d#FOI,BfEpYj`?pp4`^BHmj523a?YZYYt7HEFs9d4M3;""C,!6eX*=<8%'SHqS>OUTVs+V1Nn=;!c38J/,T2]AS\5:Lc#jNg'9oX`\>kO8eeQ]3p"^3$Sc8_!Mdhp'(oBT]<q]p&/Z*>SZ/X6j@-q-YWO>:D.R;t:`d+Z]0J3C8T1_%f6.[X6i%6:d[Xfd4X!_k%S7l@roZ;ROa_'h%NS[1/4Do#HKjVAQJHH*XI;j-&gA.;B962)r,[lNHQ!3LRC&mc2E<<D^RtF-4eJ#<4@gkQck;MC(4e<:Se%ba>o41TZRZ6T,,be-XWcEKPLX*T@iqIuO.+nHuLY@#P!H\lKn!I)Q*P`c3ABW)^JH.6M"-h8U2?~>endstream
 endobj
 12 0 obj
 <<
@@ -99,14 +99,14 @@ xref
 0000000836 00000 n 
 0000001031 00000 n 
 0000001100 00000 n 
-0000001406 00000 n 
-0000001478 00000 n 
-0000002331 00000 n 
-0000004814 00000 n 
+0000001408 00000 n 
+0000001480 00000 n 
+0000002335 00000 n 
+0000004818 00000 n 
 trailer
 <<
 /ID 
-[<f8117af8835ac13f3e09775bc144b6ce><f8117af8835ac13f3e09775bc144b6ce>]
+[<8dd5936b4c2264213d24d734e7bf7db2><8dd5936b4c2264213d24d734e7bf7db2>]
 % ReportLab generated PDF document -- digest (opensource)
 
 /Info 9 0 R
@@ -114,5 +114,5 @@ trailer
 /Size 14
 >>
 startxref
-7150
+7154
 %%EOF
