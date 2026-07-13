@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS + BIOE — RLcapstone.ai</title>
+  <meta name="description" content="How this portfolio of end-to-end AI projects maps to an interdisciplinary Computer Science and Bioengineering education — with a project-by-project breakdown of the CS and biomedical skills each one demonstrates.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">RLcapstone<span>.ai</span></a>
+    <nav class="site">
+      <a href="/">Projects</a>
+      <a href="/cs-bioe.html" aria-current="page">CS + BIOE</a>
+      <a href="/about.html">About</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Computer Science + Bioengineering</h1>
+    <p class="lead">
+      This portfolio sits at the intersection of computer science and bioengineering. Each project
+      pairs a concrete computational method — deep learning, signal processing, reinforcement
+      learning — with a biomedical or health-technology problem, and each is carried through the
+      full lifecycle: dataset, model, rigorous evaluation, and a working application. The pages
+      below map that work to the two disciplines, honestly, including where the biomedical link is
+      indirect.
+    </p>
+  </section>
+
+  <section>
+    <h2>How the portfolio maps to the two disciplines</h2>
+    <p>
+      The <strong>computer science</strong> throughline is applied machine learning done carefully:
+      convolutional and multilayer networks, reinforcement learning, leakage-aware evaluation, and
+      the engineering needed to ship a model to a phone or a browser. The
+      <strong>bioengineering</strong> throughline is the domain grounding: physiological signals
+      (ECG, EEG), medical imaging (dermatology, hematology), and a clinical evaluation mindset that
+      favors sensitivity, specificity, and ROC-AUC over raw accuracy. The recurring theme across
+      both is responsible, honest health technology — privacy-preserving inference, clearly stated
+      limitations, and explicitly non-diagnostic framing.
+    </p>
+  </section>
+
+  <section>
+    <h2>Project by project</h2>
+    <div class="grid">
+      <a class="card" href="/projects/molecheck.html">
+        <h3>MoleCheck</h3>
+        <p><strong>CS:</strong> transfer-learned CNN (YOLO11), model export to TensorFlow Lite, and
+           on-device mobile engineering in Flutter.<br>
+           <strong>BIOE:</strong> dermatological image analysis for skin-cancer screening, tuned for
+           sensitivity and built to preserve the privacy of sensitive medical imagery.</p>
+        <div class="tags">
+          <span class="tag">Medical imaging</span>
+          <span class="tag">Computer vision</span>
+          <span class="tag">On-device AI</span>
+        </div>
+      </a>
+      <a class="card" href="/projects/ecg.html">
+        <h3>ECG Arrhythmia Classification</h3>
+        <p><strong>CS:</strong> 1D convolutional network, signal-window preprocessing, and a
+           leakage-aware inter-patient evaluation protocol.<br>
+           <strong>BIOE:</strong> cardiac electrophysiology — classifying heartbeats and confronting
+           the inter-patient generalization gap central to real ECG diagnostics.</p>
+        <div class="tags">
+          <span class="tag">Biosignals</span>
+          <span class="tag">Cardiology</span>
+          <span class="tag">1D CNN</span>
+        </div>
+      </a>
+      <a class="card" href="/projects/adhd-eeg.html">
+        <h3>ADHD Classification from EEG</h3>
+        <p><strong>CS:</strong> multi-channel 1D CNN with a strict subject-level split and
+           subject-averaged evaluation.<br>
+           <strong>BIOE:</strong> neural signal analysis on 19-channel EEG, applying research
+           methodology that separates a genuine group signal from individual memorization.</p>
+        <div class="tags">
+          <span class="tag">Neural signals</span>
+          <span class="tag">EEG</span>
+          <span class="tag">Generalization</span>
+        </div>
+      </a>
+      <a class="card" href="/projects/leukemia.html">
+        <h3>Leukemia Cell Subtyping</h3>
+        <p><strong>CS:</strong> transfer-learned image classifier and a critical analysis of
+           dataset leakage behind an apparently perfect score.<br>
+           <strong>BIOE:</strong> hematology and blood-smear microscopy — distinguishing leukemic
+           blast stages from benign look-alikes, with clinical validation caveats.</p>
+        <div class="tags">
+          <span class="tag">Pathology</span>
+          <span class="tag">Microscopy</span>
+          <span class="tag">Computer vision</span>
+        </div>
+      </a>
+      <a class="card" href="/projects/stock-risk.html">
+        <h3>Stock Volatility &amp; Sentiment</h3>
+        <p><strong>CS:</strong> compact neural network, feature engineering, and a controlled
+           ablation with time-ordered splits.<br>
+           <strong>BIOE:</strong> not a biomedical project — included for the experimental-design
+           and statistical rigor (reporting a negative result) that transfer directly to
+           biostatistics and clinical study design.</p>
+        <div class="tags">
+          <span class="tag">Experimental design</span>
+          <span class="tag">Time series</span>
+          <span class="tag">Ablation study</span>
+        </div>
+      </a>
+      <a class="card" href="/projects/pentest-agent.html">
+        <h3>Autonomous Pentest Agent</h3>
+        <p><strong>CS:</strong> reinforcement learning (Q-learning over a Markov decision process)
+           and security engineering against a sandboxed application.<br>
+           <strong>BIOE:</strong> indirect but relevant — the security of health information systems
+           and patient data, extended by a defensive detector for AI-driven ransomware.</p>
+        <div class="tags">
+          <span class="tag">Reinforcement learning</span>
+          <span class="tag">Health-data security</span>
+          <span class="tag">Q-learning</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills across the two disciplines</h2>
+    <div class="grid">
+      <div class="card coming">
+        <h3>Computer Science</h3>
+        <ul>
+          <li>Deep learning: 1D and 2D CNNs, MLPs, and reinforcement learning (Q-learning)</li>
+          <li>Rigorous ML methodology: leakage-aware and subject-level splits, ablation studies</li>
+          <li>Model deployment: PyTorch → ONNX / TensorFlow Lite, on-device and in-browser inference</li>
+          <li>Full-stack delivery: Flutter mobile apps, static web demos, automated PDF reporting</li>
+          <li>Software and security engineering: Flask, HTTP tooling, agent design, OWASP Top 10</li>
+        </ul>
+      </div>
+      <div class="card coming">
+        <h3>Bioengineering</h3>
+        <ul>
+          <li>Physiological signal processing: ECG (cardiac) and EEG (neural)</li>
+          <li>Medical imaging: dermatoscopy and blood-smear microscopy</li>
+          <li>Clinical evaluation: sensitivity, specificity, ROC-AUC, and macro-recall over accuracy</li>
+          <li>Responsible health AI: privacy-preserving inference and honest, non-diagnostic framing</li>
+          <li>Domain grounding: pathology look-alikes, inter-patient variability, and dataset equity</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="disclaimer">
+    <strong>Educational content only.</strong> These projects are learning exercises, not certified
+    products or medical devices, and nothing here constitutes medical, financial, or professional
+    advice. See the full <a href="/disclaimer.html">disclaimer</a>.
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
+    <span><a href="/disclaimer.html">Disclaimer</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
