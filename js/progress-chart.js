@@ -11,6 +11,13 @@
 
   const fmtPct = (v) => (v * 100).toFixed(1) + "%";
 
+  // A "nice" round step near target (1/2/5 x 10^n), for raw-number axes.
+  function niceStep(target) {
+    const p = Math.pow(10, Math.floor(Math.log(target) / Math.LN10));
+    const candidates = [p, 2 * p, 5 * p, 10 * p];
+    return candidates.find((c) => c >= target) || 10 * p;
+  }
+
   function el(tag, attrs, parent) {
     const ns = "http://www.w3.org/2000/svg";
     const node = document.createElementNS(ns, tag);
@@ -61,12 +68,21 @@
 
   function renderChart(container, series) {
     const pts = series.points;
+    const raw = series.valueFormat === "raw";
+    const fmtY = raw ? (v) => String(Math.round(v * 10) / 10) : fmtPct;
     const xMin = pts[0][0], xMax = pts[pts.length - 1][0];
-    let yMin = Math.min(...pts.map((p) => p[1]), series.baseline ? series.baseline.value : 1);
-    let yMax = Math.max(...pts.map((p) => p[1]));
-    const span = yMax - yMin;
-    yMin = Math.floor((yMin - span * 0.1) * 50) / 50; // snap to 2% steps
-    yMax = Math.ceil((yMax + span * 0.1) * 50) / 50;
+    let yMin = Math.min(...pts.map((p) => p[1]), series.baseline ? series.baseline.value : (raw ? Infinity : 1));
+    let yMax = Math.max(...pts.map((p) => p[1]), series.baseline ? series.baseline.value : -Infinity);
+    const span = (yMax - yMin) || 1;
+    const yStep = raw ? niceStep(span * 1.2 / 5) : 0.02;
+    if (raw) {
+      yMin = Math.floor((yMin - span * 0.1) / yStep) * yStep;
+      yMax = Math.ceil((yMax + span * 0.1) / yStep) * yStep;
+    } else {
+      yMin = Math.floor((yMin - span * 0.1) * 50) / 50;
+      yMax = Math.ceil((yMax + span * 0.1) * 50) / 50;
+    }
+    const xStep = niceStep((xMax - xMin) / 6);
 
     const px = (x) => PAD.left + ((x - xMin) / (xMax - xMin)) * (W - PAD.left - PAD.right);
     const py = (y) => PAD.top + (1 - (y - yMin) / (yMax - yMin)) * (H - PAD.top - PAD.bottom);
@@ -80,15 +96,15 @@
     const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
       "aria-label": series.label });
 
-    // recessive horizontal grid + y tick labels, every 2%
-    for (let y = yMin; y <= yMax + 1e-9; y += 0.02) {
+    // recessive horizontal grid + y tick labels
+    for (let y = yMin; y <= yMax + yStep * 1e-3; y += yStep) {
       el("line", { x1: PAD.left, x2: W - PAD.right, y1: py(y), y2: py(y),
         class: "grid" }, svg);
       el("text", { x: PAD.left - 8, y: py(y) + 4, "text-anchor": "end",
-        class: "tick" }, svg).textContent = Math.round(y * 100) + "%";
+        class: "tick" }, svg).textContent = raw ? fmtY(y) : Math.round(y * 100) + "%";
     }
-    // x ticks every 10 epochs
-    for (let x = 10; x <= xMax; x += 10) {
+    // x ticks
+    for (let x = Math.ceil(xMin / xStep) * xStep; x <= xMax; x += xStep) {
       el("text", { x: px(x), y: H - PAD.bottom + 20, "text-anchor": "middle",
         class: "tick" }, svg).textContent = x;
     }
@@ -113,10 +129,10 @@
     const best = pts.reduce((a, b) => (b[1] > a[1] ? b : a));
     el("circle", { cx: px(last[0]), cy: py(last[1]), r: 4, class: "series-dot" }, svg);
     el("text", { x: px(last[0]) + 8, y: py(last[1]) + 4, class: "point-label" },
-      svg).textContent = fmtPct(last[1]);
+      svg).textContent = fmtY(last[1]);
     if (best[0] !== last[0]) {
       el("text", { x: px(best[0]), y: py(best[1]) - 8, "text-anchor": "middle",
-        class: "point-label" }, svg).textContent = "best " + fmtPct(best[1]);
+        class: "point-label" }, svg).textContent = "best " + fmtY(best[1]);
     }
 
     // hover layer: crosshair + dot + tooltip
@@ -144,7 +160,7 @@
       hoverDot.setAttribute("cy", py(p[1]));
       hoverDot.setAttribute("visibility", "visible");
       tip.hidden = false;
-      tip.textContent = "Epoch " + p[0] + ": " + fmtPct(p[1]);
+      tip.textContent = (series.xName || "Epoch") + " " + p[0] + ": " + fmtY(p[1]);
       tip.style.left = (px(p[0]) / W) * 100 + "%";
       tip.style.top = (py(p[1]) / H) * 100 + "%";
     });
@@ -173,7 +189,7 @@
     const tb = document.createElement("tbody");
     for (const p of pts) {
       const tr = document.createElement("tr");
-      tr.innerHTML = "<td>" + p[0] + "</td><td>" + fmtPct(p[1]) + "</td>";
+      tr.innerHTML = "<td>" + p[0] + "</td><td>" + fmtY(p[1]) + "</td>";
       tb.appendChild(tr);
     }
     t.appendChild(tb);
