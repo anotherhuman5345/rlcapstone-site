@@ -444,6 +444,70 @@ table.facts th { background: var(--bg-soft); white-space: nowrap; }
 .result-truth { font-size: 0.95rem; color: var(--text-soft); margin: 0 0 0.4rem; }
 .result-context { font-size: 0.9rem; color: var(--text-soft); margin: 0 0 0.8rem; }
 
+/* Pentest agent demo (js/pentest-demo.js) */
+#action-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.4rem;
+  max-width: 46rem;
+}
+.act {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-soft);
+  background: var(--bg-soft);
+  opacity: 0.55;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+.act.used { opacity: 1; border-color: var(--accent); color: var(--text); font-weight: 600; }
+.act-sqli.used, .act-xss.used, .act-idor.used { border-color: #c0392b; }
+.act-recon.used { border-color: #2563eb; }
+.terminal {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  background: #0d1117;
+  color: #c9d1d9;
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  max-width: 46rem;
+  min-height: 8rem;
+  max-height: 22rem;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.term-line { }
+.term-info { color: #58a6ff; }
+.term-cmd { color: #e6edf3; font-weight: 600; margin-top: 0.3rem; }
+.term-resp { color: #8b949e; }
+.term-found { color: #3fb950; font-weight: 700; }
+.term-dim { color: #6e7681; }
+.pentest-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.2rem 0;
+  max-width: 46rem;
+}
+.pentest-summary .stat {
+  flex: 1;
+  min-width: 9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-soft);
+}
+.pentest-summary .stat.agent { border-color: var(--accent); }
+.pentest-summary .stat h4 { margin: 0 0 0.5rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-soft); }
+.pentest-summary .stat .big { font-size: 1.5rem; font-weight: 700; }
+.pentest-summary .stat .sub { font-size: 0.85rem; color: var(--text-soft); }
+
 /* Progress chart (js/progress-chart.js) */
 .progress-note { color: var(--text-soft); font-size: 0.95rem; }
 figure.chart {
