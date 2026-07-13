@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About — RLcapstone.ai</title>
-  <meta name="description" content="Why this site exists: learning AI by building complete, working systems and documenting everything.">
+  <meta name="description" content="Who I am and why I built these AI projects — learning by building the whole thing and being honest about how it went.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -24,37 +24,36 @@
   <article>
     <h1>About this site</h1>
     <p>
-      RLcapstone.ai is a collection of capstone-style AI projects, each built completely:
-      dataset preparation, model training on local GPU hardware, evaluation with honest
-      metrics, and deployment into a real working application.
+      Hi — I'm a high school student who's really into AI, and this is where I keep the
+      projects I've built. For each one I did the whole thing myself: found the data, trained
+      the AI on my own computer, tested it honestly, and turned it into an app or demo you can
+      actually try.
     </p>
     <p>
-      The write-ups aim to be the article I wished existed when starting each project.
-      That means including the parts tutorials usually skip — export toolchains that only
-      work on certain platforms, dependency versions that silently break builds, evaluation
-      thresholds chosen for a reason, and results that are good but not magic.
+      I tried to write these up the way I wish tutorials had explained things to me — including
+      the annoying parts most guides skip. Stuff that only works on certain computers, tiny
+      version mismatches that quietly break everything, why I picked the settings I did, and
+      results that are decent but definitely not magic.
     </p>
 
-    <h2>How projects are built</h2>
+    <h2>How I build each one</h2>
     <ul>
-      <li><strong>Training</strong> — PyTorch on a local NVIDIA GPU, using public research datasets.</li>
-      <li><strong>Deployment</strong> — on-device inference wherever possible (TensorFlow Lite,
-          ONNX Runtime), so demos work offline and no user data leaves the device.</li>
-      <li><strong>Apps</strong> — Flutter for mobile, plain web for demos, one codebase per project.</li>
-      <li><strong>Honesty</strong> — every project page reports real metrics on held-out data and
-          states its limitations plainly.</li>
+      <li><strong>Training</strong> — I train the models with PyTorch on my own graphics card, using free public datasets.</li>
+      <li><strong>Running them</strong> — wherever I can, the AI runs right on your device (phone or browser), so the demos work offline and nothing you do gets uploaded.</li>
+      <li><strong>Apps</strong> — Flutter for the phone apps, plain web pages for the demos.</li>
+      <li><strong>Being honest</strong> — every project shows its real scores on data it never trained on, and admits what it can't do.</li>
     </ul>
 
     <h2>Contact</h2>
     <p>
-      Questions or corrections are welcome — reach out via the project repositories on GitHub.
+      Questions or corrections? Feel free to reach out through the project code on GitHub.
     </p>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
+    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

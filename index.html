@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RL Capstone — hands-on AI projects, explained</title>
-  <meta name="description" content="Educational write-ups of end-to-end AI projects: training, on-device deployment, and the lessons learned along the way.">
+  <title>RLcapstone.ai — AI projects I built, start to finish</title>
+  <meta name="description" content="Six AI projects a high schooler built end to end — the real results, the mistakes, and what each one taught me.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -22,18 +22,19 @@
 
 <main class="wrap">
   <section class="hero">
-    <h1>Hands-on AI projects, built end to end</h1>
+    <h1>AI projects I built, start to finish</h1>
     <p class="lead">
-      Each project here goes from public dataset to trained model to a working app —
-      with the real numbers, the dead ends, and the export gotchas included.
-      Everything is educational: built to learn and to teach, not to be a product.
+      I'm a high school student, and these are six AI projects I built completely myself —
+      from the raw data all the way to a working app. For each one I show the real results,
+      including the parts that didn't work and the mistakes I almost made. It's all for
+      learning, not something you should actually use.
     </p>
   </section>
 
   <div class="disclaimer">
-    <strong>Educational content only.</strong> Nothing on this site is medical, financial,
-    or professional advice, and none of these projects are certified products or devices.
-    See the full <a href="/disclaimer.html">disclaimer</a>.
+    <strong>Just for learning.</strong> None of this is medical, money, or professional
+    advice, and none of these are real products you should trust. Here's the full
+    <a href="/disclaimer.html">disclaimer</a>.
   </div>
 
   <section>
@@ -41,8 +42,9 @@
     <div class="grid">
       <a class="card" href="/projects/molecheck.html">
         <h3>MoleCheck</h3>
-        <p>A skin-lesion risk-awareness app: YOLO11 classifier trained on 11,720 dermatology
-           images, running fully on-device in a Flutter app. No photo ever leaves the phone.</p>
+        <p>A phone app that looks at a photo of a mole and guesses whether it's probably
+           harmless or worth getting checked. The AI runs right on your phone, so the photo
+           never leaves it.</p>
         <div class="tags">
           <span class="tag">Computer vision</span>
           <span class="tag">TFLite</span>
@@ -51,10 +53,9 @@
         </div>
       </a>
       <a class="card" href="/projects/ecg.html">
-        <h3>ECG Arrhythmia</h3>
-        <p>A 1D CNN that classifies heartbeats from the MIT-BIH database — and an honest
-           look at the inter-patient generalization gap, where 96% in the lab becomes 44%
-           on unseen patients.</p>
+        <h3>ECG Heartbeats</h3>
+        <p>An AI that sorts heartbeats into four types — and the story of how it looked
+           amazing while training but only got 44% right on patients it had never seen.</p>
         <div class="tags">
           <span class="tag">Signal processing</span>
           <span class="tag">1D CNN</span>
@@ -63,10 +64,9 @@
         </div>
       </a>
       <a class="card" href="/projects/adhd-eeg.html">
-        <h3>ADHD from EEG</h3>
-        <p>A multi-channel 1D CNN reading children's brain waves, split honestly by subject:
-           92% accuracy on unseen children — with a careful look at why the split is the
-           whole story.</p>
+        <h3>ADHD from Brain Waves</h3>
+        <p>An AI that reads kids' brain waves and tells apart two research groups. I tested it
+           the honest way (splitting by kid), so the 92% score is actually real.</p>
         <div class="tags">
           <span class="tag">EEG</span>
           <span class="tag">1D CNN</span>
@@ -75,9 +75,9 @@
         </div>
       </a>
       <a class="card" href="/projects/leukemia.html">
-        <h3>Leukemia Subtyping</h3>
-        <p>A vision model sorting leukemic blood cells into 4 classes at 99.8% — and a case
-           study in why that near-perfect score is the least trustworthy number here.</p>
+        <h3>Leukemia Blood Cells</h3>
+        <p>An AI that sorts leukemia cells from blood photos and scores 99.8% — and why that
+           almost-perfect number is actually the sketchiest one on this whole site.</p>
         <div class="tags">
           <span class="tag">Computer vision</span>
           <span class="tag">YOLO</span>
@@ -86,9 +86,9 @@
         </div>
       </a>
       <a class="card" href="/projects/stock-risk.html">
-        <h3>Stock Risk + Sentiment</h3>
-        <p>An MLP predicting a stock's next-week volatility risk from price and news sentiment —
-           and the honest finding that the sentiment didn't actually help.</p>
+        <h3>Stock Risk + News</h3>
+        <p>An AI that guesses whether a stock will be calm or bumpy next week from its price
+           and the news — plus my surprising finding that the news part didn't help at all.</p>
         <div class="tags">
           <span class="tag">Fintech</span>
           <span class="tag">Time series</span>
@@ -97,9 +97,9 @@
         </div>
       </a>
       <a class="card" href="/projects/pentest-agent.html">
-        <h3>AI Pentest Agent</h3>
-        <p>A reinforcement-learning agent that learns, by trial and error, to find SQL injection,
-           XSS, and access-control bugs in a practice app — and beats random guessing six to one.</p>
+        <h3>AI Hacking Agent</h3>
+        <p>An AI that learns, by trial and error, to find security holes in a practice website —
+           and beats random guessing six to one. All safe and practice-only.</p>
         <div class="tags">
           <span class="tag">Reinforcement learning</span>
           <span class="tag">Security</span>
@@ -113,7 +113,7 @@
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
+    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

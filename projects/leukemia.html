@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leukemia subtyping from blood smears — RLcapstone.ai</title>
-  <meta name="description" content="A YOLO classifier that subtypes leukemic cells from blood smears at 99.8% — and an honest look at why that number can't be trusted yet.">
+  <title>Leukemia Blood Cells — sorting cells with AI — RLcapstone.ai</title>
+  <meta name="description" content="An AI that sorts leukemia cells from blood photos and scores 99.8% — and why that almost-perfect number is actually a warning sign.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/progress-chart.js" defer></script>
 </head>
@@ -23,22 +23,22 @@
 
 <main class="wrap">
   <article>
-    <h1>Subtyping leukemia from a single cell</h1>
+    <h1>Sorting leukemia cells from a blood photo</h1>
     <p class="lead">
-      A computer-vision classifier that sorts white blood cells from a smear into Benign or
-      one of three B-cell ALL stages — and a case study in why a 99.8% score can be the
-      least trustworthy result on this whole site.
+      An AI that looks at a photo of one white blood cell and sorts it into a healthy look-alike
+      or one of three stages of a blood cancer — plus a lesson in why a 99.8% score can be the
+      least trustworthy number on this whole site.
     </p>
 
     <div class="disclaimer">
-      <strong>Not a diagnostic tool.</strong> Leukaemia is diagnosed by haematologists using
-      bone-marrow biopsy, flow cytometry and genetics. This project classifies research images
-      and is purely educational. Read the full <a href="/disclaimer.html">disclaimer</a>.
+      <strong>Not a diagnosis tool.</strong> Real leukemia diagnosis needs doctors and lab tests
+      like bone-marrow analysis. This project just sorts research photos and is purely for
+      learning. Here's the full <a href="/disclaimer.html">disclaimer</a>.
     </div>
 
     <p>
       <a class="btn" href="/projects/leukemia-demo.html">Try it in your browser →</a><br>
-      <small>Classifies real blood-smear cells on your device — nothing is uploaded.</small>
+      <small>Sorts real blood-cell photos on your device — nothing is uploaded.</small>
     </p>
 
     <div class="download-card">
@@ -46,23 +46,22 @@
         <strong>Get the Android app</strong><br>
         Cell Explorer · Android (arm64) · ~44 MB · v1.0.0
       </div>
-      <p>Prefer a native app? Download the APK and sideload it. It runs the same
-         on-device model as the browser demo — offline, nothing uploaded.</p>
+      <p>Want the app version? Download the APK and install it. It runs the same on-the-phone
+         model as the browser demo — offline, nothing uploaded.</p>
       <a class="btn" href="https://github.com/anotherhuman5345/rlcapstone-site/releases/download/apps-v1.0.0/cell-explorer-v1.0.0-arm64.apk">Download APK →</a>
       <details>
         <summary>How to install (sideloading)</summary>
         <ol>
           <li>On your Android phone, open this page and tap <strong>Download APK</strong>.</li>
-          <li>When prompted, allow your browser to “install unknown apps” (Android asks once, for safety).</li>
+          <li>When it asks, let your browser “install unknown apps” (Android asks once, just to be safe).</li>
           <li>Open the downloaded file and tap <strong>Install</strong>.</li>
         </ol>
       </details>
       <p class="download-note">
-        Educational app — not a medical device and not a diagnosis. It is distributed
-        outside the Play Store and signed with a debug key, so Android will warn you
-        before installing; that warning is expected for a sideloaded educational build.
-        Built for arm64 phones (essentially all Android phones from the last several
-        years). Android only — an iOS build can be produced from the same code.
+        School project — not a medical tool and not a diagnosis. It's not on the Play Store and
+        it's signed with a test key, so your phone will warn you before installing. That warning
+        is normal here. Built for arm64 phones (basically every recent Android). Android only for
+        now — the same code can make an iPhone version.
       </p>
     </div>
 
@@ -71,62 +70,61 @@
       <span>Read the full capstone report<small>PDF, opens in your browser</small></span>
     </a>
 
-    <h2>At a glance</h2>
+    <h2>The quick version</h2>
     <table class="facts">
-      <tr><th>Task</th><td>Classify one blood-smear white cell into 4 classes: Benign, Early Pre-B, Pre-B, Pro-B ALL</td></tr>
-      <tr><th>Data</th><td>ALL image dataset (Aria et al., 2021) — 3,256 peripheral-blood-smear images</td></tr>
-      <tr><th>Model</th><td>YOLO11s-cls, transfer-learned, 224×224 input (5.4M parameters)</td></tr>
-      <tr><th>Result</th><td>99.8% accuracy, 0.998 macro-F1 on held-out images — see the caveat below</td></tr>
-      <tr><th>Deployment</th><td>ONNX in the browser demo; TFLite in the Android app</td></tr>
+      <tr><th>What it does</th><td>Sorts one blood-cell photo into 4 types: healthy look-alike + 3 cancer stages</td></tr>
+      <tr><th>Data</th><td>ALL blood-cell dataset (Aria et al., 2021) — 3,256 photos</td></tr>
+      <tr><th>Model</th><td>YOLO11 image AI (same one as MoleCheck), retrained on blood cells</td></tr>
+      <tr><th>Result</th><td>99.8% on the test photos — but read the warning below</td></tr>
+      <tr><th>Runs on</th><td>Right in your browser, and in an Android app</td></tr>
     </table>
 
-    <h2>The four classes</h2>
+    <h2>The four types</h2>
     <p>
-      Three of the classes — <strong>Early Pre-B</strong>, <strong>Pre-B</strong> and
-      <strong>Pro-B</strong> — are maturation stages of the same B-cell acute lymphoblastic
-      leukaemia, and the fourth, <strong>Benign</strong>, is a non-cancerous look-alike
-      (hematogones) that can fool the eye. Distinguishing them is genuinely subtle work, which
-      is what makes it a worthwhile vision problem.
+      Three of the types (<strong>Early Pre-B</strong>, <strong>Pre-B</strong>, and
+      <strong>Pro-B</strong>) are stages of the same blood cancer (ALL), and the fourth is a
+      <strong>healthy look-alike</strong> that can fool your eye. Telling them apart is genuinely
+      hard even for experts, which is what makes it a cool problem for an AI.
     </p>
 
-    <h2>Progress across iterations</h2>
+    <h2>Watching it learn</h2>
     <p>
-      The model learns the four cell types quickly and cleanly, and validation accuracy
-      marches to 100%. On most projects that would be the headline. Here it's the opposite —
-      it's the cue to look harder at how the data was split.
+      The model picks up the four cell types fast and cleanly, and its practice score marches
+      right up to 100%. On most projects that would be the big win. Here it's the opposite — it's
+      the sign to stop and look harder at how I split the data.
     </p>
     <div class="progress" data-src="/data/leukemia-progress.json"></div>
 
     <h2>Why 99.8% is a warning, not a win</h2>
     <p>
-      The images come from a real set of patients, but this public release does not include
-      patient identifiers. So when the data is split into training and test sets at random, the
-      overwhelmingly likely outcome is that <strong>cells from the same patient land on both
-      sides of the split</strong>. Cells from one slide share the same staining, lighting,
-      focus and background — and a powerful model can score near-perfectly by recognising
-      <em>those</em> cues, having learned far less about leukaemia than the number suggests.
+      The photos come from real patients, but this dataset doesn't tell you which patient each
+      cell came from. So when I split it randomly, <strong>cells from the same patient almost
+      certainly ended up in both the training and test piles</strong>. Cells from one slide share
+      the same coloring, lighting, and background — and a strong AI can score almost perfectly by
+      recognizing <em>those</em> things, while actually learning way less about the cancer than
+      the number makes it look.
     </p>
     <p>
-      This is the same trap the <a href="/projects/adhd-eeg.html">EEG project</a> avoided by
-      splitting on subjects. We can't avoid it here, because the identifiers simply aren't in
-      the data — and pretending otherwise would be the dishonest move. So the 99.8% is reported
-      with an asterisk the size of the result itself.
+      This is the same trap my <a href="/projects/adhd-eeg.html">brain-wave project</a> avoided by
+      splitting by kid. I couldn't avoid it here, because the patient info just isn't in the data —
+      and pretending it wasn't a problem would be the dishonest move. So I report the 99.8% with an
+      asterisk about as big as the number itself.
     </p>
 
     <h2>What's next (v2)</h2>
     <p>
-      v2 moves to the <strong>C-NMC 2019</strong> dataset, which ships patient IDs for roughly
-      fifteen thousand cells. That lets us hold out whole patients, exactly as we did for EEG,
-      and measure what the model has really learned. The near-certain outcome is a
-      <em>lower</em> accuracy than 99.8% — and that lower number will be worth far more than
-      this one. It will appear in the table above when it lands.
+      The next version uses a bigger dataset called <strong>C-NMC</strong> that <em>does</em> tell
+      you which patient each cell came from — about fifteen thousand cells. That lets me keep each
+      patient's cells together, exactly like I did for the brain waves, and finally see what the AI
+      really learned. The score will almost certainly drop below 99.8% — and that lower number will
+      be worth way more than this one. It'll show up in the table above when it's done.
     </p>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
+    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

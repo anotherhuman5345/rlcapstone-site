@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ECG arrhythmia live demo — RLcapstone.ai</title>
-  <meta name="description" content="Try the ECG heartbeat classifier in your browser. Pick a real MIT-BIH beat and watch the model classify it on your device.">
+  <title>ECG Heartbeats live demo — RLcapstone.ai</title>
+  <meta name="description" content="Try the heartbeat AI in your browser. Pick a real heartbeat and watch it get sorted, right on your device.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
   <script src="/js/ecg-demo.js" defer></script>
@@ -24,27 +24,25 @@
 
 <main class="wrap">
   <article>
-    <h1>ECG arrhythmia live demo</h1>
+    <h1>Heartbeat AI — live demo</h1>
     <p class="lead">
-      Pick a real heartbeat below — each one comes from the MIT-BIH database, from
-      patients the model never saw during training. The
-      <a href="/projects/ecg.html">1D CNN</a> classifies it in your browser; nothing
-      is uploaded.
+      Pick a real heartbeat below — each one is from a real patient the
+      <a href="/projects/ecg.html">AI</a> never saw while training. It sorts the beat right in your
+      browser; nothing gets uploaded.
     </p>
 
     <div class="disclaimer">
-      <strong>Educational demo — not a diagnostic tool.</strong> This classifies
-      pre-recorded research heartbeats to show how a model reads an ECG. It cannot
-      read a live ECG, and it is not a substitute for a clinician or an approved
-      cardiac monitor. If you have symptoms or a heart-rhythm concern, seek medical care.
+      <strong>A demo for learning — not a medical tool.</strong> This sorts pre-recorded research
+      heartbeats to show how an AI reads an ECG. It can't read a live ECG and it's not a substitute
+      for a doctor or a real heart monitor. If you have symptoms or a heart-rhythm worry, get medical
+      care.
     </div>
 
     <h2>Pick a heartbeat</h2>
     <p>
-      Beats are labelled by their true class (as annotated by cardiologists):
-      <strong>N</strong> normal, <strong>S</strong> supraventricular, <strong>V</strong>
-      ventricular, <strong>F</strong> fusion. Watch what the model gets right — and
-      where it slips.
+      Each beat is labeled with its real type (from cardiologists): <strong>N</strong> normal,
+      <strong>S</strong> supraventricular, <strong>V</strong> ventricular, <strong>F</strong> fusion.
+      Watch what the AI gets right — and where it slips up.
     </p>
     <div id="ecg-samples"></div>
 
@@ -57,27 +55,26 @@
       <p id="ecg-truth" class="ecg-truth"></p>
       <div id="ecg-bars"></div>
       <p class="result-reminder">
-        A demo on curated research data flatters any model. On truly unseen patients,
-        this one catches ventricular beats well but misses most supraventricular ones —
-        see the <a href="/projects/ecg.html">write-up</a> for the honest numbers and why.
+        A demo on hand-picked research data makes any AI look better than it is. On patients it's
+        truly never seen, this one catches ventricular beats well but misses most supraventricular
+        ones — see the <a href="/projects/ecg.html">write-up</a> for the honest numbers and why.
       </p>
     </div>
 
     <h2>What am I looking at?</h2>
     <p>
-      Each trace is a single heartbeat: a ~0.7-second window of the ECG signal centered
-      on the beat's sharp peak (the R-peak). The model was trained only on the
-      <em>shape</em> of these windows. That's why it reads ventricular beats — which look
-      visibly different — but struggles with supraventricular beats, whose shape is nearly
-      normal and whose real giveaway is <em>timing</em> the model can't see. Fixing that
-      is exactly what the next iteration tackles.
+      Each squiggle is one heartbeat — about 0.7 seconds of the ECG, centered on the beat's sharp
+      spike. The AI only ever learned the <em>shape</em> of these. That's why it reads ventricular
+      beats (which look clearly different) but struggles with supraventricular ones, which look
+      almost normal — their real giveaway is <em>timing</em>, which the AI can't see. Fixing that is
+      exactly what the next version is about.
     </p>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
+    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

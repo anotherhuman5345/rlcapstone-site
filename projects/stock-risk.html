@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stock volatility risk from price + sentiment — RLcapstone.ai</title>
-  <meta name="description" content="An MLP that predicts a stock's next-week volatility risk from price and news sentiment — and the honest finding that the sentiment didn't help.">
+  <title>Stock Risk + News — guessing a stock's risk with AI — RLcapstone.ai</title>
+  <meta name="description" content="An AI that guesses if a stock will be calm or bumpy next week from price and news — plus my surprising finding that the news didn't help.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/progress-chart.js" defer></script>
 </head>
@@ -23,17 +23,17 @@
 
 <main class="wrap">
   <article>
-    <h1>Predicting a stock's risk — and testing whether sentiment helps</h1>
+    <h1>Guessing a stock's risk — and testing if news helps</h1>
     <p class="lead">
-      A model that sorts a stock's coming week into Low, Medium or High volatility from its price
-      history and the news sentiment around it — built mainly to answer one question honestly:
-      does the sentiment actually add anything?
+      An AI that guesses whether a stock's coming week will be Low, Medium, or High risk (how much
+      it bounces around) from its price history and the news about it. I mostly built it to answer
+      one question honestly: does the news part actually help?
     </p>
 
     <div class="disclaimer">
-      <strong>Not financial advice.</strong> This is an educational machine-learning project. It
-      predicts volatility, not price direction, and nothing here is a recommendation to buy, sell
-      or hold anything. Read the full <a href="/disclaimer.html">disclaimer</a>.
+      <strong>Not financial advice.</strong> This is a school AI project. It guesses how bumpy a
+      stock is, not whether it goes up or down, and nothing here tells you to buy or sell anything.
+      Here's the full <a href="/disclaimer.html">disclaimer</a>.
     </div>
 
     <p>
@@ -46,22 +46,22 @@
         <strong>Get the Android app</strong><br>
         Risk Explorer · Android (arm64) · ~22 MB · v1.0.0
       </div>
-      <p>Prefer a native app? Download the APK and sideload it. It runs the same
-         on-device model as the browser demo — offline, nothing uploaded.</p>
+      <p>Want the app version? Download the APK and install it. It runs the same on-the-phone
+         model as the browser demo — offline, nothing uploaded.</p>
       <a class="btn" href="https://github.com/anotherhuman5345/rlcapstone-site/releases/download/apps-v1.0.0/risk-explorer-v1.0.0-arm64.apk">Download APK →</a>
       <details>
         <summary>How to install (sideloading)</summary>
         <ol>
           <li>On your Android phone, open this page and tap <strong>Download APK</strong>.</li>
-          <li>When prompted, allow your browser to “install unknown apps” (Android asks once, for safety).</li>
+          <li>When it asks, let your browser “install unknown apps” (Android asks once, just to be safe).</li>
           <li>Open the downloaded file and tap <strong>Install</strong>.</li>
         </ol>
       </details>
       <p class="download-note">
-        Educational app — not financial advice and not a recommendation. It is distributed
-        outside the Play Store and signed with a debug key, so Android will warn you before
-        installing; that warning is expected for a sideloaded educational build. Built for
-        arm64 phones. Android only — an iOS build can be produced from the same code.
+        School project — not financial advice and not a recommendation. It's not on the Play Store
+        and it's signed with a test key, so your phone will warn you before installing. That warning
+        is normal here. Built for arm64 phones. Android only for now — the same code can make an
+        iPhone version.
       </p>
     </div>
 
@@ -70,71 +70,69 @@
       <span>Read the full capstone report<small>PDF, opens in your browser</small></span>
     </a>
 
-    <h2>At a glance</h2>
+    <h2>The quick version</h2>
     <table class="facts">
-      <tr><th>Task</th><td>Classify a stock's next-week realised volatility as Low / Medium / High</td></tr>
-      <tr><th>Data</th><td>Yahoo Finance prices + ticker-level news sentiment (Polygon, 2023), 59 stocks</td></tr>
-      <tr><th>Features</th><td>12: trailing returns, rolling volatility, volume, drawdown, and a daily sentiment signal</td></tr>
-      <tr><th>Model</th><td>Small MLP — 3,397 parameters (20 KB)</td></tr>
-      <tr><th>Result</th><td>56% accuracy on 3 classes (chance is 33%) — but see the sentiment finding</td></tr>
-      <tr><th>Deployment</th><td>ONNX in the browser demo; TFLite in the Android app</td></tr>
+      <tr><th>What it does</th><td>Guesses next week's risk as Low / Medium / High (how bumpy, not up or down)</td></tr>
+      <tr><th>Data</th><td>Yahoo Finance prices + news mood (Polygon, 2023) for 59 stocks</td></tr>
+      <tr><th>Clues it uses</th><td>12: recent gains/losses, how bumpy it's been, volume, drops, and a daily news-mood score</td></tr>
+      <tr><th>Model</th><td>A tiny neural network — 3,397 numbers (20 KB)</td></tr>
+      <tr><th>Result</th><td>56% right out of 3 choices (random is 33%) — but read the news finding</td></tr>
+      <tr><th>Runs on</th><td>Right in your browser, and in an Android app</td></tr>
     </table>
 
-    <h2>Why volatility, not direction</h2>
+    <h2>Why bumpiness, not direction</h2>
     <p>
-      Predicting whether a stock goes <em>up or down</em> tomorrow is famously close to a coin
-      flip. Predicting <em>how much it will move</em> — its volatility — is a different story,
-      because volatility clusters: calm weeks tend to follow calm weeks and turbulent ones follow
-      turbulent ones. That autocorrelation is real, learnable signal, which is why a simple model
-      reaches 56% on three classes where chance is 33%.
+      Guessing whether a stock goes <em>up or down</em> tomorrow is basically a coin flip. But
+      guessing <em>how much it'll move</em> is a different story, because calm and crazy stretches
+      come in streaks — calm weeks tend to follow calm weeks, wild weeks follow wild ones. That
+      streakiness is a real pattern the model can learn, which is why it hits 56% out of three
+      choices where random guessing would only get 33%.
     </p>
 
-    <h2>Progress across iterations</h2>
+    <h2>Watching it learn</h2>
     <p>
-      The model trains in seconds and settles around 64% on the validation slice, dropping to 56%
-      on the later, unseen test period — a normal, honest gap when markets move to a regime the
-      model hasn't seen.
+      The model trains in seconds and settles around 64% on the practice weeks, then drops to 56%
+      on the later weeks it had never seen. That drop is normal and honest — the market moved into
+      a stretch the model hadn't practiced on.
     </p>
     <div class="progress" data-src="/data/stock-progress.json"></div>
 
-    <h2>The honest headline: sentiment didn't help</h2>
+    <h2>The honest headline: the news didn't help</h2>
     <p>
-      The whole point of the project was the word "sentiment", so the result that matters is the
-      comparison. Training the same model on <strong>price features only</strong> — no sentiment —
-      scored <strong>57.2%</strong>, actually a hair <em>better</em> than the 56.3% with sentiment
-      included. The sentiment signal added nothing; if anything it added a little noise.
+      The whole point of this project was the "news" part, so the result that matters is the
+      comparison. When I trained the exact same model on <strong>price clues only</strong> — no
+      news — it scored <strong>57.2%</strong>, actually a tiny bit <em>better</em> than the 56.3%
+      with news included. The news added nothing; if anything, a little noise.
     </p>
     <p>
-      That is not a bug, and it is not a disappointment — it is the most useful thing the project
-      found. A daily average of headline sentiment is a coarse, sparse signal, and by the time you
-      already have rolling-volatility features, most of what's predictable about next week's
-      turbulence is already on the table. Reporting the negative result honestly — instead of
-      quietly dropping the ablation and claiming sentiment "works" — is the difference between a
-      demo and an experiment.
+      That's not a bug and it's not a letdown — it's the most useful thing I found. A once-a-day
+      average of news mood is a pretty weak, blurry signal, and once you already have the "how
+      bumpy has it been lately" clues, most of what you can predict about next week is already
+      covered. Reporting that honestly — instead of quietly deleting the test and claiming "news
+      helps!" — is the difference between a demo and a real experiment.
     </p>
 
-    <h2>Where the model struggles</h2>
+    <h2>Where it struggles</h2>
     <p>
-      The confusion is exactly where you'd expect: it reads calm (Low, 76% recall) and turbulent
-      (High, 60%) weeks reasonably well, but the Medium middle bucket is hard (27%), because
-      "medium" volatility looks like a blurred edge between the other two. That's an honest,
-      interpretable failure mode rather than a mysterious one.
+      It messes up exactly where you'd expect: it reads calm weeks (76% right) and wild weeks (60%)
+      pretty well, but the Medium middle is hard (27%), because "medium" bumpiness is basically a
+      blurry line between the other two. That's an honest, understandable weak spot, not a mystery.
     </p>
 
     <h2>What's next (v2)</h2>
     <p>
-      If sentiment is going to earn its place, it needs to be richer than a daily average: per
-      headline embeddings rather than one number, a longer multi-year history spanning more market
-      regimes, and a test of whether sentiment helps more for <em>direction</em> than for
-      volatility. Those results will appear in the table above — including, honestly, if sentiment
-      still doesn't help.
+      If the news is ever going to earn its spot, it needs to be smarter than a daily average:
+      actually reading each headline instead of averaging a mood score, using more years of data
+      across different kinds of markets, and testing whether news helps more for guessing
+      <em>direction</em> than bumpiness. Those results will show up in the table above — including,
+      honestly, if the news still doesn't help.
     </p>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
+    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>
