@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MoleCheck live demo — RLcapstone.ai</title>
-  <meta name="description" content="Try the MoleCheck mole classifier in your browser. Your photo is checked right on your device and never uploaded.">
+  <meta name="description" content="Try the MoleCheck lesion classifier in your browser. Inference runs on your device and the image is never uploaded.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
   <script src="/js/molecheck-demo.js" defer></script>
@@ -26,29 +26,29 @@
   <article>
     <h1>MoleCheck live demo</h1>
     <p class="lead">
-      The same AI from the <a href="/projects/molecheck.html">MoleCheck app</a>, running right in
-      your browser. Your photo is checked <strong>on your device</strong> — it's never uploaded,
-      and this site has no server to send it to anyway.
+      The same model that powers the <a href="/projects/molecheck.html">MoleCheck application</a>,
+      running in your browser. Your photo is analyzed <strong>on your device</strong> — it is never
+      uploaded, and this site has no server to receive it.
     </p>
 
     <!-- Consent gate: mirrors the app's onboarding acknowledgement -->
     <section id="demo-gate" class="demo-gate">
       <div class="disclaimer">
-        <strong>Before you try it — this is not a real medical test.</strong>
+        <strong>Before you begin — this is not a medical test.</strong>
         <ul>
-          <li>It's a school project that shows off image AI. It <strong>can't diagnose</strong>
-              skin cancer or anything else.</li>
-          <li>A "lower-risk" result is <strong>not a green light</strong>. It misses about 1 in 10
-              dangerous moles even on its test data, and real phone photos are harder than the
-              medical ones it learned on.</li>
-          <li>If a mole is new, changing, bleeding, or worrying you at all,
-              <strong>see a skin doctor</strong> — no matter what this page says.</li>
+          <li>This is an educational demonstration of image classification. It
+              <strong>cannot diagnose</strong> skin cancer or any other condition.</li>
+          <li>A "lower-risk" result is <strong>not reassurance</strong>. The model misses roughly
+              1 in 10 malignant lesions even on its test set, and real-world photographs are harder
+              than the dermatoscopic images it was trained on.</li>
+          <li>If a mole is new, changing, bleeding, or concerning in any way,
+              <strong>consult a dermatologist</strong> — regardless of what this page reports.</li>
         </ul>
         <label class="gate-row">
           <input type="checkbox" id="gate-ack">
-          I get it — this is a demo for learning, not medical advice.
+          I understand this is an educational demonstration, not medical advice.
         </label>
-        <button id="gate-start" class="btn" disabled>Try the demo</button>
+        <button id="gate-start" class="btn" disabled>Start the demo</button>
       </div>
     </section>
 
@@ -58,7 +58,7 @@
            aria-label="Choose or drop a photo of a mole">
         <input type="file" id="demo-file" accept="image/*" hidden>
         <img id="demo-preview" alt="Selected photo preview" hidden>
-        <p id="dropzone-hint">Drop a close-up photo of one mole here,<br>or click to choose one</p>
+        <p id="dropzone-hint">Drop a close-up photo of a single mole here,<br>or click to choose one</p>
       </div>
       <p id="demo-status" class="demo-status" role="status"></p>
 
@@ -70,24 +70,24 @@
         </div>
         <p id="result-detail"></p>
         <p class="result-reminder">
-          Whatever the score says: this can't see what a real doctor sees. If you're worried about
-          this mole, <strong>get it looked at in person.</strong>
+          Whatever the score: this tool cannot perceive what a dermatologist can. If you are
+          concerned about this mole, <strong>have it examined in person.</strong>
         </p>
       </div>
 
       <h2>What happens to my photo?</h2>
       <p>
-        Nothing leaves your browser. The AI (a 21&nbsp;MB file) downloads <em>to</em> your device
-        once, and all the checking happens locally. You can even turn off your internet after the
-        page loads and it'll still work.
+        Nothing leaves your browser. The model (a 21&nbsp;MB neural network) is downloaded
+        <em>to</em> your device once, and all inference runs locally via WebAssembly. You may
+        disconnect from the internet after the page loads and it will continue to function.
       </p>
 
-      <h2>Tips for a decent result</h2>
+      <h2>Tips for a meaningful result</h2>
       <ul>
         <li>One mole per photo, centered and in focus, filling most of the frame.</li>
-        <li>Good, even lighting — no shadows across the mole.</li>
-        <li>It learned on special medical close-ups, so regular phone photos are outside its comfort
-            zone — treat the score as a rough hint only.</li>
+        <li>Even lighting, with no shadows across the lesion.</li>
+        <li>The model was trained on dermatoscopic images, so ordinary smartphone photos are outside
+            its training distribution — treat the score as a rough signal only.</li>
       </ul>
     </section>
   </article>
@@ -95,7 +95,7 @@
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>

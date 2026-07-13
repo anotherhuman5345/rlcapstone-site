@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ADHD from Brain Waves — reading EEG with AI — RLcapstone.ai</title>
-  <meta name="description" content="An AI that reads kids' brain waves and tells apart two research groups — split honestly by kid, so the 92% score is actually real.">
+  <title>ADHD Classification from EEG — RLcapstone.ai</title>
+  <meta name="description" content="A multi-channel 1D CNN classifying pediatric EEG by study group, evaluated with a strict subject-level split — 92% accuracy on unseen subjects.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/progress-chart.js" defer></script>
 </head>
@@ -23,45 +23,45 @@
 
 <main class="wrap">
   <article>
-    <h1>Reading ADHD in brain waves</h1>
+    <h1>ADHD Classification from Pediatric EEG</h1>
     <p class="lead">
-      An AI that reads kids' brain-wave recordings and guesses whether each one came from the
-      ADHD group or the non-ADHD group of a study. The trick is that I trained and tested it on
-      totally separate kids, so the score shows if it actually works on new people.
+      A multi-channel 1D convolutional neural network that classifies children's EEG recordings by
+      study group (ADHD vs. control). Training and evaluation use a strict subject-level split, so
+      the reported performance reflects genuine generalization to previously unseen individuals.
     </p>
 
     <div class="disclaimer">
-      <strong>Not a diagnosis tool.</strong> ADHD is diagnosed by doctors, never from a quick
-      brain scan. This just tells apart two groups from a research study, and it's purely a
-      school project. Here's the full <a href="/disclaimer.html">disclaimer</a>.
+      <strong>Not a diagnostic tool.</strong> ADHD is a clinical diagnosis made by professionals,
+      never from a brief EEG. This project classifies research-cohort group membership and is
+      strictly educational. Read the full <a href="/disclaimer.html">disclaimer</a>.
     </div>
 
     <p>
       <a class="btn" href="/projects/adhd-eeg-demo.html">Try it in your browser →</a><br>
-      <small>Sorts real brain-wave recordings on your device — nothing is uploaded.</small>
+      <small>Classifies real EEG recordings on your device — nothing is uploaded.</small>
     </p>
 
     <div class="download-card">
       <div class="download-meta">
-        <strong>Get the Android app</strong><br>
+        <strong>Android application</strong><br>
         EEG Explorer · Android (arm64) · ~23 MB · v1.0.0
       </div>
-      <p>Want the app version? Download the APK and install it. It runs the same on-the-phone
-         model as the browser demo — offline, nothing uploaded.</p>
+      <p>A native application running the same on-device model as the browser demonstration —
+         offline, with no data uploaded.</p>
       <a class="btn" href="https://github.com/anotherhuman5345/rlcapstone-site/releases/download/apps-v1.0.0/eeg-explorer-v1.0.0-arm64.apk">Download APK →</a>
       <details>
-        <summary>How to install (sideloading)</summary>
+        <summary>Installation (sideloading)</summary>
         <ol>
-          <li>On your Android phone, open this page and tap <strong>Download APK</strong>.</li>
-          <li>When it asks, let your browser “install unknown apps” (Android asks once, just to be safe).</li>
+          <li>On an Android phone, open this page and tap <strong>Download APK</strong>.</li>
+          <li>When prompted, permit your browser to install from unknown sources (Android requests this once, for safety).</li>
           <li>Open the downloaded file and tap <strong>Install</strong>.</li>
         </ol>
       </details>
       <p class="download-note">
-        School project — not a medical tool and not a diagnosis. It's not on the Play Store and
-        it's signed with a test key, so your phone will warn you before installing. That warning
-        is normal here. Built for arm64 phones (basically every recent Android). Android only for
-        now — the same code can make an iPhone version.
+        Educational application — not a medical device and not a diagnosis. Distributed outside the
+        Play Store and signed with a debug key, so Android displays a warning before installation;
+        this is expected for a sideloaded educational build. Built for arm64 devices. Android only
+        at present — an iOS build can be produced from the same codebase.
       </p>
     </div>
 
@@ -70,67 +70,71 @@
       <span>Read the full capstone report<small>PDF, opens in your browser</small></span>
     </a>
 
-    <h2>The quick version</h2>
+    <h2>Summary</h2>
     <table class="facts">
-      <tr><th>What it does</th><td>Looks at a 2-second brain-wave snippet and guesses ADHD group or not</td></tr>
-      <tr><th>Data</th><td>Nasrabadi EEG set — 61 kids with ADHD + 60 without, ages 7–12</td></tr>
-      <tr><th>Signal</th><td>19 sensors on the scalp, recorded while the kids did an attention task</td></tr>
-      <tr><th>Model</th><td>A neural network that reads all 19 sensors — 193,000 numbers (775 KB)</td></tr>
-      <tr><th>Result</th><td>On 24 new kids: 91.7% right per kid, separating score 0.965</td></tr>
-      <tr><th>Runs on</th><td>Right in your browser, and in an Android app</td></tr>
+      <tr><th>Task</th><td>Classify a 2-second EEG window by study group (ADHD vs. control)</td></tr>
+      <tr><th>Dataset</th><td>Nasrabadi ADHD/Control EEG — 61 ADHD + 60 control children, ages 7–12</td></tr>
+      <tr><th>Signal</th><td>19 scalp electrodes (10–20 system), 128 Hz, recorded during a visual attention task</td></tr>
+      <tr><th>Model</th><td>Multi-channel 1D CNN — 193k parameters (775 KB)</td></tr>
+      <tr><th>Result</th><td>On 24 unseen subjects: 91.7% subject-level accuracy, ROC-AUC 0.965</td></tr>
+      <tr><th>Deployment</th><td>ONNX in the browser demonstration; TensorFlow Lite in the Android application</td></tr>
     </table>
 
-    <h2>The one decision that makes or breaks it</h2>
+    <h2>The decisive methodological choice</h2>
     <p>
-      There are only 121 kids in this data, but hundreds of thousands of little snippets. If you
-      shuffle the snippets and split them randomly, the <em>same kid</em> ends up in both piles —
-      and the AI can score almost perfectly just by recognizing each kid's own brain pattern,
-      while learning nothing about ADHD at all. A surprising amount of published work on this
-      exact dataset does exactly that by accident.
+      The dataset contains only 121 children but hundreds of thousands of EEG windows. If the
+      windows are shuffled and split randomly, the <em>same child</em> appears in both training and
+      test partitions, and the model can achieve near-perfect scores simply by learning to
+      recognize each child's individual EEG signature — learning nothing about ADHD. A substantial
+      body of published work on this dataset does exactly that.
     </p>
     <p>
-      So I split it <strong>by kid</strong>: the 24 test kids share nothing with training, and
-      even the practice-check kids are a totally separate group. Every number below is the AI
-      working on <em>new people</em>.
+      Accordingly, the split here is performed <strong>by subject</strong>: the 24 test children
+      share no data with training, and even the validation set used during training is a separate
+      group of children. Every figure below therefore measures generalization to
+      <em>new individuals</em>.
     </p>
 
-    <h2>Watching it learn</h2>
+    <h2>Training progression</h2>
     <p>
-      The chart tracks how well it does on held-out kids while it trains. It climbs from
-      random-guessing up to about 90% and stays there — and the important part is that the real
-      test kids land in the same range, which means it's reading something real about the groups
-      instead of just memorizing individual kids.
+      The chart tracks validation accuracy (on held-out children) across training. It rises from
+      chance toward ~90% and stabilizes — and, critically, the held-out <em>test</em> subjects fall
+      in the same range, indicating that the model captures a genuine group-level signal rather
+      than memorizing individuals.
     </p>
     <div class="progress" data-src="/data/adhd-progress.json"></div>
 
-    <h2>What 92% really means here</h2>
+    <h2>Interpreting the 92% result</h2>
     <p>
-      On the 24 new kids it got <strong>91.7% right</strong> with a strong separating score of
-      <strong>0.965</strong>. That's a solid result — and unlike my
-      <a href="/projects/ecg.html">ECG project</a>, it did <em>not</em> collapse from practice to
-      real testing. That suggests the brain-wave pattern really does carry over from one kid to
-      another.
+      On the 24 unseen test subjects the model attains <strong>91.7% subject-level accuracy</strong>
+      and a <strong>0.965 ROC-AUC</strong>. This is a strong result — and, unlike the
+      <a href="/projects/ecg.html">ECG project</a>, it exhibits no dramatic collapse from validation
+      to test, which suggests the ADHD-vs-control EEG signature in this task genuinely transfers
+      across children.
     </p>
     <p>
-      But two things keep me honest. First, 91.7% of 24 kids is really <strong>22 out of 24</strong>
-      — small numbers, so the true accuracy could be higher or lower. And second, and more
-      important: this only tells apart two <em>research groups</em>. It's not a diagnosis, it's one
-      small specific study, and real attention issues are way more varied than any single study.
+      Two caveats maintain a balanced interpretation. First, 91.7% of 24 subjects corresponds to
+      <strong>22 of 24</strong> — a small denominator with a wide confidence interval, so the true
+      accuracy could be meaningfully higher or lower. Second, and more important, the model
+      classifies <em>research-group membership</em>. It is not a diagnosis; the cohort is small and
+      specific; and real-world attention difficulties are far more varied than any single study can
+      represent.
     </p>
 
-    <h2>What's next (v2)</h2>
+    <h2>Next iteration (v2)</h2>
     <p>
-      The next steps are more about trust than a higher score: check which brain-wave frequencies
-      carry the signal, turn off different sensors to see which parts of the head matter, and test
-      on all 121 kids in rotation so the headline number rests on everyone, not just one group of
-      24. Those results will show up in the table above.
+      The most valuable follow-ups concern trust rather than headline accuracy: band-limiting the
+      input to identify which frequency bands carry the signal, ablating electrodes to determine
+      which scalp regions are informative, and running subject-level cross-validation so the
+      headline figure rests on all 121 children rather than a single 24-subject split. These
+      results will appear in the table above.
     </p>
   </article>
 </main>
 
 <footer class="site">
   <div class="wrap">
-    <span>© 2026 RLcapstone.ai — built for learning, not advice.</span>
+    <span>© 2026 RLcapstone.ai — educational content, no professional advice.</span>
     <span><a href="/disclaimer.html">Disclaimer</a></span>
   </div>
 </footer>
