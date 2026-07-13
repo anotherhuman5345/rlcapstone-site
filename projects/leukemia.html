@@ -113,13 +113,34 @@
       Accordingly, the 99.8% is presented with a caveat commensurate with the result itself.
     </p>
 
-    <h2>Next iteration (v2)</h2>
+    <h2>v2 — the honest patient-level result</h2>
     <p>
-      The next iteration moves to the <strong>C-NMC 2019</strong> dataset, which provides patient
-      identifiers for roughly fifteen thousand cells. This enables holding out entire patients — as
-      done in the EEG project — and measuring what the model has genuinely learned. The expected
-      outcome is a <em>lower</em> accuracy than 99.8%, and that lower figure will be substantially
-      more meaningful. It will appear in the table above once available.
+      This iteration moves to the <strong>C-NMC 2019</strong> dataset, which encodes a patient ID in
+      every filename. That makes it possible to hold out <strong>entire patients</strong> — the same
+      protocol as the <a href="/projects/adhd-eeg.html">EEG project</a> — so the score measures what
+      the model learned about leukemia, not which patient a cell came from. C-NMC labels cells as
+      leukemic or normal, so this is a <strong>binary</strong> task: a different, harder problem than
+      v1's four-class subtyping, not a like-for-like rematch.
+    </p>
+    <p>
+      The data is split across 73 patients with no patient on both sides, and the test set is held
+      out as <strong>11 patients the model never saw</strong> (1,014 cells). On that test set:
+    </p>
+    <ul>
+      <li><strong>80.8% accuracy</strong> and <strong>ROC-AUC 0.857</strong> per image — a large,
+          honest drop from v1's leakage-inflated 99.8%.</li>
+      <li><strong>93.6% sensitivity</strong>: the model rarely misses a malignant cell.</li>
+      <li><strong>53.4% specificity</strong>: but it over-calls malignant, flagging many normal cells
+          — an honest weakness, driven by a training set with far more leukemic patients than normal
+          ones.</li>
+    </ul>
+    <p>
+      The fall from 99.8% to about 81% is the whole point: the near-perfect v1 figure was largely
+      leakage, and this is what the model can actually do on people it has never seen. The test set
+      is small — only 11 patients, and just four of them normal — so the per-patient view is noisy
+      (it flagged all seven leukemia patients but misread three of the four normal ones), which is
+      why the per-image figures are the more stable read. A lower, honestly-measured number is worth
+      far more than an inflated one.
     </p>
   </article>
 </main>
