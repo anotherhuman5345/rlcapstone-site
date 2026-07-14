@@ -1,22 +1,22 @@
-/* Leukemia (ALL subtyping) demo — runs the YOLO classifier in the browser via
-   onnxruntime-web. The visitor picks a real blood-smear cell image; we classify
-   it on-device into 4 classes. Nothing is uploaded. Mirrors the training
-   preprocessing: resize to 224, RGB/255, NCHW [1,3,224,224]; the model already
-   applies softmax. Classes: [benign, early, pre, pro]. */
+/* Leukemia demo (v3) — runs the multi-source YOLO classifier in the browser via
+   onnxruntime-web. The visitor picks a real single-cell image and we classify it
+   on-device as leukemic (B-ALL blast) vs normal. Nothing is uploaded. The sample
+   cells come from THREE different labs (Delhi, Tehran, Barcelona) to show the
+   model works across sources. Preprocessing mirrors training: resize to 224,
+   RGB/255, NCHW [1,3,224,224]; the model already applies softmax.
+   Model output order = [all (leukemic), hem (normal)]. */
 
 (function () {
   "use strict";
 
   const MODEL_URL = "/models/leukemia.onnx";
   const SAMPLES_URL = "/data/leukemia-samples.json";
-  const IMG_BASE = "/demo-images/leukemia/";
+  const IMG_BASE = "/demo-images/leukemia-v3/";
   const SIZE = 224;
-  const CLASSES = ["benign", "early", "pre", "pro"];
+  const CLASSES = ["all", "hem"]; // must match the model's output order
   const DISPLAY = {
-    benign: "Benign (hematogones)",
-    early: "Early Pre-B ALL",
-    pre: "Pre-B ALL",
-    pro: "Pro-B ALL",
+    all: "Leukemic (B-ALL blast)",
+    hem: "Normal cell",
   };
 
   let sessionPromise = null;
@@ -89,27 +89,26 @@
     return softmaxIfNeeded(Array.from(out[session.outputNames[0]].data));
   }
 
-  function showResult(probs, trueClass) {
+  function showResult(probs, sample) {
     let top = 0;
     for (let i = 1; i < probs.length; i++) if (probs[i] > probs[top]) top = i;
     const predClass = CLASSES[top];
-    const correct = predClass === trueClass;
-    const malignantPred = predClass !== "benign";
+    const correct = predClass === sample.trueClass;
 
     const box = $("demo-result");
     box.hidden = false;
     box.className = "demo-result " + (correct ? "reassuring" : "concerning");
     $("result-verdict").textContent = "Model says: " + DISPLAY[predClass] +
       " (" + (probs[top] * 100).toFixed(0) + "%)";
-    $("result-truth").textContent = "True label: " + DISPLAY[trueClass] +
-      "  —  " + (correct ? "model agrees ✓" : "model is wrong ✗");
+    $("result-truth").textContent = "True label: " + DISPLAY[sample.trueClass] +
+      "  ·  from " + sample.source + "  —  " + (correct ? "model agrees ✓" : "model is wrong ✗");
     const bars = $("result-bars");
     bars.innerHTML = "";
     CLASSES.forEach((c, i) => {
       const row = document.createElement("div");
       row.className = "prob-row";
       row.innerHTML =
-        "<span class='prob-label' style='width:8.5rem'>" + DISPLAY[c] + "</span>" +
+        "<span class='prob-label' style='width:10rem'>" + DISPLAY[c] + "</span>" +
         "<div class='prob-track'><div class='prob-fill" + (i === top ? " top" : "") +
         "' style='width:" + Math.max(1, probs[i] * 100) + "%'></div></div>" +
         "<span class='prob-val'>" + (probs[i] * 100).toFixed(0) + "%</span>";
@@ -130,7 +129,7 @@
       await new Promise((ok, err) => { img.onload = ok; img.onerror = err; img.src = IMG_BASE + sample.file; });
       const probs = await classify(img);
       setStatus("");
-      showResult(probs, sample.trueClass);
+      showResult(probs, sample);
     } catch (e) {
       setStatus("Model error: " + e.message);
     }
@@ -142,7 +141,8 @@
     samples.samples.forEach((s) => {
       const b = document.createElement("button");
       b.className = "cell-thumb";
-      b.innerHTML = "<img src='" + IMG_BASE + s.file + "' alt='blood smear cell' loading='lazy'>";
+      b.title = s.source;
+      b.innerHTML = "<img src='" + IMG_BASE + s.file + "' alt='single blood cell' loading='lazy'>";
       b.addEventListener("click", () => pick(s, b));
       grid.appendChild(b);
     });

@@ -1,1 +1,44 @@
-{"classes": ["benign", "early", "pre", "pro"], "samples": [{"file": "benign1.jpg", "trueClass": "benign"}, {"file": "benign2.jpg", "trueClass": "benign"}, {"file": "early1.jpg", "trueClass": "early"}, {"file": "early2.jpg", "trueClass": "early"}, {"file": "pre1.jpg", "trueClass": "pre"}, {"file": "pre2.jpg", "trueClass": "pre"}, {"file": "pro1.jpg", "trueClass": "pro"}, {"file": "pro2.jpg", "trueClass": "pro"}]}
+{
+ "samples": [
+  {
+   "file": "cell01.jpg",
+   "trueClass": "all",
+   "source": "C-NMC (Delhi)"
+  },
+  {
+   "file": "cell02.jpg",
+   "trueClass": "all",
+   "source": "C-NMC (Delhi)"
+  },
+  {
+   "file": "cell03.jpg",
+   "trueClass": "hem",
+   "source": "C-NMC (Delhi)"
+  },
+  {
+   "file": "cell04.jpg",
+   "trueClass": "all",
+   "source": "Aria (Tehran)"
+  },
+  {
+   "file": "cell05.jpg",
+   "trueClass": "hem",
+   "source": "Aria (Tehran)"
+  },
+  {
+   "file": "cell06.jpg",
+   "trueClass": "hem",
+   "source": "Acevedo (Barcelona)"
+  },
+  {
+   "file": "cell07.jpg",
+   "trueClass": "hem",
+   "source": "Acevedo (Barcelona)"
+  },
+  {
+   "file": "cell08.jpg",
+   "trueClass": "hem",
+   "source": "Acevedo (Barcelona)"
+  }
+ ]
+}

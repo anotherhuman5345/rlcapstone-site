@@ -40,7 +40,7 @@
 
     <p>
       <a class="btn" href="/projects/leukemia-demo.html">Try it in your browser →</a><br>
-      <small>Classifies real blood-smear cells on your device — nothing is uploaded.</small>
+      <small>Classifies a real cell as leukemic or normal on your device — nothing is uploaded.</small>
     </p>
 
     <div class="download-card">
@@ -77,7 +77,8 @@
       <tr><th>Task</th><td>Classify one blood-smear white cell into 4 classes: Benign, Early Pre-B, Pre-B, Pro-B ALL</td></tr>
       <tr><th>Dataset</th><td>ALL image dataset (Aria et al., 2021) — 3,256 peripheral-blood-smear images</td></tr>
       <tr><th>Model</th><td>YOLO11s-cls, transfer-learned, 224×224 input (5.4M parameters)</td></tr>
-      <tr><th>Result</th><td>99.8% accuracy, 0.998 macro-F1 on held-out images — see the analysis below</td></tr>
+      <tr><th>Result</th><td>v1: 99.8% (a red flag) → v2: 80.8% honest patient-split → v3: cross-lab (see below)</td></tr>
+      <tr><th>Shipped now</th><td><strong>v3</strong> — binary (leukemic vs normal), trained on two labs; the browser demo and app run this model (<a href="#v3">details below</a>)</td></tr>
       <tr><th>Deployment</th><td>ONNX in the browser demonstration; TensorFlow Lite in the Android application</td></tr>
     </table>
 
