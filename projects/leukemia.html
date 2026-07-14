@@ -143,6 +143,72 @@
       why the per-image figures are the more stable read. A lower, honestly-measured number is worth
       far more than an inflated one.
     </p>
+
+    <h2 id="v3">v3 — does it survive a different microscope?</h2>
+    <p>
+      v2 answered "does it work on unseen patients?" (81%). The harder, real-world question — and the
+      single biggest failure mode of medical imaging AI — is whether it works on a <strong>different
+      lab's microscope</strong>: another hospital's staining, scanner and lighting. So I ran the
+      unchanged v2 model on two independent datasets it had never seen — <strong>Aria</strong> (Tehran)
+      and <strong>Acevedo</strong> (Barcelona, 17,092 images of normal cells).
+    </p>
+    <p>
+      It failed — badly, and honestly. On Barcelona's healthy cells the v2 model flagged
+      <strong>80%</strong> of them as leukemic (89% of the lymphocytes — the cell a lymphoblast most
+      resembles). On Tehran's images it was near-random. And a telling detail: on raw images it scored
+      <em>worse than a coin flip</em> (ROC-AUC 0.40), but on the same cells re-segmented onto a black
+      background — matching C-NMC's style — it recovered toward 0.51. That gap is the smoking gun: even
+      the honest 81% model had learned a lot about <strong>C-NMC's particular background and staining</strong>,
+      not just leukemia. It's the v1 leakage worry, one level deeper.
+    </p>
+    <h3>The fix: train on more than one lab</h3>
+    <p>
+      Augmentation can't rescue this — C-NMC contains only black-background cells, so the model has
+      nothing to learn real backgrounds from. The real fix is <strong>more than one source</strong>.
+      v3 trains on <strong>two labs at once</strong> — C-NMC (Delhi) plus Aria (Tehran), including both
+      the real-background and segmented versions — so it sees two staining pipelines and both background
+      types. <strong>Acevedo (Barcelona) is held out entirely</strong> as an unseen third lab, to test
+      whether this genuinely generalizes.
+    </p>
+    <table class="facts">
+      <tr>
+        <th></th>
+        <th>Within-source (C-NMC held-out patients)</th>
+        <th>Held-out 3rd lab (Barcelona normals)</th>
+      </tr>
+      <tr>
+        <td>v2 — one lab</td>
+        <td>80.8% acc · AUC 0.857 · spec 53%</td>
+        <td>specificity <strong>20%</strong> · lymphocytes 89% false-alarm</td>
+      </tr>
+      <tr>
+        <td>v3 — two labs</td>
+        <td><strong>83.3%</strong> · AUC <strong>0.863</strong> · spec <strong>59%</strong></td>
+        <td>specificity <strong>67%</strong> · lymphocytes 36% false-alarm</td>
+      </tr>
+    </table>
+    <p>
+      Training on a second lab <strong>more than tripled specificity on a completely unseen third lab</strong>
+      (20% → 67%): the false-alarm rate on healthy Barcelona cells fell from 80% to 33%, and on the
+      hard-negative lymphocytes from 89% to 36% — while <em>also</em> nudging within-source accuracy up.
+      That's the whole project's lesson in one number: a single-source model, even one evaluated
+      correctly, is still a single-source model. Robustness comes from diversity in the training data,
+      not only discipline in the split.
+    </p>
+    <figure>
+      <img src="/images/leukemia-v3-gradcam.png"
+           alt="Grad-CAM of a leukemic cell — attention concentrated on the cell body, not the background">
+      <figcaption>Grad-CAM on a leukemic cell (left: the cell; right: where the model looks). The
+        attention sits on the cell's cytoplasm, not the background — the interpretability check the
+        honesty thesis calls for.</figcaption>
+    </figure>
+    <p>
+      Honest limits: 67% specificity still means a third of normal cells get flagged — improved, not
+      solved. Aria is now a <em>training</em> source, so its near-perfect v3 numbers are in-domain, not
+      a generalization claim; the honest proof is Barcelona, which the model never saw. And a truly
+      held-out external <em>blast</em> source would need a fourth dataset. But the direction is
+      unambiguous — and it's the right one.
+    </p>
   </article>
 </main>
 
