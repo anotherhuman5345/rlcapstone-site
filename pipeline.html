@@ -143,7 +143,7 @@
         <div class="step"><span class="k">1 · Dataset</span><span class="v">v1: Aria 2021 smears (3,256 cells, <em>no patient IDs</em>). v2: C-NMC 2019 (<strong>with</strong> patient IDs).</span></div>
         <div class="step"><span class="k">2 · Prepare</span><span class="v">v1 could only split randomly; v2 holds out <strong>whole patients</strong> — the honest test.</span></div>
         <div class="step"><span class="k">3 · Train</span><span class="v">YOLO11s-cls at 224×224, transfer-learned on the blood-cell images.</span></div>
-        <div class="step"><span class="k">4 · Evaluate</span><span class="v">v1 hit <strong>99.8%</strong> — a red flag, not a win. v2, done right: <strong>80.8%</strong>, ROC-AUC 0.857.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">v1 <strong>99.8%</strong> (a red flag); v2 patient-split <strong>80.8%</strong>; v3 across labs lifts unseen-lab specificity <strong>20%→67%</strong>.</span></div>
         <div class="step"><span class="k">5 · Export</span><span class="v">ONNX + TFLite, both reproducing the original model.</span></div>
         <div class="step"><span class="k">6 · Ship</span><span class="v">Browser "Cell Explorer" demo + Android app.</span></div>
       </div>

@@ -23,6 +23,15 @@
       "macroF1": "n/a (binary)",
       "split": "patient-disjoint (C-NMC 2019)",
       "note": "ROC-AUC 0.857 · sensitivity 93.6% · specificity 53.4% — the honest drop from 99.8%"
+    },
+    {
+      "version": "v3 — two labs (C-NMC + Aria)",
+      "date": "July 2026",
+      "data": "C-NMC held-out patients + Barcelona (unseen lab)",
+      "acc": "83.3%",
+      "macroF1": "AUC 0.863",
+      "split": "patient-disjoint + cross-lab",
+      "note": "Cross-lab specificity on unseen Barcelona normals 20% → 67% — multi-source training generalizes"
     }
   ],
   "inProgress": "",
@@ -44,9 +53,25 @@
   },
   "changelog": [
     {
-      "version": "v2 — C-NMC, binary, patient-level",
+      "version": "v3 — two labs, cross-lab generalization",
       "date": "July 2026",
       "status": "current",
+      "changed": [
+        "Tested the honest v2 model on two labs it had never seen (Aria/Tehran, Acevedo/Barcelona) — the real-world 'different microscope' test. It failed: on Barcelona's normal cells it flagged 80% as leukemic, and on raw Tehran images it scored worse than chance (ROC-AUC 0.40), exposing heavy dependence on C-NMC's black-background/stain style.",
+        "Retrained on TWO labs at once (C-NMC Delhi + Aria Tehran, real and black backgrounds), holding out Acevedo (Barcelona) entirely as an unseen third lab."
+      ],
+      "improved": [
+        "Generalization to the unseen third lab more than tripled: specificity on Barcelona's normal cells rose from 20% to 67% (false-alarm 80%→33%; hard-negative lymphocytes 89%→36%).",
+        "Within-source performance improved too, not just held: 80.8%→83.3% accuracy, ROC-AUC 0.857→0.863, specificity 53%→59% on the C-NMC held-out patients. Grad-CAM confirms attention on the cell cytoplasm, not the background."
+      ],
+      "knownGaps": [
+        "67% specificity still means a third of normal cells get flagged — improved, not solved. Aria is now a training source (its near-perfect v3 numbers are in-domain, not generalization — Barcelona is the honest proof), and a truly held-out external blast source would need a fourth dataset."
+      ]
+    },
+    {
+      "version": "v2 — C-NMC, binary, patient-level",
+      "date": "July 2026",
+      "status": "previous",
       "changed": [
         "Moved to the C-NMC 2019 dataset, which encodes a patient ID in every filename, and split the data by patient so no patient appears in both training and test (73 patients; 11 held out for the test set).",
         "Reframed as a binary task — leukemic vs. normal cell — which is what C-NMC labels; a different, harder problem than v1's four-class subtyping, not a like-for-like rematch."
