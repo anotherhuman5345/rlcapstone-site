@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Leukemia cell demo — RLcapstone.ai</title>
-  <meta name="description" content="Try the blood-cell classifier in your browser. Select a real cell image and watch it classified into four types on your device.">
+  <meta name="description" content="Try the blood-cell classifier in your browser. Pick a real cell from one of three labs and watch it classified as leukemic or normal on your device.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
   <script src="/js/leukemia-demo.js" defer></script>
@@ -28,9 +28,10 @@
   <article>
     <h1>Leukemia cell classifier — live demo</h1>
     <p class="lead">
-      Select a real blood-smear cell below. The <a href="/projects/leukemia.html">model</a>
-      classifies it into one of four classes — Benign or one of three B-cell ALL stages — in your
-      browser. Nothing is uploaded.
+      Select a real single-cell image below. The <a href="/projects/leukemia.html">v3 model</a>
+      classifies it as <strong>leukemic</strong> (a B-ALL blast) or a <strong>normal</strong> cell, in
+      your browser. The samples come from <strong>three different labs</strong> — Delhi, Tehran and
+      Barcelona — to show it works across sources. Nothing is uploaded.
     </p>
 
     <section id="demo-gate">
@@ -39,9 +40,9 @@
         <ul>
           <li>Diagnosing leukemia requires a hematologist, bone-marrow analysis, flow cytometry, and
               genetic testing — never a single cell image.</li>
-          <li>This is a demonstration of image classification on a research dataset, and (as the
-              write-up explains) its headline accuracy is inflated by how the data is split. Treat
-              every output as an educational example.</li>
+          <li>This is a demonstration of image classification on research datasets. Even the honest,
+              multi-lab model is imperfect (the write-up reports where it false-alarms) — treat every
+              output as an educational example.</li>
           <li>If you have any health concern, consult a qualified clinician.</li>
         </ul>
         <label class="gate-row">
@@ -54,8 +55,9 @@
 
     <section id="demo-ui" hidden>
       <h2>Select a cell</h2>
-      <p>Each thumbnail is a real peripheral-blood-smear image of one white cell from the held-out
-         test set.</p>
+      <p>Each thumbnail is a real single-cell image, drawn from <strong>three separate labs</strong>
+         (Delhi, Tehran, Barcelona) — hover to see each cell's source — so you can watch the model
+         classify cells from microscopes it has to generalize across.</p>
       <div id="cell-grid"></div>
       <img id="selected-cell" alt="Selected blood-smear cell" hidden>
       <p id="demo-status" class="demo-status" role="status"></p>
@@ -65,19 +67,20 @@
         <p id="result-truth" class="result-truth"></p>
         <div id="result-bars"></div>
         <p class="result-reminder">
-          On this dataset the model appears near-perfect — which is precisely what warrants
-          suspicion. The <a href="/projects/leukemia.html">write-up</a> explains why, and what the
-          patient-split v2 will reveal.
+          This is the multi-source <strong>v3</strong> model — it generalizes across labs far better
+          than the single-source version, but it is still imperfect. The
+          <a href="/projects/leukemia.html">write-up</a> reports the honest numbers, including where it
+          false-alarms on normal cells.
         </p>
       </div>
 
       <h2>What am I looking at?</h2>
       <p>
-        Each image is a single white blood cell, stained and photographed under a microscope. The
-        malignant classes (Early Pre-B, Pre-B, Pro-B) are maturation stages of the same B-cell
-        leukemia; the benign class is a non-cancerous look-alike. Distinguishing them is subtle even
-        for specialists — which makes it a substantive computer-vision problem, and which is why
-        honest evaluation matters so much.
+        Each image is a single white blood cell, stained and photographed under a microscope. A
+        <strong>leukemic</strong> cell is a B-ALL lymphoblast; a <strong>normal</strong> cell is a
+        healthy one — including normal lymphocytes, which look deceptively similar. Distinguishing them
+        is subtle even for specialists, and doing it across <em>different labs'</em> microscopes is
+        harder still — which is the whole point of v3.
       </p>
     </section>
   </article>
