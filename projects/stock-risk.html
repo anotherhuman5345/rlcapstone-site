@@ -78,7 +78,7 @@
       <tr><th>Dataset</th><td>Yahoo Finance prices + ticker-level news sentiment (Polygon, 2023), 59 stocks</td></tr>
       <tr><th>Features</th><td>12: trailing returns, rolling volatility, volume, drawdown, and a daily sentiment signal</td></tr>
       <tr><th>Model</th><td>Compact multilayer perceptron — 3,397 parameters (20 KB)</td></tr>
-      <tr><th>Result</th><td>56% accuracy on 3 classes (chance is 33%) — see the sentiment ablation below</td></tr>
+      <tr><th>Result</th><td>57% accuracy on 3 classes (chance is 33%) — see the sentiment ablation below</td></tr>
       <tr><th>Deployment</th><td>ONNX in the browser demonstration; TensorFlow Lite in the Android application</td></tr>
     </table>
 
@@ -88,14 +88,14 @@
       <em>how much</em> it will move — its volatility — is more tractable, because volatility
       clusters: calm periods tend to follow calm periods and turbulent ones follow turbulent ones.
       This temporal autocorrelation is genuine, learnable signal, which is why a simple model
-      reaches 56% on a three-class problem where chance is 33%.
+      reaches 57% on a three-class problem where chance is 33%.
     </p>
 
     <h2>Training progression</h2>
     <p>
-      The model trains in seconds and settles near 64% on the validation window, then declines to
-      56% on the later, unseen test period — a normal, honest gap that occurs when the market enters
-      a regime the model has not observed.
+      The model trains in seconds and settles near 59% on a proper temporal validation window (the
+      latest weeks of the training period), then 57% on the later, unseen test period — a small,
+      honest gap that occurs when the market enters a regime the model has not observed.
     </p>
     <div class="progress" data-src="/data/stock-progress.json"></div>
 
@@ -103,7 +103,7 @@
     <p>
       Because the project centers on the sentiment signal, the decisive result is the controlled
       comparison. Training an identical model on <strong>price features only</strong> — no sentiment
-      — yielded <strong>57.2%</strong>, marginally <em>higher</em> than the 56.3% obtained with
+      — yielded <strong>57.5%</strong>, marginally <em>higher</em> than the 57.1% obtained with
       sentiment included. The sentiment signal added no predictive value, and if anything a small
       amount of noise.
     </p>
@@ -117,8 +117,8 @@
 
     <h2>Error analysis</h2>
     <p>
-      The errors fall where expected: the model reads calm weeks (Low, 76% recall) and turbulent
-      weeks (High, 60%) reasonably well, but the Medium class is difficult (27%), because
+      The errors fall where expected: the model reads calm weeks (Low, 75% recall) and turbulent
+      weeks (High, 57%) reasonably well, but the Medium class is difficult (33%), because
       intermediate volatility sits on a blurred boundary between the other two. This is an
       interpretable failure mode rather than a mysterious one.
     </p>

@@ -11,10 +11,10 @@
       "version": "v1 — price + sentiment MLP",
       "date": "July 2026",
       "data": "later 2023 (unseen time period)",
-      "acc": "56.3%",
-      "priceAcc": "57.2%",
-      "lift": "−0.9 pts",
-      "macroF1": "0.536",
+      "acc": "57.1%",
+      "priceAcc": "57.5%",
+      "lift": "−0.4 pts",
+      "macroF1": "0.550",
       "note": "Beats 33% chance on volatility — but sentiment didn't help"
     }
   ],
@@ -25,10 +25,10 @@
     "xLabel": "Training epoch",
     "baseline": { "value": 0.333, "label": "chance (3 classes) = 33%" },
     "points": [
-      [1, 0.618], [5, 0.637], [10, 0.643], [15, 0.646], [20, 0.639],
-      [25, 0.640], [30, 0.643], [35, 0.644], [40, 0.639], [45, 0.639],
-      [50, 0.636], [55, 0.644], [60, 0.640], [65, 0.641], [70, 0.641],
-      [75, 0.640], [80, 0.639]
+      [1, 0.558], [5, 0.577], [10, 0.582], [15, 0.584], [20, 0.580],
+      [25, 0.582], [30, 0.585], [35, 0.582], [40, 0.587], [45, 0.588],
+      [50, 0.589], [55, 0.588], [60, 0.583], [65, 0.588], [70, 0.591],
+      [75, 0.589], [80, 0.587]
     ]
   },
   "changelog": [
@@ -42,10 +42,10 @@
         "Exported to a 20 KB ONNX model running on-device in the browser demo."
       ],
       "improved": [
-        "Volatility is genuinely predictable: 56% accuracy on 3 classes versus 33% for chance, driven by volatility clustering in the price features."
+        "Volatility is genuinely predictable: 57% accuracy on 3 classes versus 33% for chance, driven by volatility clustering in the price features."
       ],
       "knownGaps": [
-        "Adding sentiment did NOT help — the price-only model actually scored 0.9 points higher. That is an honest and common finding: a sparse daily-average sentiment signal is noisy, and price-based volatility features already capture most of what's predictable. v2 tries a richer sentiment signal to see if it ever earns its keep.",
+        "Adding sentiment did NOT help — the price-only model actually scored 0.4 points higher. That is an honest and common finding: a sparse daily-average sentiment signal is noisy, and price-based volatility features already capture most of what's predictable. v2 tries a richer sentiment signal to see if it ever earns its keep.",
         "This predicts volatility (how much a stock moves), not direction (up or down) — and it is an educational model, never financial advice."
       ]
     }
