@@ -77,7 +77,7 @@
       <tr><th>Task</th><td>Classify one blood-smear white cell into 4 classes: Benign, Early Pre-B, Pre-B, Pro-B ALL</td></tr>
       <tr><th>Dataset</th><td>ALL image dataset (Aria et al., 2021) — 3,256 peripheral-blood-smear images</td></tr>
       <tr><th>Model</th><td>YOLO11s-cls, transfer-learned, 224×224 input (5.4M parameters)</td></tr>
-      <tr><th>Result</th><td>v1: 99.8% (a red flag) → v2: 80.8% honest patient-split → v3: cross-lab (see below)</td></tr>
+      <tr><th>Result</th><td>v1: 99.8% (a red flag) → v2: 80.8% patient-split → v3: cross-lab (see below)</td></tr>
       <tr><th>Shipped now</th><td><strong>v3</strong> — binary (leukemic vs normal), trained on two labs; the browser demo and app run this model (<a href="#v3">details below</a>)</td></tr>
       <tr><th>Deployment</th><td>ONNX in the browser demonstration; TensorFlow Lite in the Android application</td></tr>
     </table>
@@ -87,7 +87,7 @@
       Three of the classes — <strong>Early Pre-B</strong>, <strong>Pre-B</strong>, and
       <strong>Pro-B</strong> — are maturation stages of the same B-cell acute lymphoblastic
       leukemia, while the fourth, <strong>Benign</strong>, is a non-cancerous look-alike
-      (hematogones) that can deceive the eye. Distinguishing them is genuinely subtle work, which is
+      (hematogones) that can deceive the eye. Distinguishing them is subtle work, which is
       what makes it a substantive computer-vision problem.
     </p>
 
@@ -115,7 +115,7 @@
       Accordingly, the 99.8% is presented with a caveat commensurate with the result itself.
     </p>
 
-    <h2>v2 — the honest patient-level result</h2>
+    <h2>v2 — the patient-level result</h2>
     <p>
       This iteration moves to the <strong>C-NMC 2019</strong> dataset, which encodes a patient ID in
       every filename. That makes it possible to hold out <strong>entire patients</strong> — the same
@@ -130,10 +130,10 @@
     </p>
     <ul>
       <li><strong>80.8% accuracy</strong> and <strong>ROC-AUC 0.857</strong> per image — a large,
-          honest drop from v1's leakage-inflated 99.8%.</li>
+          drop from v1's leakage-inflated 99.8%.</li>
       <li><strong>93.6% sensitivity</strong>: the model rarely misses a malignant cell.</li>
       <li><strong>53.4% specificity</strong>: but it over-calls malignant, flagging many normal cells
-          — an honest weakness, driven by a training set with far more leukemic patients than normal
+          — a weakness, driven by a training set with far more leukemic patients than normal
           ones.</li>
     </ul>
     <p>
@@ -141,8 +141,8 @@
       leakage, and this is what the model can actually do on people it has never seen. The test set
       is small — only 11 patients, and just four of them normal — so the per-patient view is noisy
       (it flagged all seven leukemia patients but misread three of the four normal ones), which is
-      why the per-image figures are the more stable read. A lower, honestly-measured number is worth
-      far more than an inflated one.
+      why the per-image figures are the more stable read. The patient split gives a more useful
+      estimate of performance on new patients.
     </p>
 
     <h2 id="v3">v3 — does it survive a different microscope?</h2>
@@ -154,12 +154,12 @@
       and <strong>Acevedo</strong> (Barcelona, 17,092 images of normal cells).
     </p>
     <p>
-      It failed — badly, and honestly. On Barcelona's healthy cells the v2 model flagged
+      It performed poorly. On Barcelona's healthy cells the v2 model flagged
       <strong>80%</strong> of them as leukemic (89% of the lymphocytes — the cell a lymphoblast most
       resembles). On Tehran's images it was near-random. And a telling detail: on raw images it scored
       <em>worse than a coin flip</em> (ROC-AUC 0.40), but on the same cells re-segmented onto a black
       background — matching C-NMC's style — it recovered toward 0.51. That gap is the smoking gun: even
-      the honest 81% model had learned a lot about <strong>C-NMC's particular background and staining</strong>,
+      the patient-split 81% model had learned a lot about <strong>C-NMC's particular background and staining</strong>,
       not just leukemia. It's the v1 leakage worry, one level deeper.
     </p>
     <h3>The fix: train on more than one lab</h3>
@@ -169,7 +169,7 @@
       v3 trains on <strong>two labs at once</strong> — C-NMC (Delhi) plus Aria (Tehran), including both
       the real-background and segmented versions — so it sees two staining pipelines and both background
       types. <strong>Acevedo (Barcelona) is held out entirely</strong> as an unseen third lab, to test
-      whether this genuinely generalizes.
+      whether this generalizes.
     </p>
     <table class="facts">
       <tr>
@@ -201,12 +201,12 @@
            alt="Grad-CAM of a leukemic cell — attention concentrated on the cell body, not the background">
       <figcaption>Grad-CAM on a leukemic cell (left: the cell; right: where the model looks). The
         attention sits on the cell's cytoplasm, not the background — the interpretability check the
-        honesty thesis calls for.</figcaption>
+        cross-source comparison tests.</figcaption>
     </figure>
     <p>
-      Honest limits: 67% specificity still means a third of normal cells get flagged — improved, not
+      Limits: 67% specificity still means a third of normal cells get flagged — improved, not
       solved. Aria is now a <em>training</em> source, so its near-perfect v3 numbers are in-domain, not
-      a generalization claim; the honest proof is Barcelona, which the model never saw. And a truly
+      a generalization claim; the external test is Barcelona, which the model never saw. And a truly
       held-out external <em>blast</em> source would need a fourth dataset. But the direction is
       unambiguous — and it's the right one.
     </p>

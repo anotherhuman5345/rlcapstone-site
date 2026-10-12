@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CS + BIOE — RLcapstone.ai</title>
-  <meta name="description" content="How this portfolio of end-to-end AI projects maps to an interdisciplinary Computer Science and Bioengineering education — with a project-by-project breakdown of the CS and biomedical skills each one demonstrates.">
+  <meta name="description" content="How this portfolio of machine-learning projects maps to an interdisciplinary Computer Science and Bioengineering education — with a project-by-project breakdown of the CS and biomedical skills each one demonstrates.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
       This portfolio sits at the intersection of computer science and bioengineering. Each project
       pairs a concrete computational method — deep learning and biomedical signal or image
       processing — with a health-technology problem, and each is carried through the full lifecycle:
-      dataset, model, rigorous evaluation, and a working application. The sections below map that
+      dataset, model, evaluation, and a working application. The sections below map that
       work to the two disciplines.
     </p>
   </section>
@@ -44,13 +44,11 @@
       cells from blood-smear images. She has since beaten it, and is working toward a normal life.
     </p>
     <p>
-      That project is also why I care so much about being honest about results. My first version
-      scored 99.8%, and instead of celebrating I got suspicious — the dataset had no patient IDs, so
-      the model was probably winning on the wrong cues. When the disease you're modeling is one a
-      real kid you love actually had, a fake-high number isn't a win; it's a lie. So I rebuilt the
-      experiment properly — a dataset with patient labels, tested only on patients the model had
-      never seen — and the honest accuracy came out around 81%, not 99.8%. That lower, real number
-      means far more to me than the inflated one.
+      My first model scored 99.8%, which made me look more closely at the dataset. It had no
+      patient IDs, so I could not rule out cells from the same person appearing in both training
+      and testing. I repeated the experiment with C-NMC, which has patient labels. Accuracy
+      on held-out patients was about 81%. The change in the data split mattered more than
+      the original score suggested.
     </p>
     <p>
       CS + Bioengineering feels like home in an almost literal way. My dad works in computers and my
@@ -70,14 +68,11 @@
   <section>
     <h2>How the portfolio maps to the two disciplines</h2>
     <p>
-      The <strong>computer science</strong> throughline is applied machine learning done carefully:
-      convolutional neural networks, leakage-aware evaluation, and the engineering needed to ship a
-      model to a phone or a browser. The
-      <strong>bioengineering</strong> throughline is the domain grounding: physiological signals
-      (ECG, EEG), medical imaging (dermatology, hematology), and a clinical evaluation mindset that
-      favors sensitivity, specificity, and ROC-AUC over raw accuracy. The recurring theme across
-      both is responsible, honest health technology — privacy-preserving inference, clearly stated
-      limitations, and explicitly non-diagnostic framing.
+      <strong>Computer science</strong> covers the networks, data preparation, evaluation,
+      and model export needed to run these demos. <strong>Bioengineering</strong> brings in
+      the signals and images: ECG, EEG, skin lesions, and blood cells. Working on them has
+      made me pay attention to sensitivity, specificity, and per-class errors as well as
+      accuracy. The apps keep inference on the device and explain their limitations.
     </p>
   </section>
 
@@ -142,10 +137,10 @@
         <h3>Computer Science</h3>
         <ul>
           <li>Deep learning: 1D and 2D convolutional neural networks across signals and images</li>
-          <li>Rigorous ML methodology: leakage-aware and subject-level train/test splits</li>
+          <li>ML evaluation: leakage-aware and subject-level train/test splits</li>
           <li>Model deployment: PyTorch → ONNX / TensorFlow Lite, on-device and in-browser inference</li>
           <li>Full-stack delivery: Flutter mobile apps, static web demos, automated PDF reporting</li>
-          <li>Reproducibility and verification: confirmed model-export parity and honest, documented reporting</li>
+          <li>Reproducibility and verification: model-export parity checks and documented results</li>
         </ul>
       </div>
       <div class="card coming">
@@ -154,7 +149,7 @@
           <li>Physiological signal processing: ECG (cardiac) and EEG (neural)</li>
           <li>Medical imaging: dermatoscopy and blood-smear microscopy</li>
           <li>Clinical evaluation: sensitivity, specificity, ROC-AUC, and macro-recall over accuracy</li>
-          <li>Responsible health AI: privacy-preserving inference and honest, non-diagnostic framing</li>
+          <li>Responsible health AI: on-device inference and clearly stated diagnostic limits</li>
           <li>Domain grounding: pathology look-alikes, inter-patient variability, and dataset equity</li>
         </ul>
       </div>

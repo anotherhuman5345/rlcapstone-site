@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ECG Arrhythmia Classification — RLcapstone.ai</title>
-  <meta name="description" content="A 1D CNN for heartbeat classification on MIT-BIH, with a rigorous inter-patient evaluation documenting the gap between controlled and real-world performance.">
+  <meta name="description" content="A 1D CNN for heartbeat classification on MIT-BIH, with an inter-patient evaluation documenting the gap between controlled and real-world performance.">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/progress-chart.js" defer></script>
 </head>
@@ -28,7 +28,7 @@
     <h1>Inter-Patient Generalization in ECG Arrhythmia Classification</h1>
     <p class="lead">
       A 1D convolutional neural network that classifies individual heartbeats into four clinical
-      categories — and a rigorous study of the inter-patient generalization gap, in which
+      categories — and a study of the inter-patient generalization gap, in which
       validation performance of ~96% falls to 44% on previously unseen patients.
     </p>
 
@@ -107,7 +107,7 @@
     <p>
       During training, validation macro-recall climbs above 96% and appears excellent. However,
       that validation set shares <em>patients</em> with the training data. On the true test set —
-      22 entirely unseen patients — the honest macro-recall is <strong>44%</strong>. The gap
+      22 entirely unseen patients — the test macro-recall is <strong>44%</strong>. The gap
       between the climbing curve and that figure is the central finding of the project.
     </p>
     <div class="progress" data-src="/data/ecg-progress.json"></div>
@@ -115,7 +115,7 @@
     <h2>Per-class analysis</h2>
     <p>
       The per-class breakdown is instructive. On unseen patients the model detects
-      <strong>86% of ventricular beats</strong> — genuinely useful — but only
+      <strong>86% of ventricular beats</strong>  but only
       <strong>9% of supraventricular beats</strong>. This is not random; it indicates what the
       model can and cannot perceive.
     </p>

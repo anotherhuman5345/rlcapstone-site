@@ -39,12 +39,12 @@
       "date": "July 2026",
       "status": "current",
       "changed": [
-        "First end-to-end build: a 193k-parameter 1D CNN over all 19 EEG channels, classifying 2-second windows as ADHD vs control.",
+        "Initial model: a 193k-parameter 1D CNN over all 19 EEG channels, classifying 2-second windows as ADHD vs control.",
         "Split strictly by subject (train / validation / test share no people), and scored at the subject level by averaging each subject's window predictions.",
         "Exported to self-contained ONNX (775 KB) for the on-device browser demo."
       ],
       "improved": [
-        "Strong, honest baseline: 91.7% accuracy and 0.965 ROC-AUC on 24 completely unseen subjects — the model generalises to new people, not just new windows.",
+        "Baseline: 91.7% accuracy and 0.965 ROC-AUC on 24 completely unseen subjects — the model generalises to new people, not just new windows.",
         "Unlike the ECG project, no big lab-to-reality gap appeared here: validation and test agree closely."
       ],
       "knownGaps": [

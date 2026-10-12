@@ -22,7 +22,7 @@
       "acc": "80.8%",
       "macroF1": "n/a (binary)",
       "split": "patient-disjoint (C-NMC 2019)",
-      "note": "ROC-AUC 0.857 · sensitivity 93.6% · specificity 53.4% — the honest drop from 99.8%"
+      "note": "ROC-AUC 0.857 · sensitivity 93.6% · specificity 53.4% — evaluated on held-out patients"
     },
     {
       "version": "v3 — two labs (C-NMC + Aria)",
@@ -57,7 +57,7 @@
       "date": "July 2026",
       "status": "current",
       "changed": [
-        "Tested the honest v2 model on two labs it had never seen (Aria/Tehran, Acevedo/Barcelona) — the real-world 'different microscope' test. It failed: on Barcelona's normal cells it flagged 80% as leukemic, and on raw Tehran images it scored worse than chance (ROC-AUC 0.40), exposing heavy dependence on C-NMC's black-background/stain style.",
+        "Tested the v2 model on two labs it had never seen (Aria/Tehran, Acevedo/Barcelona) — the real-world 'different microscope' test. It failed: on Barcelona's normal cells it flagged 80% as leukemic, and on raw Tehran images it scored worse than chance (ROC-AUC 0.40), exposing heavy dependence on C-NMC's black-background/stain style.",
         "Retrained on TWO labs at once (C-NMC Delhi + Aria Tehran, real and black backgrounds), holding out Acevedo (Barcelona) entirely as an unseen third lab."
       ],
       "improved": [
@@ -65,7 +65,7 @@
         "Within-source performance improved too, not just held: 80.8%→83.3% accuracy, ROC-AUC 0.857→0.863, specificity 53%→59% on the C-NMC held-out patients. Grad-CAM confirms attention on the cell cytoplasm, not the background."
       ],
       "knownGaps": [
-        "67% specificity still means a third of normal cells get flagged — improved, not solved. Aria is now a training source (its near-perfect v3 numbers are in-domain, not generalization — Barcelona is the honest proof), and a truly held-out external blast source would need a fourth dataset."
+        "67% specificity still means a third of normal cells get flagged — improved, not solved. Aria is now a training source (its near-perfect v3 numbers are in-domain, not generalization — Barcelona is the held-out source), and a truly held-out external blast source would need a fourth dataset."
       ]
     },
     {
@@ -77,10 +77,10 @@
         "Reframed as a binary task — leukemic vs. normal cell — which is what C-NMC labels; a different, harder problem than v1's four-class subtyping, not a like-for-like rematch."
       ],
       "improved": [
-        "Replaced v1's leakage-inflated 99.8% with an honestly-measured result on unseen patients: 80.8% accuracy, ROC-AUC 0.857, and 93.6% sensitivity (it rarely misses a malignant cell)."
+        "Replaced v1's leakage-inflated 99.8% with a result on unseen patients: 80.8% accuracy, ROC-AUC 0.857, and 93.6% sensitivity (it rarely misses a malignant cell)."
       ],
       "knownGaps": [
-        "Specificity is only 53.4% — the model over-calls malignant, because the training set has far more leukemic patients than normal ones. The test set is small too (11 patients, only 4 normal), so the per-patient view is noisy. Balancing the normal-patient data, or tuning the decision threshold, is the honest next step."
+        "Specificity is only 53.4% — the model over-calls malignant, because the training set has far more leukemic patients than normal ones. The test set is small too (11 patients, only 4 normal), so the per-patient view is noisy. Balancing the normal-patient data, or tuning the decision threshold, could be tested next."
       ]
     },
     {
@@ -88,7 +88,7 @@
       "date": "July 2026",
       "status": "previous",
       "changed": [
-        "First end-to-end build: a YOLO11s-cls network fine-tuned to sort blood-smear white cells into 4 classes — Benign plus three B-cell ALL maturation stages (Early Pre-B, Pre-B, Pro-B).",
+        "Initial model: a YOLO11s-cls network fine-tuned to sort blood-smear white cells into 4 classes — Benign plus three B-cell ALL maturation stages (Early Pre-B, Pre-B, Pro-B).",
         "Reuses the MoleCheck computer-vision pipeline (transfer learning → ONNX for the browser, TFLite for the app).",
         "Exported to ONNX (21 MB) running on-device in the browser demo."
       ],
@@ -96,7 +96,7 @@
         "Learns the four cell types cleanly: 99.8% accuracy and 0.998 macro-F1 on the held-out images."
       ],
       "knownGaps": [
-        "That 99.8% is a red flag, not a triumph. This dataset ships no patient IDs, so a random split almost certainly puts the same patient's cells in both training and test — the model can key on patient/staining artifacts instead of leukemia morphology. v2 (above) does the rigorous patient-level split, and the honest number drops to ~81%."
+        "That 99.8% is a red flag, not a triumph. This dataset ships no patient IDs, so a random split almost certainly puts the same patient's cells in both training and test — the model can key on patient/staining artifacts instead of leukemia morphology. v2 (above) does a patient-level split, and accuracy drops to ~81%."
       ]
     }
   ]

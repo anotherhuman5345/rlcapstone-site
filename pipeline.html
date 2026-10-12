@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>How it's built — the pipeline behind every project — RLcapstone.ai</title>
-  <meta name="description" content="Every project on this site follows the same six-stage pipeline: public dataset, leakage-aware preparation, local-GPU training, honest evaluation, export, and a shippable demo. This page shows that pipeline and how each project fills it in.">
+  <meta name="description" content="Every project on this site follows the same six-stage pipeline: public dataset, leakage-aware preparation, local-GPU training, held-out evaluation, export, and a shippable demo. This page shows that pipeline and how each project fills it in.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -24,7 +24,7 @@
 
 <main class="wrap">
   <article>
-    <h1>How it's built, end to end</h1>
+    <h1>From dataset to demo</h1>
     <p class="lead">
       Every project on this site — whether it reads a heartbeat, a brain wave, or a blood cell —
       is built the same way. This page shows the six-stage pipeline I follow from a raw public
@@ -48,14 +48,12 @@
       <div class="stage">
         <span class="num">3</span>
         <h3>Train</h3>
-        <p>Fine-tune or train a model on my own GPU — an NVIDIA RTX 5060 Ti — not a black-box
-           cloud service.</p>
+        <p>Fine-tune or train on an NVIDIA RTX 5060 Ti.</p>
       </div>
       <div class="stage">
         <span class="num">4</span>
-        <h3>Evaluate honestly</h3>
-        <p>Score on data the model has never seen, and report the real number — even when it's
-           lower than the demo-day version.</p>
+        <h3>Evaluate</h3>
+        <p>Score on held-out data and report per-class errors.</p>
       </div>
       <div class="stage">
         <span class="num">5</span>
@@ -72,17 +70,15 @@
     </div>
 
     <div class="spine">
-      <strong>The spine of the whole thing is stage 2 and stage 4.</strong> The easiest way to get
-      a big, impressive number is to accidentally let the model see the answer in advance — the
-      same patient's heartbeats, or the same person's brain waves, landing in both the training and
-      the test set. Almost every project here is really a story about <em>refusing</em> to do that,
-      and reporting the honest number that comes out the other side.
+      <strong>The split affects what a score means.</strong> When recordings from the same
+      person appear in training and testing, a model may recognize the person rather than the
+      condition. The ECG and EEG experiments keep patients or subjects in separate partitions.
+      The first leukemia dataset lacked the identifiers needed for that check.
     </div>
 
     <h2>The pipeline, project by project</h2>
     <p>
-      Same six stages, filled in with what each project actually does. The <strong>Evaluate</strong>
-      column is the one that matters most — it's where the honesty lives.
+      These are the datasets, splits, models, and results for each project.
     </p>
 
     <!-- MoleCheck -->
@@ -111,7 +107,7 @@
         <div class="step"><span class="k">1 · Dataset</span><span class="v">MIT-BIH Arrhythmia Database — 48 records, ~<strong>100,000</strong> cardiologist-labeled beats.</span></div>
         <div class="step"><span class="k">2 · Prepare</span><span class="v">Cut a 0.7&nbsp;s window per beat, map to 4 AAMI classes; split <strong>by patient</strong>.</span></div>
         <div class="step"><span class="k">3 · Train</span><span class="v">A compact 1D CNN (77k parameters) with class weighting for the rare beats.</span></div>
-        <div class="step"><span class="k">4 · Evaluate</span><span class="v">96% in validation &rarr; an honest <strong>44% macro-recall</strong> on 22 unseen patients.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">96% in validation &rarr; <strong>44% macro-recall</strong> on 22 unseen patients.</span></div>
         <div class="step"><span class="k">5 · Export</span><span class="v">ONNX (28&nbsp;KB) for the browser, TFLite for Android.</span></div>
         <div class="step"><span class="k">6 · Ship</span><span class="v">Browser demo where you pick a real beat and watch it classified live.</span></div>
       </div>
@@ -141,7 +137,7 @@
       </div>
       <div class="steps">
         <div class="step"><span class="k">1 · Dataset</span><span class="v">v1: Aria 2021 smears (3,256 cells, <em>no patient IDs</em>). v2: C-NMC 2019 (<strong>with</strong> patient IDs).</span></div>
-        <div class="step"><span class="k">2 · Prepare</span><span class="v">v1 could only split randomly; v2 holds out <strong>whole patients</strong> — the honest test.</span></div>
+        <div class="step"><span class="k">2 · Prepare</span><span class="v">v1 could only split randomly; v2 holds out <strong>whole patients</strong> to measure performance on unseen patients.</span></div>
         <div class="step"><span class="k">3 · Train</span><span class="v">YOLO11s-cls at 224×224, transfer-learned on the blood-cell images.</span></div>
         <div class="step"><span class="k">4 · Evaluate</span><span class="v">v1 <strong>99.8%</strong> (a red flag); v2 patient-split <strong>80.8%</strong>; v3 across labs lifts unseen-lab specificity <strong>20%→67%</strong>.</span></div>
         <div class="step"><span class="k">5 · Export</span><span class="v">ONNX + TFLite, both reproducing the original model.</span></div>
@@ -159,7 +155,7 @@
         <div class="step"><span class="k">1 · Dataset</span><span class="v">Yahoo Finance prices for 59 stocks + a public 2023 news-sentiment dataset.</span></div>
         <div class="step"><span class="k">2 · Prepare</span><span class="v">Engineer 12 features using only past data; split <strong>by time</strong> so tests follow training.</span></div>
         <div class="step"><span class="k">3 · Train</span><span class="v">A small MLP — twice: once with sentiment, once without, to isolate its effect.</span></div>
-        <div class="step"><span class="k">4 · Evaluate</span><span class="v">57.1% with sentiment vs <strong>57.5% without</strong> (chance is 33%) — sentiment didn't help, and I said so.</span></div>
+        <div class="step"><span class="k">4 · Evaluate</span><span class="v">57.1% with sentiment vs <strong>57.5% without</strong> (chance is 33%) — sentiment did not improve test accuracy.</span></div>
         <div class="step"><span class="k">5 · Export</span><span class="v">ONNX + TFLite.</span></div>
         <div class="step"><span class="k">6 · Ship</span><span class="v">Browser demo comparing the prediction to what the stock actually did, + Risk Explorer app.</span></div>
       </div>
@@ -183,15 +179,13 @@
 
     <h2>Why it's laid out this way</h2>
     <p>
-      The point of showing the pipeline isn't just to look organized. It's that the interesting
-      part of most of these projects is <em>not</em> the headline accuracy — it's the choices in
-      stages 2 and 4 that decide whether that accuracy means anything. Splitting by patient instead
-      of by beat. Holding out whole people. Running the ablation and keeping the result even when it
-      says your idea didn't work. That's the through-line, and it's the part I'd want someone
-      looking at this to actually notice.
+      The preparation and evaluation steps explain several of the results. Holding out
+      patients exposed the ECG model's weak recall, and comparing stock models with and without
+      sentiment showed that the extra features did not help. The linked write-ups give the
+      details behind each summary.
     </p>
     <p>
-      Every project's full write-up, code, and honest metrics are linked from the
+      Every project's full write-up, code, and evaluation results are linked from the
       <a href="/">projects page</a>, and the complete source is on
       <a href="https://github.com/anotherhuman5345/rlcapstone" target="_blank" rel="noopener">GitHub</a>.
     </p>
