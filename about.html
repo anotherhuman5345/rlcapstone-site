@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About — RLcapstone.ai</title>
-  <meta name="description" content="Who I am and why I build these projects: Arel, a self-taught high-school student working at the intersection of computer science and biomedicine, with an emphasis on honest evaluation.">
+  <meta name="description" content="Who I am and why I build these projects: Arel, a self-taught high-school student working at the intersection of computer science and biomedicine, building models and testing them on held-out data.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -26,11 +26,9 @@
   <article>
     <h1>About me</h1>
     <p>
-      I'm Arel, a 16-year-old rising senior at Adlai Stevenson High School in Illinois. I've
-      been into computers for about as long as I can remember — I taught myself to code, and then
-      taught myself machine learning the same way, by building things until they worked. Everything on
-      this site is a project I took end to end, from the dataset to the trained model to an app or a
-      demo you can actually try.
+      I'm Arel, a 16-year-old rising senior at Adlai Stevenson High School in Illinois.
+      I taught myself to code and started learning machine learning by working on these projects.
+      This site collects the experiments, their results, and the apps and demos that came out of them.
     </p>
     <p>
       Why medicine? That part is personal. When my 13-year-old cousin was diagnosed with leukemia, I
@@ -42,12 +40,11 @@
       like home.
     </p>
     <p>
-      The thing I care about most is being honest about what these models can and can't do. It's easy
-      to post a 99.8% and move on; I'd rather show the patient-level result that dropped to 81%,
-      because when you're modeling a disease a real kid you love actually had, an inflated number
-      isn't a win — it's a lie. So every project here reports real metrics on data it hasn't seen and
-      says plainly where it falls short. None of it is a medical device — it's how I'm teaching myself
-      to build tools that could one day be trustworthy enough to actually help.
+      My first leukemia model scored 99.8%, but the dataset had no patient IDs. I couldn't
+      tell whether cells from the same patient appeared in both training and testing. A later
+      experiment with a patient split scored about 81%. That changed how I test my models:
+      I check the split before trusting a score and include the errors in the write-up.
+      These projects are learning exercises, not medical devices.
     </p>
     <p>
       I'm working toward studying Computer Science + Bioengineering — the one path where I don't have
@@ -56,17 +53,14 @@
 
     <h2>About this portfolio</h2>
     <p>
-      RLcapstone.ai presents a series of end-to-end applied AI projects, with a focus on biomedical
-      computing. Each project is developed in full — dataset preparation, model training on local
-      GPU hardware, rigorous evaluation, and deployment to a functional application or interactive
-      demonstration — and is documented with an emphasis on reproducibility and the honest reporting
-      of limitations.
+      The portfolio covers skin images, ECG, EEG, blood cells, stock volatility, and a
+      reinforcement-learning security sandbox. The source repository contains preparation,
+      training, evaluation, and export scripts, along with five Flutter apps.
     </p>
     <p>
-      The write-ups aim to document not only the results but the engineering decisions and pitfalls
-      typically omitted from tutorials: platform-specific export toolchains, dependency constraints
-      that silently break builds, thresholds chosen for principled reasons, and results that are
-      strong but not without caveats.
+      The write-ups explain decisions that affected each project: how the data was split,
+      which metrics I used, where export tools failed, and how the model performed on a
+      different dataset. Checkpoints and evaluation files are available alongside the code.
     </p>
 
     <h2>Methodology</h2>

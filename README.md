@@ -1,7 +1,7 @@
 # RLcapstone.ai
 
-Educational website for a series of end-to-end AI capstone projects. Plain static
-HTML/CSS — no build step, no framework, no Node toolchain.
+Static website for the RLcapstone projects. It contains write-ups, browser demos,
+model assets, and downloadable reports. There is no build step.
 
 ## Structure
 

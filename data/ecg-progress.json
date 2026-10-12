@@ -24,8 +24,8 @@
       "date": "July 2026",
       "status": "current",
       "changed": [
-        "First end-to-end build: a 77k-parameter 1D CNN trained on ~100,000 MIT-BIH heartbeats, classifying each beat into the 4 AAMI classes.",
-        "Split the data by patient (not by beat) so the honest inter-patient result is measured, not an inflated one.",
+        "Initial model: a 77k-parameter 1D CNN trained on ~100,000 MIT-BIH heartbeats, classifying each beat into the 4 AAMI classes.",
+        "Split the data by patient (not by beat) to evaluate on unseen patients.",
         "Exported to a self-contained ONNX model (325 KB) running on-device in the browser demo."
       ],
       "improved": [

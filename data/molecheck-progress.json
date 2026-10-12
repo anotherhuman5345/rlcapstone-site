@@ -31,7 +31,7 @@
       "rocAuc": "0.920",
       "sensitivity": "90%",
       "specificity": "75%",
-      "note": "Recovered on phone photos — the honest, deployable number"
+      "note": "Recovered on phone photos — the smartphone test result"
     }
   ],
   "inProgress": "",
@@ -61,7 +61,7 @@
         "Fine-tuned that same model on the smartphone photos and re-evaluated on the identical held-out test split, so the only thing that changes between the two numbers is the training domain."
       ],
       "improved": [
-        "Measured the domain gap honestly: on phone photos the dermoscopy model dropped from ROC-AUC 0.914 to 0.743, its specificity collapsing to 32% — it flagged roughly two-thirds of benign lesions.",
+        "Measured the domain gap: on phone photos the dermoscopy model dropped from ROC-AUC 0.914 to 0.743, its specificity collapsing to 32% — it flagged roughly two-thirds of benign lesions.",
         "Fine-tuning recovered it to ROC-AUC 0.920 on phone photos — as strong as v1 ever was in its own domain — with specificity back to 75%. That 0.920 is the number that describes what the app can actually do."
       ],
       "knownGaps": [
@@ -73,7 +73,7 @@
       "date": "July 2026",
       "status": "previous",
       "changed": [
-        "First end-to-end build: YOLO11s-cls fine-tuned for 40 epochs on 11,720 ISIC dermatoscopic images.",
+        "Initial model: YOLO11s-cls fine-tuned for 40 epochs on 11,720 ISIC dermatoscopic images.",
         "Exported to TensorFlow Lite and wired into the Flutter app and this in-browser demo (fully on-device).",
         "Decision threshold deliberately set to 0.137 instead of the default 0.5, to prioritise catching malignant lesions."
       ],
