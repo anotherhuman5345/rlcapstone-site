@@ -41,7 +41,7 @@
 
     <p>
       <a class="btn" href="https://study.rlcapstone.ai/">Try the demo →</a><br>
-      <small>About 15 minutes. Demo mode: answers are marked as test data and never analyzed.</small>
+      <small>You keep going until you feel exhausted (60 minutes at most). Demo mode: answers are marked as test data and never analyzed.</small>
     </p>
 
     <h2>The questions</h2>
@@ -50,8 +50,9 @@
       <li><strong>The invisible gorilla.</strong> When your attention is on one job, does a weaker-language
           clue make you more likely to miss something unexpected? (In a famous 2013 study, 83% of
           radiologists missed a gorilla placed in a lung scan.)</li>
-      <li><strong>Time on task.</strong> Within 15 minutes, when does performance start to slip, and does
-          the weaker-language cost grow as people tire?</li>
+      <li><strong>Fatigue.</strong> People keep going until they declare exhaustion. When does performance
+          start to slip, how tired do they say they feel along the way, and does the weaker-language
+          cost grow as they tire?</li>
       <li><strong>Who.</strong> How do these differ across age, education and image-reading expertise —
           from high school students to PhDs to radiologists?</li>
     </ol>
@@ -59,11 +60,12 @@
     <h2>How it works</h2>
     <table class="facts">
       <tr><th>1. Surprise image</th><td>Find a small ring on a scan. A gorilla is also hidden there and never mentioned. Then: “Did you notice anything unusual?” and “Did you see a gorilla?” Half of each group gets this clue in their comfortable language, half in their weaker one.</td></tr>
-      <tr><th>2. Rounds</th><td>Identical rounds of 8 pictures: find a red umbrella in a busy scene, or a small monkey planted in a scan. Each person sees half the clues in each language, so everyone is their own comparison.</td></tr>
-      <tr><th>3. Time limit</th><td>At 14 minutes the study moves to the last questions, so nobody goes past 15. Every answer records its elapsed time, so the analysis can find where (or whether) performance starts to decay.</td></tr>
-      <tr><th>Measures</th><td>Time to find the target, misses, a 1–9 mental-effort rating per picture, and the surprise questions</td></tr>
+      <tr><th>2. Rounds</th><td>Identical rounds of seven tasks, one item of each in each language: find a named object in a busy scene; spot what is out of the ordinary in a scan; follow written moves on a dice grid; repeat a sequence of lit squares forward or backward; answer a question about a short passage; sort a card by a written rule; and remember words between quick sums. Each person sees half of everything in each language, so everyone is their own comparison.</td></tr>
+      <tr><th>3. Until exhaustion</th><td>People continue until they press “I’m exhausted” (60 minutes at most), rating how mentally tired they feel after every round. A word-memory check comes last.</td></tr>
+      <tr><th>Measures</th><td>Speed and accuracy per task, a 1–9 mental-effort rating per item, 0–100 fatigue ratings, time to exhaustion, word retention, and the surprise questions</td></tr>
       <tr><th>Groups</th><td>High school students, adults, PhD students and professors, physicians, radiologists</td></tr>
-      <tr><th>Analysis</th><td>Mixed-effects models on response time; gorilla notice rates with a logistic model; a piecewise time model to locate the start of decay — checked on simulated data to confirm it finds a planted decay and reports none when there is none</td></tr>
+      <tr><th>Analysis</th><td>Mixed-effects models on response time and effort; gorilla notice rates with a logistic model; a piecewise time model to locate the start of decay; time to exhaustion as survival data; retention hit and false-alarm rates — checked on simulated data</td></tr>
+      <tr><th>Languages</th><td>30 languages; any pair can be tested. Translations await review by native speakers before real data collection.</td></tr>
     </table>
 
     <h2>The pictures</h2>
